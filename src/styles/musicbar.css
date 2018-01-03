@@ -1,0 +1,105 @@
+.musicDisplay{
+    width:100%;
+    /* border: 1px solid blueviolet; */
+    border-top: 1px solid gray;
+    background: #3a3a3f;
+    grid-area: 5 / 2 / 5 / 3;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 0px 7px;
+}
+
+.progress{
+    width: 50%;
+    display:flex;
+    flex-flow: row wrap;
+    align-items: center;
+    box-sizing: border-box;
+    /* border:1px solid violet; */
+}
+
+.progress > ul {
+    padding: 0 3px;
+    margin: 0;
+    width:100%;
+    /* border: 1px solid green; */
+    display:flex;
+    flex-flow: row nowrap;
+    justify-content: flex-end;
+    list-style: none;
+    box-sizing: border-box;
+}
+
+.progress > ul > li {
+    display:inline;
+    font-size:12px;
+    color:#fff;
+}
+
+.currentVal{
+    margin-right: auto;
+}
+
+/*
+
+Everything below just works for Mozilla, need to add support for IE and Chrome
+
+*/
+
+input[type=range]{
+    width: 100%;
+    box-sizing: border-box;
+    -webkit-appearance: none
+}
+
+input[type=range]::-webkit-slider-runnable-track{
+    background:#ddd;
+    border: none;
+    border-radius: 3px;
+    height:5px;
+    box-sizing: border-box;
+}
+
+input[type=range]::-webkit-slider-thumb{
+    -webkit-appearance: none;
+    height:16px;
+    width:16px;
+    border-radius:50%;
+    background:#FFA726;
+    margin-top: -4px;
+}
+
+input[type=range]:focus{
+    outline: none;
+}
+
+input[type=range]:focus::-webkit-slider-runnable-track{
+    background: #ccc;
+}
+
+input[type=range]::-moz-range-thumb {
+    border: none;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background: goldenrod;
+    outline: none;
+}
+
+input[type=range]:focus::-moz-range-track {
+    background: #ccc;
+}
+
+input[type=range]::-moz-range-progress{
+    height: 5px;
+    background: #FFA726;
+    border: none;
+    border-radius: 3px;
+    outline: none;
+}
+
+input[type=range]::-moz-focus-outer {
+    border: 0;
+}

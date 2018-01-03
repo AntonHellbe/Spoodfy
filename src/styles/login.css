@@ -1,0 +1,19 @@
+.loginDiv {
+    grid-area: 2 / 2 / 5 / 2;
+    background: #3a3a3f;
+    border-top: 1px solid gray;
+    width: 100%;
+    /* border: 2px solid green; */
+}
+
+.loginDiv > h1 {
+    text-align: center;
+    color: #fff;
+    font-family: Courier New, Courier, monospace, sans-serif;
+}
+
+.loginDiv > p {
+    text-align: center;
+    color: #fff;
+    font-family: Courier New, Courier, monospace, sans-serif;
+}

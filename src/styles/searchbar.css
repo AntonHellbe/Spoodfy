@@ -1,0 +1,28 @@
+.searchOpt{
+    background: #3a3a3f;
+    /* border: 1px solid violet; */
+    grid-area: 2 / 2 / 3 / 3;
+    padding: 10px 0px;
+    box-sizing: border-box;
+}
+
+.searchBar{
+    /* border: 1px solid green; */
+    display:flex;
+    flex-flow: row wrap;
+}
+
+.inputSearch{
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+}
+
+.inputSearch {
+    width: 125px;
+    transition: ease-in-out, width, .35s, ease-in-out;
+}
+
+.inputSearch:focus{
+    width:200px;
+}

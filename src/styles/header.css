@@ -1,0 +1,50 @@
+.header{
+    grid-area: 1 / 1 / 2 / 4;
+    background: #3a3a3f;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    /*border-bottom: 2px solid #797f89; */
+}
+
+.brand {
+    margin-right: auto;
+}
+
+.brandIcon{
+    margin-left: 10px;
+    vertical-align: middle;
+}
+
+.brand > a {
+    margin-left: 10px;
+    text-decoration: none;
+    font-size: 20px;
+    color: #cfcfd1;
+    font-weight: bold;
+    vertical-align: middle;
+    font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+    
+}
+
+.brand > a:hover {
+    color: #848b96;
+}
+
+.login{
+    margin-right: 15px;
+    font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+}
+
+.logout {
+    color: #cfcfd1;
+    margin-right: 15px;
+    font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+    border: 0;
+    background: #3a3a3f
+}
+
+.login > a {
+    color: #e8eaed;
+    text-decoration: 'none';
+}

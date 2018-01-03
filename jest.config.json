@@ -1,0 +1,12 @@
+{
+    "setupFiles": [
+        "raf/polyfill",
+        "<rootDir>/src/tests/setup_tests"
+    ],
+    "snapshotSerializers": [
+        "enzyme-to-json/serializer"
+    ],
+    "moduleNameMapper": {
+        "\\.(css)$": "<rootDir>/node_modules/jest-css-modules"
+    }
+}

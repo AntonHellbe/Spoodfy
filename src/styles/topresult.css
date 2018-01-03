@@ -1,0 +1,21 @@
+.topdiv{
+    /* border: 2px solid violet; */
+    padding-top:5px;
+    height:180px;
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    box-sizing: border-box;
+}
+
+.card{
+    /* border: 1px solid green; */
+    height:100%;
+    width: 200px;
+    box-shadow: 0 4px 8px 0 #000;
+    transition: 0.3s;
+    margin: 0px 5px;
+    box-sizing: border-box;
+    /* padding:0px 5px; */
+}

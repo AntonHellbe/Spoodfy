@@ -1,0 +1,45 @@
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import FaSpotify from 'react-icons/lib/fa/spotify';
+import { connect } from 'react-redux';
+import { logoutRequest } from '../actions/auth_actions';
+
+
+class Header extends Component { 
+
+    OnLogoutHandler = () => {
+        this.props.logoutRequest();
+    }
+    
+    render() {
+        return (
+            <div className="header">
+                <div className="brand">
+                    <FaSpotify className="brandIcon" size={ '24px' } color={ '#FFA726' } />
+                    <Link to="/" style={ { textDecoration: 'none' } }> ANTONS PLAYGROUND </Link>
+                </div>
+                <div className="login">
+                    { this.props.isAuthenticated ?
+                    (
+                        <button className="logout" onClick={ this.OnLogoutHandler }>Logout</button>
+                    )
+                    :
+                    (
+                        <a href="http://localhost:5000/">Login</a>
+                    )
+                    }
+                </div>
+            </div>
+            );
+        }
+}
+
+const mapStateToProps = (state) => ({
+    isAuthenticated: state.user.isAuthenticated
+});
+
+const mapDispatchToProps = (dispatch) => ({
+    logoutRequest: () => dispatch(logoutRequest())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

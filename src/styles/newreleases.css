@@ -1,0 +1,53 @@
+.newReleasesDiv{
+    /* border: 2px solid black; */
+    background: #3a3a3f;
+    grid-area: 2 / 2 / 5 / 3;
+    padding: 10px;
+    overflow: auto;
+    border-top: 1px solid #7d7d87;
+    box-sizing: border-box;
+}
+
+.banner {
+    border: 2px solid green;
+    padding-top:5px;
+    width: 100%;
+}
+
+.newReleasesDiv > h3{
+    color:#fff;
+    font-weight: 200;
+    border-bottom:1px solid gray;
+}
+
+.newAlbums {
+    display:flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+}
+
+.banner > h3 {
+    display:inline-block;
+    padding: 0;
+    margin: 0;
+}
+
+.banner > button {
+    /* margin:0; */
+    padding: 0;
+    float:right;
+    position: relative;
+    width:120px;
+    height: 30px;
+    border-radius: 34px; 
+    -moz-border-radius: 34px; 
+    -webkit-border-radius: 34px;
+    background: #ff6b42;
+    border: none;
+    /* box-shadow: 0px 4px 0px 8px #fff; */
+    
+}
+
+.banner > button:hover {
+    cursor:pointer;
+}

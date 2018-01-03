@@ -1,0 +1,20 @@
+.faPlay{
+    font-size: 36px;
+}
+
+.faForward {
+    font-size: 24px;
+}
+
+.faBackward {
+    font-size: 24px;
+}
+
+.innerDiv{
+    width: 50%;
+    /* border:1px solid green; */
+    display:flex;
+    justify-content: space-around;
+    align-items: center;
+    box-sizing: border-box;
+}

@@ -1,0 +1,37 @@
+.cardColumn{
+    /* border: 2px solid black; */
+    height: 100%;
+    /* width: 100%; */
+    display:flex;
+    flex-direction: column;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    box-sizing: border-box;
+}
+
+.topImg{
+    display:block;
+    height: 125px;
+    width: 100%;
+}
+
+.cardSummary{
+    display: block;
+    height: calc(100% - 125px);
+    padding: 5% 5% 3% 5%;
+    box-sizing: border-box;
+    background: #ffffff;
+}
+
+.cardTitle {
+    font-size: 16px;
+    font-family: 'Trebuchet MS', sans-serif;
+    display:block;
+}
+
+.cardSubtitle {
+    font-size: 12px;
+    font-family: 'Trebuchet MS', sans-serif;
+    display:block;
+}

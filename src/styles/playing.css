@@ -1,0 +1,38 @@
+.playing{
+    /* border: 1px solid green; */
+    grid-area: 5 / 1 / 6 / 1;
+    background: #252528;
+    padding-left:10px;
+}
+
+.displayTrackInfo{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    list-style-type: none;
+    height: 100%;
+    margin: 0;
+    padding:0;
+    /* border: 1px solid green; */
+    color: #ffffff;
+    font-size: 14px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.displayTrackInfo > li {
+    animation-name:slide-left;
+    animation-duration: 4s;
+}
+
+
+@keyframes slide-left{
+    from {
+        margin-left: -100%;
+        width:-200%;
+    }
+
+    to {
+        margin-left: 0%;
+        width:100%;
+    }
+}

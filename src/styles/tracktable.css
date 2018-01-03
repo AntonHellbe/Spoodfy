@@ -1,0 +1,89 @@
+.searchDiv{
+    /* border: 2px solid black; */
+    background: #3a3a3f;
+    grid-area: 2 / 2 / 5 / 3;
+    padding: 10px;
+    overflow: auto;
+    border-top: 1px solid #7d7d87;
+    box-sizing: border-box;
+}
+
+.searchDiv > h3 {
+    font-weight: normal;
+    font-family: 'Montserrat', sans-serif;
+    color: #cfcfd1;
+    border-bottom: 1px solid #fff;
+}
+
+.tableHeader{
+    color: #cfcfd1;
+    border-bottom: 1px solid #7d7d87;
+}
+
+.tableHeader > th {
+    text-align: left;
+    /* border-right: 1px solid #7d7d87; */
+    font-weight: normal;
+}
+
+.table{
+    width: 100%;
+    box-sizing: border-box;
+    /* height: 100%; */
+    table-layout: fixed;
+    border-collapse: collapse;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+td {
+    padding: 10px 0px;
+    font-family: 'Montserrat', sans-serif;
+    color: #ffffff;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: 14px;
+}
+
+.track{
+    box-sizing: border-box;
+    border-bottom: 1px solid rgba(125, 125, 135, 0.25);
+}   
+
+.track:hover{
+    background:#444449;
+}
+
+.table-col-title{
+    width:40%
+}
+
+.table-col-album{
+    width:40%
+}
+
+.table-col-actions{
+    width:5%;
+}
+
+.table-col-time{
+    width:5%;
+}
+
+.albums{
+    display:flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    /* border:2px solid green; */
+}
+
+.artists{
+    display:flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+}

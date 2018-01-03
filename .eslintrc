@@ -1,0 +1,23 @@
+{
+    "plugins":
+    ["react"],
+    "parser": "babel-eslint",
+    "extends": "rallycoding",
+    "rules" : {
+        "padded-blocks":"off",
+        "react/require-extension":"off",
+        "camelcase" : "off",
+        "eol-last":"off",
+        "react/jsx-curly-spacing": [1,
+        {
+            "when":"always"
+        }],
+        "no-underscore-dangle":"off",
+        "arrow-body-style": "off",
+        "react/jsx-closing-bracket-location": [1, "tag-aligned"]
+    },
+    "env": {
+        "browser": true,
+        "node": true
+    }
+}

@@ -1,0 +1,22 @@
+.main{
+    /* border: 2px solid black; */
+    display:grid;
+    height: 100%;
+    grid-template-columns: 257px 1fr 250px;
+    grid-template-rows: 57px 225px 1fr 200px 50px;
+}
+
+@media only screen and (max-width: 900px) {
+    .main {
+        display: grid;
+        grid-template-columns: 257px 1fr;
+        grid-template-rows: 57px 225px 1fr 200px 50px;
+    }
+}
+
+/* @media only screen and (min-width: 1000px) {
+    .main{
+        display:grid;
+        
+    }
+} */
