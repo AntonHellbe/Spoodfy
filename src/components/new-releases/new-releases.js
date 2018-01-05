@@ -13,13 +13,11 @@ class NewReleases extends Component {
     }
 
     handleClick = () => {
-        console.log('We are called');
         this.props.history.push('/');
     }
         
     
     render() {
-        console.log(this.props);
         const { newReleases } = this.props;
         return (
             <div className="newReleasesDiv">

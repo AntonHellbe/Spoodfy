@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import FaClock from 'react-icons/lib/fa/clock-o';
-import TrackItem from './trackitem';
 import AlbumItem from './albumitem';
 import ArtistItem from './artistitem';
 import Searchbar from './searchbar';
+import TrackTable from './tracktable';
 import { 
     selectTrack, 
     AddToQueue } 
@@ -15,30 +14,21 @@ class Search extends Component {
     
     render() {
         const { tracks, albums, artists } = this.props.searchResult;
+        const isPlaylist = false;
 
         return (
             <div className="searchDiv">
+
                 <Searchbar />
                 <h3>Tracks</h3>
-                <table className="table">
-                    <tbody>
-                        <tr className="tableHeader">
-                            <th className="table-col-title" > Title </th>
-                            <th className="table-col-album"> Album </th>
-                            <th className="table-col-time"> <FaClock size={ 24 } /> </th>
-                            <th className="table-col-actions"> Actions </th>
-                        </tr>
-                        { tracks.map((track) => {
-                            return (
-                                <TrackItem 
-                                track={ track } 
-                                selectTrack={ this.props.selectTrack } 
-                                AddToQueue={ this.props.AddToQueue }
-                                />
-                            );
-                        }) }
-                    </tbody>
-                </table>
+
+                <TrackTable 
+                tracks={ tracks } 
+                AddToQueue={ this.props.AddToQueue } 
+                selectTrack={ this.props.selectTrack }
+                isPlaylist={ isPlaylist }
+                />
+
                 { albums.length > 0 &&
                     <h3>Albums</h3>
                 }

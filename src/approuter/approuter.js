@@ -11,6 +11,7 @@ import SideMenu from '../components/sidemenu';
 import MusicBar from '../components/musicbar';
 import RecentlyPlayed from '../components/recentlyplayed';
 import NewReleases from '../components/new-releases/new-releases';
+import Playlist from '../components/playlist/playlist';
 
 
 const Routes = (props) => {
@@ -29,6 +30,11 @@ const Routes = (props) => {
                 path="/new-releases"
                 isAuthenticated={ props.isAuthenticated }
                 component={ NewReleases }
+                />
+                <PrivateRoute
+                    path="/playlists/:id"
+                    isAuthenticated={ props.isAuthenticated }
+                    component={ Playlist }
                 />
                 <Route path="/login" component={ Login } />
                 <Route path="/callback" component={ Callback } />

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link, withRouter } from 'react-router-dom';
 
 class PlaylistMenu extends Component {
 
@@ -25,16 +26,20 @@ class PlaylistMenu extends Component {
             <ul className="playlists" style={ { listStyle: 'none' } }>
                 {this.props.playlists.map((playlist) => (
                     <li
-                        className="child"
+                        className="playlist"
                         style={ { paddingTop: '5px' } }
                         key={ playlist.id }
-                    >
+                    >   
+                        <Link className="link" to={ `playlists/${playlist.id}` }>
                         { this.renderImage(playlist) }
-                        <p className="playlistName" >{playlist.name}</p>
-                    </li>))}
+                            <p>{playlist.name}</p>
+                        </Link>
+                    </li>
+                    
+                ))}
             </ul>
         );
     }
 }
 
-export default PlaylistMenu;
+export default withRouter(PlaylistMenu);

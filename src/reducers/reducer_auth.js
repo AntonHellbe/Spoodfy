@@ -6,6 +6,7 @@ const INITIAL_STATE = {
     token_error: '',
     user: {},
     user_error: '',
+    spotifyId: ''
 };
 
 
@@ -25,7 +26,7 @@ const authReducer = (state = INITIAL_STATE, action) => {
             return { ...state, token_error: action.error };
         
         case authActions.USER_INFO_SUCCESS:
-            return { ...state, user: action.user };
+            return { ...state, user: action.user, spotifyId: action.user.id };
 
         case authActions.USER_INFO_ERROR:
             return { ...state, user_error: action.error };

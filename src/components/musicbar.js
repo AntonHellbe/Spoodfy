@@ -15,21 +15,19 @@ class MusicBar extends Component {
 
     constructor(props) {
         super(props);
-
         this.currentTimeInterval = null;
     }
 
     state = {
-        value: 0.0
+        value: 0.0,
     }
 
 
     componentDidMount() {
         this.audioElement.addEventListener('ended', this.OnEndedListener);
-        this.audioElement.addEventListener('canplay', this.OnCanPlay);
-        this.audioElement.addEventListener('loadedmetadata', this.metaDataloaded);
         this.audioElement.addEventListener('play', this.OnPlay);
-
+        this.audioElement.addEventListener('loadedmetadata', this.metaDataloaded);
+        this.audioElement.addEventListener('loadeddata', this.onLoadedData);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -40,26 +38,43 @@ class MusicBar extends Component {
     }
 
     componentWillUnmount() {
-        this.audioElement.removeEventListener('ended', this.props.OnEndedListener);
         this.audioElement.removeEventListener('loadmetadata', this.metaDataloaded);
         this.audioElement.removeEventListener('canplay', this.OnCanPlay);
         this.audioElement.removeEventListener('play', this.OnPlay);
+        this.audioElement.removeEventListener('ended', this.props.OnEndedListener);
+        this.audioElement.removeEventListener('loadeddata', this.onLoadedData);
+    }
+
+    onMouseDown = () => {
+        this.audioElement.pause();
     }
 
     onChange = (e) => {
         const value = e.target.value;
-        clearInterval(this.currentTimeInterval);
-        this.audioElement.currentTime = value;
         this.setState(() => ({ value }));
-        this.audioElement.pause();
+        this.audioElement.currentTime = value;
+        clearInterval(this.currentTimeInterval);
+    }
+
+    onMouseUp = () => {
+        this.audioElement.play();
     }
     
-    metaDataloaded = () => {
-        console.log('Data loaded...');
+    onLoadedData = () => {
+        console.log('Loaded Data Called...');
+        if (!this.props.isPlaying) {
+            this.props.togglePlaying();
+        }
+        if (!this.state.isSeeking) {
+            console.log('TogglingAudio');
+            console.log(this.state.isSeeking);
+            this.playAudio();
+        }
+
     }
 
     handleKeyPress = (event) => {
-        console.log(event.key); 
+        console.log(event.key);
         if (event.key === 'Space') {
             if (this.props.isPlaying) {
                 this.pauseAudio();
@@ -84,12 +99,6 @@ class MusicBar extends Component {
 
     }
 
-    OnCanPlay = () => {
-        if (!this.props.isPlaying) {
-            this.props.togglePlaying();
-        }
-        this.playAudio();
-    }
 
     OnPlay = () => {
         this.currentTimeInterval = setInterval(() => {
@@ -97,7 +106,6 @@ class MusicBar extends Component {
         }, 500);
 
     }
-
 
     handleMusicControls = (e) => {
         const id = e.target.id;
@@ -142,6 +150,13 @@ class MusicBar extends Component {
     }
 
     render() {
+        // console.log(this.props.isAuthenticated);
+        // if (!this.props.isAuthenticated) {
+        //     return (
+        //         <div className="musicDisplay" />
+                 
+        //     );
+        // }
         return (
             <React.Fragment>
                 <div className="musicDisplay" key="musicDisplay">
@@ -165,6 +180,8 @@ class MusicBar extends Component {
                     name="points" 
                     min="0"
                     max={ this.props.duration }
+                    onMouseDown={ this.onMouseDown }
+                    onMouseUp={ this.onMouseUp }
                     onChange={ this.onChange }
                     key="inputProgress"
                     />
@@ -195,7 +212,8 @@ const mapStateToProps = (state) => ({
     queue: state.music.queue,
     currentTrack: state.music.currentTrack,
     shuffle: state.music.shuffle,
-    duration: state.music.duration
+    duration: state.music.duration,
+    isAuthenticated: state.user.isAuthenticated,
 });
 
 const mapDispatchToProps = (dispatch) => {

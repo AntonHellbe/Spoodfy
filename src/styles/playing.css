@@ -1,8 +1,9 @@
 .playing{
     /* border: 1px solid green; */
     grid-area: 5 / 1 / 6 / 1;
-    background: #252528;
+    background: #282828;
     padding-left:10px;
+    border-top: 1px solid gray;
 }
 
 .displayTrackInfo{

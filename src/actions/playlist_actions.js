@@ -16,3 +16,25 @@ export const playlistError = (error) => ({
     type: playlistActions.PLAYLISTS_ERROR,
     error
 });
+
+export const requestPlaylistSongs = () => ({
+    type: playlistActions.REQUEST_PLAYLIST_TRACKS,
+});
+
+export const playlistTracksSuccess = (tracks) => ({
+    type: playlistActions.PLAYLIST_TRACKS_SUCCESS,
+    tracks
+});
+
+export const playlistTracksError = (error) => ({
+    type: playlistActions.PLAYLIST_TRACKS_ERROR,
+    error
+});
+
+export const updateActivePlaylistId = (playlistId, spotifyId) => {
+    return {
+        type: playlistActions.UPDATE_PLAYLIST_ID,
+        playlistId,
+        spotifyId
+    };
+};

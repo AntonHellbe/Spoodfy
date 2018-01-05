@@ -3,7 +3,7 @@
     border-top: 0.5px solid gray;
     grid-area: 2 / 1 / 5 / 2;
     padding:10px;
-    background: #252528;
+    background: #121212;
     /* border: 2px solid purple; */
 }
 
@@ -29,14 +29,29 @@
 .playlistTitle {
     color: #fff;
     font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
 
 }
+.link:hover {
+    color:#cfcfd1;
+}
 
-.child{
+.link{
+    text-decoration: none;
+    color: gray;
+}
+.link > p {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 5px;
+    font-size: 12px;
+}
+
+.playlist{
     flex: 1 0 100%;
     padding-top: 5px;
     box-sizing:border-box;
-    /*flex-basis: 100%*/
+    
 }
 
 .playlistAvatar{
@@ -46,15 +61,10 @@
     vertical-align: middle;
 }
 
-.playlistName{
-    display: inline-block;
-    vertical-align: middle;
-    margin-left: 5px;
+.playlist:hover{
+    color:#fff;
 }
 
-.child:hover{
-    color:#cfcfd1;
-}
 
 .albumImage {
     margin-top:10px;

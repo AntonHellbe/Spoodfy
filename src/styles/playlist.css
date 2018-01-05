@@ -1,0 +1,61 @@
+.playlistDiv{
+    /* border: 2px solid black; */
+    background: #3a3a3f; 
+    grid-area: 2 / 2 / 5 / 3;
+    padding: 10px;
+    overflow: auto;
+    border-top: 1px solid #7d7d87;
+    box-sizing: border-box;
+}
+
+.playlistBanner{
+    background: #3a3a3f;
+    border: 1px solid green;
+    grid-area: 2 / 2 / 3 / 3;
+    padding: 10px;
+}
+
+.playlistBanner > img {
+    height: 100%;
+    width: 20%;
+    float:left;
+    margin-right: 10px;
+    display:block;
+}
+
+
+
+.playlistBanner > h3 {
+    padding: 0;
+    margin: 0;
+    font-weight: normal;
+    font-size: 14px;
+    text-transform: uppercase;
+    margin-left:20px;
+    margin-top: 20px;
+    /* margin-left: 210px; */
+}
+
+.playlistBanner > h1 {
+    padding:0;
+    margin:0;
+    text-align: start;
+    font-weight: normal;
+    /* margin-left: 210px; */
+}
+
+.playlistBanner > * {
+    font-family: 'Montserrat', sans-serif;
+    color: #fff;
+}
+
+.playlistTracks { 
+    grid-area: 3 / 2 / 5 / 3;
+    border:1px solid;
+    padding: 10px;
+    overflow: auto;
+    background: #3a3a3f;
+    box-sizing: border-box;
+    border:1px solid violet;
+}
+

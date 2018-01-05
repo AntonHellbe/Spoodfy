@@ -1,20 +1,26 @@
 .faPlay{
-    font-size: 36px;
+    font-size: 32px;
 }
 
 .faForward {
-    font-size: 24px;
+    font-size: 16px;
 }
 
 .faBackward {
-    font-size: 24px;
+    font-size: 16px;
 }
 
 .innerDiv{
-    width: 50%;
+    width: 25%;
     /* border:1px solid green; */
     display:flex;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
     box-sizing: border-box;
+    flex-shrink: 0;
+    flex-basis: 0;
+}
+
+.innerDiv > svg {
+    margin: 0px 15px;
 }

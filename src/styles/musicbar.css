@@ -2,7 +2,7 @@
     width:100%;
     /* border: 1px solid blueviolet; */
     border-top: 1px solid gray;
-    background: #3a3a3f;
+    background: #282828;
     grid-area: 5 / 2 / 5 / 3;
     display: flex;
     justify-content: flex-start;

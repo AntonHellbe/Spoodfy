@@ -7,7 +7,10 @@ export const spotifyUrls = {
     userInfo: '/me',
     recentlyPlayed: '/player/recently-played',
     browse: '/browse',
-    newReleases: '/new-releases'
+    newReleases: '/new-releases',
+    tracks: '/tracks',
+    playlists: '/playlists',
+    users: '/users'
 
 };
 

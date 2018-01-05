@@ -28,8 +28,9 @@
 
 .table{
     width: 100%;
-    box-sizing: border-box;
     /* height: 100%; */
+    box-sizing: border-box;
+    background:#3a3a3f; 
     table-layout: fixed;
     border-collapse: collapse;
     -webkit-touch-callout: none;
@@ -38,6 +39,7 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    /* border:2px solid green; */
 }
 
 td {

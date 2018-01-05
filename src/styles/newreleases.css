@@ -1,6 +1,6 @@
 .newReleasesDiv{
     /* border: 2px solid black; */
-    background: #3a3a3f;
+    background: #181818;
     grid-area: 2 / 2 / 5 / 3;
     padding: 10px;
     overflow: auto;
@@ -9,10 +9,11 @@
 }
 
 .banner {
-    border: 2px solid green;
+    /* border: 2px solid green; */
     padding-top:5px;
     width: 100%;
 }
+
 
 .newReleasesDiv > h3{
     color:#fff;
@@ -30,10 +31,16 @@
     display:inline-block;
     padding: 0;
     margin: 0;
+    color:#fff;
+}
+
+.banner > p {
+    color:#fff;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .banner > button {
-    /* margin:0; */
+    margin:0;
     padding: 0;
     float:right;
     position: relative;
@@ -44,6 +51,10 @@
     -webkit-border-radius: 34px;
     background: #ff6b42;
     border: none;
+    box-sizing: border-box;
+    color:#fff;
+    font-size:14px;
+    font-family: 'Montserrat', sans-serif;
     /* box-shadow: 0px 4px 0px 8px #fff; */
     
 }
