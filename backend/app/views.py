@@ -7,7 +7,10 @@ import urllib
 import urllib.parse
 import sys
 import six
-from config import CLIENT_ID, CLIENT_SECRET
+# from . import CLIENT_ID, CLIENT_SECRET
+
+CLIENT_ID = "6c94d2c6becc41c6a84429c86270179e"
+CLIENT_SECRET = "875b30af700543bc87f7260b61bb028d"
 
 SPOTIFY_AUTH_URL = "https://accounts.spotify.com/authorize"
 SPOTIFY_TOKEN_URL = "https://accounts.spotify.com/api/token"
@@ -19,7 +22,7 @@ SPOTIFY_API_URL = "{}/{}".format(SPOTIFY_API_BASE_URL, API_VERSION)
 CLIENT_SIDE_URL = "http://localhost"
 PORT = 5000
 REDIRECT_URI = "{}:{}/callback".format(CLIENT_SIDE_URL, PORT)
-SCOPE = "playlist-modify-public playlist-modify-private playlist-read-private user-read-private user-read-email user-read-recently-played"
+SCOPE = "playlist-modify-public playlist-modify-private playlist-read-private user-read-private user-read-email user-read-recently-played playlist-read-collaborative user-follow-modify"
 STATE = ""
 SHOW_DIALOG_bool = True
 SHOW_DIALOG_str = str(SHOW_DIALOG_bool).lower()

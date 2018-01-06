@@ -1,6 +1,9 @@
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
-import { getUserPlaylists } from '../actions/playlist_actions';
+import { 
+    getUserPlaylists,
+    updateActivePlaylist
+} from '../actions/playlist_actions';
 import { DEFAULT_IMAGE_URL } from '../constants/actions';
 import PlaylistMenu from './playlistmenu';
 import { withRouter } from 'react-router-dom';
@@ -8,8 +11,6 @@ import { withRouter } from 'react-router-dom';
 class SideMenu extends Component {
 
     componentWillReceiveProps(nextProps) {
-        console.log('Receiving new props - Sidemenu');
-        console.log(this.props.match.url);
         if (nextProps.playlists.length === 0) {
             this.props.getUserPlaylists();
         }
@@ -17,7 +18,7 @@ class SideMenu extends Component {
 
     renderAlbumImage = () => {
         if (this.props.isAuthenticated) {
-            if (this.props.currentTrack === null) {
+            if (typeof this.props.currentTrack.album === 'undefined') {
                 return <img className="imgAlbum" src={ DEFAULT_IMAGE_URL } role="presentation" />;
             }
 
@@ -42,7 +43,10 @@ class SideMenu extends Component {
                     ) 
                     :
                     (
-                        <PlaylistMenu playlists={ this.props.playlists } />
+                        <PlaylistMenu 
+                        playlists={ this.props.playlists } 
+                        updateActivePlaylist={ this.props.updateActivePlaylist }
+                        />
                     ) 
                 }
                 
@@ -65,7 +69,8 @@ const mapStateToProps = (state) => {
 
 
 const mapDispatchToProps = (dispatch) => ({
-    getUserPlaylists: () => dispatch(getUserPlaylists())
+    getUserPlaylists: () => dispatch(getUserPlaylists()),
+    updateActivePlaylist: (playlist) => dispatch(updateActivePlaylist(playlist)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(SideMenu));

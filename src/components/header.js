@@ -15,8 +15,8 @@ class Header extends Component {
         return (
             <div className="header">
                 <div className="brand">
-                    <FaSpotify className="brandIcon" size={ '24px' } color={ '#FFA726' } />
-                    <Link to="/" style={ { textDecoration: 'none' } }> ANTONS PLAYGROUND </Link>
+                    <FaSpotify className="brandIcon" size={'24px'} color={ '#ff6b42' } />
+                    <Link to="/" style={ { textDecoration: 'none' } }> SPOODFY </Link>
                 </div>
                 <div className="login">
                     { this.props.isAuthenticated ?

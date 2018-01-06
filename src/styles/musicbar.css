@@ -55,7 +55,7 @@ input[type=range]{
 }
 
 input[type=range]::-webkit-slider-runnable-track{
-    background:#ddd;
+    background:#ff6b42;
     border: none;
     border-radius: 3px;
     height:5px;
@@ -84,7 +84,7 @@ input[type=range]::-moz-range-thumb {
     height: 16px;
     width: 16px;
     border-radius: 50%;
-    background: goldenrod;
+    background: #ccc;
     outline: none;
 }
 
@@ -94,7 +94,7 @@ input[type=range]:focus::-moz-range-track {
 
 input[type=range]::-moz-range-progress{
     height: 5px;
-    background: #FFA726;
+    background: #ff6b42;
     border: none;
     border-radius: 3px;
     outline: none;

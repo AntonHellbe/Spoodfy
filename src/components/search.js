@@ -13,7 +13,7 @@ import {
 class Search extends Component {
     
     render() {
-        const { tracks, albums, artists } = this.props.searchResult;
+        const { playlistSongs, currentTrack, searchResult: { tracks, albums, artists } } = this.props;
         const isPlaylist = false;
 
         return (
@@ -27,6 +27,7 @@ class Search extends Component {
                 AddToQueue={ this.props.AddToQueue } 
                 selectTrack={ this.props.selectTrack }
                 isPlaylist={ isPlaylist }
+                currentTrack={ currentTrack }
                 />
 
                 { albums.length > 0 &&
@@ -56,11 +57,13 @@ class Search extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    searchResult: state.search.searchResult
+    searchResult: state.search.searchResult,
+    playlistSongs: state.playlists.playlistSongs,
+    currentTrack: state.music.currentTrack
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    selectTrack: (track) => dispatch(selectTrack(track)),
+    selectTrack: (track, queue) => dispatch(selectTrack(track, queue)),
     AddToQueue: (track) => dispatch(AddToQueue(track))
 });
 

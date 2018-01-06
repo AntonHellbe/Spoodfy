@@ -1,10 +1,8 @@
 import { playlistActions } from '../constants/actions';
 
-export const getUserPlaylists = () => {
-    return {
-        type: playlistActions.MY_PLAYLISTS
-    };
-};
+export const getUserPlaylists = () => ({
+    type: playlistActions.MY_PLAYLISTS
+});
 
 export const playlistsFetched = (data) => ({
     type: playlistActions.PLAYLISTS_SUCCESS,
@@ -31,10 +29,14 @@ export const playlistTracksError = (error) => ({
     error
 });
 
-export const updateActivePlaylistId = (playlistId, spotifyId) => {
+export const updateActivePlaylist = (playlist) => {
     return {
         type: playlistActions.UPDATE_PLAYLIST_ID,
-        playlistId,
-        spotifyId
+        playlist
     };
 };
+
+export const updateActivePlaylistWithId = (playlistId) => ({
+    type: playlistActions.UPDATE_PLAYLIST_ID,
+    playlistId
+});

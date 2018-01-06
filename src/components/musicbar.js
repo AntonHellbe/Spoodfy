@@ -31,15 +31,23 @@ class MusicBar extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        console.log(nextProps.currentTrack.preview_url);
+        console.log(nextProps.queue.length);
         if (this.props.currentTrack !== null && 
             this.props.currentTrack.id !== nextProps.currentTrack.id) {
             clearInterval(this.currentTimeInterval); //Clear interval if it isn't the same track we are receiving, i.e slider needs to back to zero
+            // this.playAndLoad();
+        }
+        if (nextProps.currentTrack !== null && 
+            nextProps.currentTrack.preview_url === null && 
+            nextProps.queue.length >= 1) {
+            console.log('Loading next track since no preview_url');
+            this.props.loadNextTrack(this.props.queue[0], this.props.queue.slice(1));
         }
     }
 
     componentWillUnmount() {
         this.audioElement.removeEventListener('loadmetadata', this.metaDataloaded);
-        this.audioElement.removeEventListener('canplay', this.OnCanPlay);
         this.audioElement.removeEventListener('play', this.OnPlay);
         this.audioElement.removeEventListener('ended', this.props.OnEndedListener);
         this.audioElement.removeEventListener('loadeddata', this.onLoadedData);
@@ -66,8 +74,6 @@ class MusicBar extends Component {
             this.props.togglePlaying();
         }
         if (!this.state.isSeeking) {
-            console.log('TogglingAudio');
-            console.log(this.state.isSeeking);
             this.playAudio();
         }
 
@@ -90,7 +96,12 @@ class MusicBar extends Component {
             this.audioElement.load();
             this.audioElement.play();
         } else if (this.props.queue.length >= 1) {
-            this.props.loadNextTrack(this.props.queue[0], this.props.queue.slice(1));
+            if (this.props.queue[0].track) {
+                this.props.loadNextTrack(this.props.queue[0].track, this.props.queue.slice(1));
+            } else {
+                this.props.loadNextTrack(this.props.queue[0], this.props.queue.slice(1));
+            }
+            
         } else {
             clearInterval(this.currentTimeInterval); 
             this.setState(() => ({ value: 0 })); // If no track in queue, reset slider
@@ -109,8 +120,6 @@ class MusicBar extends Component {
 
     handleMusicControls = (e) => {
         const id = e.target.id;
-        console.log(e.target);
-        console.log(id);
         switch (id) {
             case 'pause':
                 this.pauseAudio();
@@ -150,13 +159,7 @@ class MusicBar extends Component {
     }
 
     render() {
-        // console.log(this.props.isAuthenticated);
-        // if (!this.props.isAuthenticated) {
-        //     return (
-        //         <div className="musicDisplay" />
-                 
-        //     );
-        // }
+
         return (
             <React.Fragment>
                 <div className="musicDisplay" key="musicDisplay">
@@ -220,7 +223,6 @@ const mapDispatchToProps = (dispatch) => {
     return {
         togglePlaying: () => dispatch(togglePlaying()),
         loadNextTrack: (track, queue) => dispatch(loadNextTrack(track, queue)),
-        selectTrack: () => dispatch(selectTrack(null)),
         toggleShuffle: () => dispatch(toggleShuffle()),
         toggleRepeat: () => dispatch(toggleRepeat())
     };

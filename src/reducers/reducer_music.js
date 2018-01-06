@@ -2,12 +2,13 @@ import { musicActions } from '../constants/actions';
 
 const INITIAL_STATE = {
     repeat: false,
-    currentTrack: null,
+    currentTrack: {},
     isPlaying: false,
     queue: [],
     duration: 30,
     recentlyPlayed: [],
-    errorRecentlyPlayed: ''
+    errorRecentlyPlayed: '',
+    volume: ''
     
 };
 
@@ -19,7 +20,7 @@ const musicReducer = (state = INITIAL_STATE, action) => {
             return { ...state, isPlaying: !state.isPlaying };
 
         case musicActions.SELECT_TRACK:
-            return { ...state, currentTrack: action.track };
+            return { ...state, currentTrack: action.track, queue: action.queue };
 
         case musicActions.NEXT_TRACK:
             return { ...state, currentTrack: action.track, queue: action.queue };

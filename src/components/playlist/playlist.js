@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
     requestPlaylistSongs,
-    updateActivePlaylistId
+    updateActivePlaylist
 } from '../../actions/playlist_actions';
 import PlaylistBanner from './playlist-banner';
 import TrackTable from '../tracktable';
@@ -11,36 +11,30 @@ import {
     selectTrack 
 } from '../../actions/music_actions';
 
+const isPlaylist = true;
 
 class Playlist extends Component {
 
 
-    componentWillMount() {
-        if (this.props.activePlaylistId === '') {
-            this.props.updateActivePlaylistId(this.props.spotifyId);
-        }
-    }
-
-    componentWillReceiveProps(nextProps) {
-        if (this.props.activePlaylistId !== nextProps) {
-            this.props.updateActivePlaylistId(nextProps.activePlaylistId, this.props.spotifyId);
-        }
-    }
-
     render() {
-        console.log(this.props);
         const { playlistSongs } = this.props;
-        console.log(playlistSongs);
-        const isPlaylist = true;
+        const { name, owner, images, tracks } = this.props.activePlaylist;
         return (
             <React.Fragment>
-                <PlaylistBanner />
+                <PlaylistBanner 
+                name={ name }
+                owner={ owner }
+                images={ images }
+                tracks={ tracks }
+                /> 
                 <div className="playlistTracks">
                     <TrackTable 
                     tracks={ playlistSongs } 
                     AddToQueue={ this.props.AddToQueue } 
                     selectTrack={ this.props.selectTrack } 
                     isPlaylist={ isPlaylist }
+                    currentTrack={ this.props.currentTrack }
+                    // searchResult={ this.props.searchResult }
                     />
                 </div>
             </React.Fragment>
@@ -50,16 +44,18 @@ class Playlist extends Component {
 
 const mapStateToProps = (state) => ({
     playlistSongs: state.playlists.playlistSongs,
-    activePlaylistId: state.playlists.activePlaylistId,
-    spotifyId: state.user.spotifyId
+    activePlaylist: state.playlists.activePlaylist,
+    spotifyId: state.user.spotifyId,
+    myPlaylists: state.playlists.myPlaylists,
+    currentTrack: state.music.currentTrack
 
 });
 
 const mapDispatchToProps = (dispatch, props) => ({
     requestPlaylistSongs: () => dispatch(requestPlaylistSongs(props.params.match.id)),
-    updateActivePlaylistId: (spotifyId) => dispatch(updateActivePlaylistId(props.match.params.id, spotifyId)),
+    updateActivePlaylist: (playlist) => dispatch(updateActivePlaylist(playlist)),
     AddToQueue: (track) => dispatch(AddToQueue(track)),
-    selectTrack: (track) => dispatch(selectTrack(track))
+    selectTrack: (track, queue) => dispatch(selectTrack(track, queue))
 
 });
 

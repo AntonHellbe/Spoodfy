@@ -20,7 +20,7 @@
     margin-left: 10px;
     text-decoration: none;
     font-size: 20px;
-    color: #cfcfd1;
+    color: #fff;
     font-weight: bold;
     vertical-align: middle;
     font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
@@ -32,19 +32,24 @@
 }
 
 .login{
+    text-decoration: none;
     margin-right: 15px;
     font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
 }
 
 .logout {
-    color: #cfcfd1;
+    background: #3d3d3d;
     margin-right: 15px;
     font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
     border: 0;
-    background: #3a3a3f
+    color: #fff;
+}
+
+.logout > button {
+    outline: none;
 }
 
 .login > a {
     color: #e8eaed;
-    text-decoration: 'none';
+    text-decoration: none;
 }

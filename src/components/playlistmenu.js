@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 class PlaylistMenu extends Component {
 
@@ -30,7 +30,7 @@ class PlaylistMenu extends Component {
                         style={ { paddingTop: '5px' } }
                         key={ playlist.id }
                     >   
-                        <Link className="link" to={ `playlists/${playlist.id}` }>
+                        <Link className="link" to={ `/playlists/${playlist.id}` } onClick={ () => this.props.updateActivePlaylist(playlist) }>
                         { this.renderImage(playlist) }
                             <p>{playlist.name}</p>
                         </Link>
@@ -42,4 +42,4 @@ class PlaylistMenu extends Component {
     }
 }
 
-export default withRouter(PlaylistMenu);
+export default PlaylistMenu;

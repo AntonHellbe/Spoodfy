@@ -1,8 +1,8 @@
 .playlistDiv{
-    /* border: 2px solid black; */
+    /* border: 2px solid red; */
     background: #3a3a3f; 
     grid-area: 2 / 2 / 5 / 3;
-    padding: 10px;
+    padding: 25px;
     overflow: auto;
     border-top: 1px solid #7d7d87;
     box-sizing: border-box;
@@ -10,39 +10,47 @@
 
 .playlistBanner{
     background: #3a3a3f;
-    border: 1px solid green;
     grid-area: 2 / 2 / 3 / 3;
-    padding: 10px;
+    padding: 20px;
+    border-top: 1px solid gray;
 }
 
 .playlistBanner > img {
-    height: 100%;
+    height: 80%;
     width: 20%;
     float:left;
     margin-right: 10px;
     display:block;
-}
-
-
-
-.playlistBanner > h3 {
-    padding: 0;
-    margin: 0;
-    font-weight: normal;
-    font-size: 14px;
-    text-transform: uppercase;
-    margin-left:20px;
-    margin-top: 20px;
-    /* margin-left: 210px; */
+    margin-bottom:10px;
 }
 
 .playlistBanner > h1 {
     padding:0;
     margin:0;
     text-align: start;
-    font-weight: normal;
+    font-weight: bold;
+    float:none;
     /* margin-left: 210px; */
 }
+
+.playlistBanner > h3 {
+    padding: 0;
+    margin: 0;
+    font-weight: normal;
+    font-size: 12px;
+    text-transform: uppercase;
+    margin-left:20px;
+    margin-top: 20px;
+    float:none;
+    /* margin-left: 210px; */
+}
+
+.playlistBanner > h2 {
+    clear:left;
+    float:none;
+    border-bottom: 1px solid #fff;
+}
+
 
 .playlistBanner > * {
     font-family: 'Montserrat', sans-serif;
@@ -51,11 +59,10 @@
 
 .playlistTracks { 
     grid-area: 3 / 2 / 5 / 3;
-    border:1px solid;
-    padding: 10px;
+    padding: 25px;
     overflow: auto;
     background: #3a3a3f;
     box-sizing: border-box;
-    border:1px solid violet;
+    /* border:1px solid violet; */
 }
 

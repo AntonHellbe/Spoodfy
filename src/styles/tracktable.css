@@ -2,7 +2,7 @@
     /* border: 2px solid black; */
     background: #3a3a3f;
     grid-area: 2 / 2 / 5 / 3;
-    padding: 10px;
+    padding: 25px;
     overflow: auto;
     border-top: 1px solid #7d7d87;
     box-sizing: border-box;
@@ -45,7 +45,7 @@
 td {
     padding: 10px 0px;
     font-family: 'Montserrat', sans-serif;
-    color: #ffffff;
+    /* color: #ffffff; */
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -61,20 +61,28 @@ td {
     background:#444449;
 }
 
+.table-col-index{
+    width: 3.3%;
+}
+
 .table-col-title{
-    width:40%
+    width:30%;
+}
+
+.table-col-artist{
+    width:30%;
 }
 
 .table-col-album{
-    width:40%
+    width:30%;
 }
 
 .table-col-actions{
-    width:5%;
+    width:3.3%;
 }
 
 .table-col-time{
-    width:5%;
+    width:3.3%;
 }
 
 .albums{
@@ -88,4 +96,8 @@ td {
     display:flex;
     flex-flow: row wrap;
     justify-content: flex-start;
+}
+
+.index-col{
+    color: #858585;
 }
