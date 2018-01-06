@@ -7,9 +7,7 @@ import urllib
 import urllib.parse
 import sys
 import six
-
-CLIENT_ID = "6c94d2c6becc41c6a84429c86270179e"
-CLIENT_SECRET = "875b30af700543bc87f7260b61bb028d"
+from config import CLIENT_ID, CLIENT_SECRET
 
 SPOTIFY_AUTH_URL = "https://accounts.spotify.com/authorize"
 SPOTIFY_TOKEN_URL = "https://accounts.spotify.com/api/token"
