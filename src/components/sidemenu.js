@@ -1,12 +1,13 @@
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
+import _ from 'lodash';
+import PlaylistMenu from './playlistmenu';
 import { 
     getUserPlaylists,
     updateActivePlaylist
 } from '../actions/playlist_actions';
 import { DEFAULT_IMAGE_URL } from '../constants/actions';
-import PlaylistMenu from './playlistmenu';
-import { withRouter } from 'react-router-dom';
 
 class SideMenu extends Component {
 
@@ -18,7 +19,7 @@ class SideMenu extends Component {
 
     renderAlbumImage = () => {
         if (this.props.isAuthenticated) {
-            if (typeof this.props.currentTrack.album === 'undefined') {
+            if (_.isEmpty(this.props.currentTrack)) {
                 return <img className="imgAlbum" src={ DEFAULT_IMAGE_URL } role="presentation" />;
             }
 

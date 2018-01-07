@@ -1,11 +1,12 @@
 .musicDisplay{
     width:100%;
     /* border: 1px solid blueviolet; */
-    border-top: 1px solid gray;
+    /* border-top: 1px solid gray; */
+    border-top: 1px solid rgba(125, 125, 135, 0.25);
     background: #282828;
     grid-area: 5 / 2 / 5 / 3;
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-around;
     align-items: center;
     box-sizing: border-box;
     padding: 0px 7px;
@@ -42,19 +43,65 @@
     margin-right: auto;
 }
 
+.volumeControl{
+    width: 25%;
+    height: 100%;
+    /* border: 1px solid blue; */
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.discodiv {
+    grid-area: 5 / 3 / 6 / 3;
+    background: #282828;
+    border-top: 1px solid rgba(125, 125, 135, 0.25);
+}
+
+.volumeControl > input[type=range]{
+    margin-left: 5px;
+    width:150px;
+    -webkit-appearance: none;
+}
+
+.volumeControl > input[type=range]::-moz-range-completed{
+    background: #000;
+    border: none;
+    height:5px;
+    box-sizing: border-box;
+    border-radius: 3px;
+}
+
+.volumeControl > input[type=range]::-moz-range-thumb{
+    border:none;
+    height:10px;
+    width: 10px;
+}
+
+.volumeControl > input[type=range]::-moz-range-track{
+    background: #ccc;
+}
+
+.volumeControl > input[type=range]::-moz-focus-outer {
+    border: 0;
+}
+
 /*
 
-Everything below just works for Mozilla, need to add support for IE and Chrome
+Everything below just works for Mozilla, need to add support for IE and Chrome,
+Fixed for Chrome?
 
 */
 
-input[type=range]{
+.progress > input[type=range]{
     width: 100%;
     box-sizing: border-box;
     -webkit-appearance: none
 }
 
-input[type=range]::-webkit-slider-runnable-track{
+.progress > input[type=range]::-webkit-slider-runnable-track{
     background:#ff6b42;
     border: none;
     border-radius: 3px;
@@ -62,7 +109,7 @@ input[type=range]::-webkit-slider-runnable-track{
     box-sizing: border-box;
 }
 
-input[type=range]::-webkit-slider-thumb{
+.progress > input[type=range]::-webkit-slider-thumb{
     -webkit-appearance: none;
     height:16px;
     width:16px;
@@ -71,15 +118,15 @@ input[type=range]::-webkit-slider-thumb{
     margin-top: -4px;
 }
 
-input[type=range]:focus{
+.progress > input[type=range]:focus{
     outline: none;
 }
 
-input[type=range]:focus::-webkit-slider-runnable-track{
+.progress > input[type=range]:focus::-webkit-slider-runnable-track{
     background: #ccc;
 }
 
-input[type=range]::-moz-range-thumb {
+.progress > input[type=range]::-moz-range-thumb {
     border: none;
     height: 16px;
     width: 16px;
@@ -88,11 +135,11 @@ input[type=range]::-moz-range-thumb {
     outline: none;
 }
 
-input[type=range]:focus::-moz-range-track {
+.progress > input[type=range]:focus::-moz-range-track {
     background: #ccc;
 }
 
-input[type=range]::-moz-range-progress{
+.progress > input[type=range]::-moz-range-progress{
     height: 5px;
     background: #ff6b42;
     border: none;
@@ -100,6 +147,6 @@ input[type=range]::-moz-range-progress{
     outline: none;
 }
 
-input[type=range]::-moz-focus-outer {
+.progress > input[type=range]::-moz-focus-outer {
     border: 0;
 }

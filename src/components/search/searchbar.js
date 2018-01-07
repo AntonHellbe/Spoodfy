@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
 import { connect } from 'react-redux';
-import { updateTerm, searchRequested } from '../actions/search_actions';
+import { updateTerm, searchRequested } from '../../actions/search_actions';
 
 class SearchBar extends Component {
 
@@ -39,7 +39,7 @@ const mapStateToProps = (state) => ({
     term: state.search.term
 });
 
-const mapDispatchToProps = (dispatch, props) => ({
+const mapDispatchToProps = (dispatch) => ({
     updateTerm: (term) => dispatch(updateTerm(term)),
     searchRequested: (term) => dispatch(searchRequested(term)),
 });

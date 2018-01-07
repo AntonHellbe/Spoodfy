@@ -5,15 +5,16 @@ import PropTypes from 'prop-types';
 
 const TrackItem = (props) => {
 
-        const { currentTrack, index, track, track: { name, artists, duration_ms, album, id } } = props;
+        const { currentTrack, track, index, track: { name, artists, duration_ms, album, id } } = props;
         if (props.track.preview_url === null) {
             return null;
         }
-        const color = currentTrack.id === id ? '#ff6b42' : '#ffffff';
+        const currentId = currentTrack.track ? currentTrack.track.id : currentTrack.id;
+        const color = currentId === id ? '#ff6b42' : '#ffffff';
         return (
             <tr className="track" style={ { color } }>
             <td className="index-col" > { index } </td>
-            <td onDoubleClick={ () => props.selectTrack(track, index) }>{ name }</td>
+                <td onDoubleClick={ () => { props.selectTrack(index, track); } }>{ name }</td>
             <td> { artists.map((artist) => `${artist.name} `) } </td>
             <td> { album.name } </td>
             <td> { (Number(duration_ms) / 1000 / 60).toFixed(2) } </td>

@@ -1,9 +1,10 @@
 .sidemenu{
     /* border: 2px solid black; */
-    border-top: 0.5px solid gray;
+    border-top: 1px solid rgba(125, 125, 135, 0.25);
     grid-area: 2 / 1 / 5 / 2;
     padding:10px;
     background: #121212;
+    border-right: 1px solid rgba(125, 125, 135, 0.25);
     /* border: 2px solid purple; */
 }
 
@@ -18,18 +19,17 @@
     overflow-y: scroll;
     margin: 0px;
     padding: 0px 0px 5px 0px;
-    color: gray;
     white-space: nowrap;
-    /* border-bottom: 1px solid #7d7d87; */
-    font-family: 'Montserrat', sans-serif;
     font-size: 14px;
     border-radius: 10px;
+    
 }
 
 .playlistTitle {
     color: #fff;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 14px;
+    font-size: 13px;
+    text-transform: uppercase;
+    border-bottom: 0.5px solid rgba(125, 125, 135, 0.35);
 
 }
 .link:hover {
@@ -50,7 +50,6 @@
 .playlist{
     flex: 1 0 100%;
     padding-top: 5px;
-    box-sizing:border-box;
     
 }
 
@@ -70,7 +69,6 @@
     margin-top:10px;
     grid-area: 4 / 1 / 5 / 1;
     /* border: 2px solid green; */
-    box-sizing: border-box;
     height:22%;
 }
 

@@ -13,10 +13,21 @@ class Header extends Component {
     
     render() {
         return (
+
             <div className="header">
                 <div className="brand">
-                    <FaSpotify className="brandIcon" size={'24px'} color={ '#ff6b42' } />
-                    <Link to="/" style={ { textDecoration: 'none' } }> SPOODFY </Link>
+                    <Link to="/" style={ { textDecoration: 'none' } }> 
+                    <FaSpotify className="brandIcon" size={ '24px' } color={ '#ff6b42' } />
+                        <h3>spoodfy </h3>
+                    </Link>
+                </div>
+                <div className="navLinks">
+                    <div className="links">
+                        <Link to="/"><p>Search</p></Link>
+                        <Link to="/new-releases"><p>New Releases</p></Link>
+                        <Link to="/"><p>Browse</p></Link>
+                    </div>
+                
                 </div>
                 <div className="login">
                     { this.props.isAuthenticated ?
@@ -26,6 +37,7 @@ class Header extends Component {
                     :
                     (
                         <a href="http://localhost:5000/">Login</a>
+                    
                     )
                     }
                 </div>
@@ -35,7 +47,8 @@ class Header extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    isAuthenticated: state.user.isAuthenticated
+    isAuthenticated: state.user.isAuthenticated,
+    user: state.user.user,
 });
 
 const mapDispatchToProps = (dispatch) => ({

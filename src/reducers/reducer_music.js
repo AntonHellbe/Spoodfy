@@ -8,7 +8,8 @@ const INITIAL_STATE = {
     duration: 30,
     recentlyPlayed: [],
     errorRecentlyPlayed: '',
-    volume: ''
+    volume: 1,
+    playingIndex: 0
     
 };
 
@@ -20,10 +21,13 @@ const musicReducer = (state = INITIAL_STATE, action) => {
             return { ...state, isPlaying: !state.isPlaying };
 
         case musicActions.SELECT_TRACK:
-            return { ...state, currentTrack: action.track, queue: action.queue };
+            return { ...state, currentTrack: action.track, playingIndex: action.index, queue: action.queue };
 
         case musicActions.NEXT_TRACK:
-            return { ...state, currentTrack: action.track, queue: action.queue };
+            return { ...state, currentTrack: state.queue[state.playingIndex + 1], playingIndex: state.playingIndex + 1 };
+        
+        case musicActions.PREVIOUS_TRACK:
+            return { ...state, currentTrack: state.queue[state.playingIndex - 1], playingIndex: state.playingIndex - 1 };
             
         case musicActions.TOGGLE_SHUFFLE:
             return { ...state, shuffle: !state.shuffle };
@@ -39,6 +43,10 @@ const musicReducer = (state = INITIAL_STATE, action) => {
 
         case musicActions.ERROR_RECENTLY_PLAYED:
             return { ...state, errorRecentlyPlayed: action.error };
+
+        case musicActions.UPDATE_VOLUME:
+            return { ...state, volume: action.volume };
+
 
         default:
             return state;

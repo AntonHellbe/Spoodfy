@@ -1,19 +1,19 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import AlbumItem from './albumitem';
-import ArtistItem from './artistitem';
+import AlbumItem from '../albumitem';
+import ArtistItem from '../artistitem';
 import Searchbar from './searchbar';
-import TrackTable from './tracktable';
+import TrackTable from '../tracktable';
 import { 
     selectTrack, 
     AddToQueue } 
-    from '../actions/music_actions';
+    from '../../actions/music_actions';
 
 
 class Search extends Component {
     
     render() {
-        const { playlistSongs, currentTrack, searchResult: { tracks, albums, artists } } = this.props;
+        const { currentTrack, searchResult: { tracks, albums, artists } } = this.props;
         const isPlaylist = false;
 
         return (
@@ -58,12 +58,11 @@ class Search extends Component {
 
 const mapStateToProps = (state) => ({
     searchResult: state.search.searchResult,
-    playlistSongs: state.playlists.playlistSongs,
     currentTrack: state.music.currentTrack
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    selectTrack: (track, queue) => dispatch(selectTrack(track, queue)),
+    selectTrack: (index, track, queue) => dispatch(selectTrack(index, track, queue)),
     AddToQueue: (track) => dispatch(AddToQueue(track))
 });
 

@@ -3,7 +3,7 @@
     grid-area: 5 / 1 / 6 / 1;
     background: #282828;
     padding-left:10px;
-    border-top: 1px solid gray;
+    border-top: 1px solid rgba(125, 125, 135, 0.25);
 }
 
 .displayTrackInfo{

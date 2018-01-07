@@ -4,7 +4,7 @@
     grid-area: 2 / 2 / 5 / 3;
     padding: 25px;
     overflow: auto;
-    border-top: 1px solid #7d7d87;
+    border-top: 1px solid rgba(125, 125, 135, 0.25);
     box-sizing: border-box;
 }
 

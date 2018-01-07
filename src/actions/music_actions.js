@@ -4,10 +4,10 @@ export const togglePlaying = () => ({
     type: musicActions.TOGGLE_PLAYING,
 });
 
-export const selectTrack = (track, queue) => {
-    // console.log(track + queue);
+export const selectTrack = (index, track, queue) => {
     return {
         type: musicActions.SELECT_TRACK,
+        index,
         track,
         queue
     };
@@ -18,10 +18,8 @@ export const AddToQueue = (track) => ({
     track
 });
 
-export const loadNextTrack = (track, queue) => ({
+export const loadNextTrack = () => ({
     type: musicActions.NEXT_TRACK,
-    track,
-    queue,
 });
 
 export const toggleShuffle = () => ({
@@ -40,4 +38,13 @@ export const updateRecentlyPlayed = (recentTracks) => ({
 export const errorRecentlyPlayed = (error) => ({
     type: musicActions.ERROR_RECENTLY_PLAYED,
     error
+});
+
+export const updateVolume = (volume) => ({
+    type: musicActions.UPDATE_VOLUME,
+    volume
+});
+
+export const previousTrack = () => ({
+    type: musicActions.PREVIOUS_TRACK
 });

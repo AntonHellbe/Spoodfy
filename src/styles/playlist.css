@@ -1,6 +1,6 @@
 .playlistDiv{
     /* border: 2px solid red; */
-    background: #3a3a3f; 
+    background: #181818; 
     grid-area: 2 / 2 / 5 / 3;
     padding: 25px;
     overflow: auto;
@@ -9,7 +9,7 @@
 }
 
 .playlistBanner{
-    background: #3a3a3f;
+    background: #181818;
     grid-area: 2 / 2 / 3 / 3;
     padding: 20px;
     border-top: 1px solid gray;
@@ -53,7 +53,6 @@
 
 
 .playlistBanner > * {
-    font-family: 'Montserrat', sans-serif;
     color: #fff;
 }
 
@@ -61,7 +60,7 @@
     grid-area: 3 / 2 / 5 / 3;
     padding: 25px;
     overflow: auto;
-    background: #3a3a3f;
+    background: #181818;
     box-sizing: border-box;
     /* border:1px solid violet; */
 }

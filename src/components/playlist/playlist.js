@@ -55,7 +55,7 @@ const mapDispatchToProps = (dispatch, props) => ({
     requestPlaylistSongs: () => dispatch(requestPlaylistSongs(props.params.match.id)),
     updateActivePlaylist: (playlist) => dispatch(updateActivePlaylist(playlist)),
     AddToQueue: (track) => dispatch(AddToQueue(track)),
-    selectTrack: (track, queue) => dispatch(selectTrack(track, queue))
+    selectTrack: (index, track, queue) => dispatch(selectTrack(index, track, queue))
 
 });
 

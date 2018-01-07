@@ -9,8 +9,13 @@ class TrackTable extends Component {
         this.props.AddToQueue(track);
     }
 
-    selectTrackHandler = (track, index) => {
-        this.props.selectTrack(track, this.props.tracks.slice(index + 1));
+    selectTrackHandler = (index, track) => {
+        if (this.props.isPlaylist) {
+            const queue = this.props.tracks.map((item) => item.track);
+            this.props.selectTrack(index, track, queue);
+        } else {
+            this.props.selectTrack(index, track, this.props.tracks);
+        }
     }
 
     render() {

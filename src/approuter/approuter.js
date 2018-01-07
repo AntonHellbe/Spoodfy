@@ -3,7 +3,7 @@ import { Route, Switch, Router } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Header from '../components/header';
 import Login from '../components/login';
-import Search from '../components/search';
+import Search from '../components/search/search';
 import PrivateRoute from '../HOC/PrivateRoute';
 import Callback from '../components/callback';
 import history from '../history';
