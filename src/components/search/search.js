@@ -6,8 +6,9 @@ import Searchbar from './searchbar';
 import TrackTable from '../tracktable';
 import { 
     selectTrack, 
-    AddToQueue } 
-    from '../../actions/music_actions';
+    AddToQueue,
+    requestPlayAlbum
+} from '../../actions/music_actions';
 
 
 class Search extends Component {
@@ -15,7 +16,6 @@ class Search extends Component {
     render() {
         const { currentTrack, searchResult: { tracks, albums, artists } } = this.props;
         const isPlaylist = false;
-
         return (
             <div className="searchDiv">
 
@@ -35,11 +35,13 @@ class Search extends Component {
                 }
                     
                 <div className="albums">
-                        { albums.map((album) => (
-                                <AlbumItem
-                                album={ album } 
-                                />
-                            )) }
+                    { albums.map((album) => (
+                            <AlbumItem
+                            album={ album } 
+                            requestPlayAlbum={ this.props.requestPlayAlbum }
+                            currentAlbum={ this.props.currentAlbum }
+                            />
+                        )) }
                 </div>
                 
                 { artists.length > 0 &&
@@ -47,7 +49,9 @@ class Search extends Component {
                 }
                 <div className="artists">
                     { artists.map((artist) => (
-                        <ArtistItem artist={ artist } />
+                        <ArtistItem 
+                        artist={ artist } 
+                        />
                     )) }
                 </div>
             </div>
@@ -58,12 +62,15 @@ class Search extends Component {
 
 const mapStateToProps = (state) => ({
     searchResult: state.search.searchResult,
-    currentTrack: state.music.currentTrack
+    currentTrack: state.music.currentTrack,
+    currentAlbum: state.music.currentAlbum
 });
 
 const mapDispatchToProps = (dispatch) => ({
     selectTrack: (index, track, queue) => dispatch(selectTrack(index, track, queue)),
-    AddToQueue: (track) => dispatch(AddToQueue(track))
+    AddToQueue: (track) => dispatch(AddToQueue(track)),
+    requestPlayAlbum: (id, album) => dispatch(requestPlayAlbum(id, album))
+    
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Search);

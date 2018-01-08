@@ -22,8 +22,6 @@ class Header extends Component {
     }
     
     render() {
-        console.log(this.props);
-        // const name = this.props.user.user.display_name ? this.props.user.user.display_name : this.props.user.user.id;
         // const { user = null } = this.props.user;
         return (
 
@@ -47,18 +45,42 @@ class Header extends Component {
                     (   
                         <React.Fragment>
                             <div className="dropdown">
-                                <span onClick={ this.handleOnClick } >{ !(_.isEmpty(this.props.user)) &&
-                                    this.props.user.id
-                                 }</span>
-                                 <FaAngleDown color={ '#fff' } />
-                                 <div className="dropdown-content" style={ this.state.isVisible ? { display: 'block' } : { display: 'none' } } >
+                                <span 
+                                onClick={ this.handleOnClick } 
+                                >
+                                    { !(_.isEmpty(this.props.user)) &&
+                                        this.props.user.id
+                                    }
+                                 </span>
+                                    <FaAngleDown 
+                                    className="fa-angle-down" 
+                                    onClick={ this.handleOnClick } 
+                                    />
+                                 <div 
+                                 className="dropdown-content" 
+                                 style={ this.state.isVisible ? 
+                                    { display: 'block' } : 
+                                    { display: 'none' } } 
+                                 >
                                   <ul>
-                                      <li><Link to="/" onClick={ this.handleOnClick } >Profile</Link></li>
+                                        <li>
+                                            <Link 
+                                            to="/" 
+                                            onClick={ this.handleOnClick } 
+                                            >
+                                                Profile
+                                            </Link>
+                                        </li>
                                   </ul>
                                  
                                  </div>
                             </div>
-                            <button className="logout" onClick={ this.OnLogoutHandler }>Logout</button>
+                            <button 
+                            className="logout" 
+                            onClick={ this.OnLogoutHandler }
+                            >
+                                Logout
+                            </button>
                         </React.Fragment>
                     )
                     :

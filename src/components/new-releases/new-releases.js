@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import NewReleasesBanner from './new-releases-banner';
-import { newReleasesRequest } from '../../actions/browse_actions';
+import { 
+    newReleasesRequest
+} from '../../actions/browse_actions';
+import {
+    requestPlayAlbum
+} from '../../actions/music_actions';
 import AlbumItem from '../albumitem';
 
 class NewReleases extends Component {
@@ -18,14 +23,20 @@ class NewReleases extends Component {
         
     
     render() {
-        const { newReleases } = this.props;
+        const { newReleases, currentAlbum } = this.props;
         return (
             <div className="newReleasesDiv">
                 <NewReleasesBanner handleClick={ this.handleClick } />
                 <h3> New Albums and Singles </h3>
                 <div className="newAlbums">
                     { newReleases.map((album) => 
-                        <AlbumItem album={ album } />
+                        (
+                        <AlbumItem 
+                        album={ album } 
+                        currentAlbum={ currentAlbum }
+                        requestPlayAlbum={ this.props.requestPlayAlbum }
+                        />
+                        )
                     ) }
                 </div>
             </div>
@@ -34,11 +45,13 @@ class NewReleases extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    newReleases: state.browse.newReleases
+    newReleases: state.browse.newReleases,
+    currentAlbum: state.music.currentAlbum,
 });
 
 const mapDispatchToProps = (dispatch) => ({
     newReleasesRequest: () => dispatch(newReleasesRequest()),
+    requestPlayAlbum: (id, album) => dispatch(requestPlayAlbum(id, album))
 });
 
 

@@ -8,7 +8,7 @@ import PrivateRoute from '../HOC/PrivateRoute';
 import Callback from '../components/callback';
 import history from '../history';
 import SideMenu from '../components/sidemenu';
-import MusicBar from '../components/musicbar';
+import MusicBar from '../components/musicbar/musicbar';
 import RecentlyPlayed from '../components/recentlyplayed';
 import NewReleases from '../components/new-releases/new-releases';
 import Playlist from '../components/playlist/playlist';

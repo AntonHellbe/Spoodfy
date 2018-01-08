@@ -19,13 +19,13 @@ class SideMenu extends Component {
 
     renderAlbumImage = () => {
         if (this.props.isAuthenticated) {
-            if (_.isEmpty(this.props.currentTrack)) {
+            if (_.isEmpty(this.props.currentAlbum)) {
                 return <img className="imgAlbum" src={ DEFAULT_IMAGE_URL } role="presentation" />;
             }
 
             return (<img 
                     className="imgAlbum" 
-                    src={ this.props.currentTrack.album.images[0].url }
+                    src={ this.props.currentAlbum.images[0].url }
                     role="presentation" 
                     />);
         }
@@ -64,7 +64,8 @@ const mapStateToProps = (state) => {
         isAuthenticated: state.user.isAuthenticated,
         token: state.user.token,
         playlists: state.playlists.myPlaylists,
-        currentTrack: state.music.currentTrack
+        currentTrack: state.music.currentTrack,
+        currentAlbum: state.music.currentAlbum
     };
 };
 

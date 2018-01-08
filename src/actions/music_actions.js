@@ -18,8 +18,9 @@ export const AddToQueue = (track) => ({
     track
 });
 
-export const loadNextTrack = () => ({
+export const loadNextTrack = (album) => ({
     type: musicActions.NEXT_TRACK,
+    album,
 });
 
 export const toggleShuffle = () => ({
@@ -47,4 +48,21 @@ export const updateVolume = (volume) => ({
 
 export const previousTrack = () => ({
     type: musicActions.PREVIOUS_TRACK
+});
+
+export const requestPlayAlbum = (id, album) => ({
+    type: musicActions.REQUEST_PLAY_ALBUM,
+    id,
+    album
+});
+
+export const playAlbumSuccess = (tracks, album) => ({
+    type: musicActions.PLAY_ALBUM_SUCCESS,
+    tracks,
+    album
+});
+
+export const playAlbumError = (error) => ({
+    type: musicActions.PLAY_ALBUM_ERROR,
+    error
 });

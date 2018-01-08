@@ -10,7 +10,8 @@ export const spotifyUrls = {
     newReleases: '/new-releases',
     tracks: '/tracks',
     playlists: '/playlists',
-    users: '/users'
+    users: '/users',
+    albums: '/albums',
 
 };
 

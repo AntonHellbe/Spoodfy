@@ -136,3 +136,11 @@
 .dropdown > span:hover{
     cursor:pointer;
 }
+
+.fa-angle-down{
+    color: #fff;
+}
+
+.fa-angle-down:hover{
+    cursor: pointer;
+}

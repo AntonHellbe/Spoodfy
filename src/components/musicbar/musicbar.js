@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import FaVolumeUp from 'react-icons/lib/fa/volume-up';
+import _ from 'lodash';
 import { connect } from 'react-redux';
 import {
     togglePlaying,
@@ -8,11 +9,12 @@ import {
     toggleShuffle,
     toggleRepeat,
     updateVolume
-} from '../actions/music_actions';
+} from '../../actions/music_actions';
 import MusicPlayer from './musicplayer';
 import Playing from './playing';
-import _ from 'lodash';
 
+let WIDTH = 0;
+let HEIGHT = 0;
 
 class MusicBar extends Component {
 
@@ -32,16 +34,24 @@ class MusicBar extends Component {
         this.audioElement.addEventListener('loadedmetadata', this.metaDataloaded);
         this.audioElement.addEventListener('loadeddata', this.onLoadedData);
         this.audioElement.addEventListener('pause', this.OnPause);
+        this.initializeVisualization();
     }
 
+
     componentWillReceiveProps(nextProps) {
-        if (this.props.currentTrack !== null && 
+        console.log(nextProps.currentTrack.preview_url);
+        if (nextProps.currentTrack.preview_url !== null && 
             this.props.currentTrack.id !== nextProps.currentTrack.id) {
+            console.log('Clearing interval');
             clearInterval(this.currentTimeInterval); //Clear interval if it isn't the same track we are receiving, i.e slider needs to back to zero
         }
          if (nextProps.currentTrack.preview_url === null) {
-                this.props.loadNextTrack();
-             
+             if (nextProps.queue[nextProps.playingIndex].album && 
+                nextProps.playingIndex < nextProps.queue.length - 1) {
+                this.props.loadNextTrack(nextProps.queue[nextProps.playingIndex].album);
+             } else if (nextProps.playingIndex < nextProps.queue.length - 1) {
+                 this.props.loadNextTrack(nextProps[this.props.currentAlbum]);
+             }
          }
     }
 
@@ -85,6 +95,49 @@ class MusicBar extends Component {
         this.props.updateVolume(volume);
         this.audioElement.volume = (volume);
     }
+
+    initializeVisualization() {
+        const context = new (window.AudioContext || window.webkitAudioContext)();
+        const analyser = context.createAnalyser();
+        analyser.fftSize = 128;
+        this.ctx = this.canvas.getContext('2d');
+        this.audioSrc = context.createMediaElementSource(this.audioElement);
+        this.audioSrc.connect(analyser);
+        this.audioSrc.connect(context.destination);
+        analyser.connect(context.destination);
+        
+
+        const renderAnim = () => {
+
+            WIDTH = this.canvas.width;
+            HEIGHT = this.canvas.height;
+
+            const freqData = new Uint8Array(analyser.frequencyBinCount);
+            analyser.getByteFrequencyData(freqData);
+
+            this.ctx.fillStyle = '#282828';
+            this.ctx.fillRect(0, 0, WIDTH, HEIGHT);
+
+            const barWidth = 3;
+            let barHeight;
+            let x = 0;
+
+            for (let i = 0; i < analyser.frequencyBinCount; i++) {
+                barHeight = freqData[i];
+
+                this.ctx.fillStyle = '#ff6b42';
+                this.ctx.fillRect(x, HEIGHT, barWidth, -(barHeight / 2));
+
+                x += barWidth + 2;
+            }
+
+            requestAnimationFrame(renderAnim);
+
+        };
+
+        renderAnim();
+        
+    }
     
     OnPause = () => {
         clearInterval(this.currentTimeInterval);
@@ -102,17 +155,24 @@ class MusicBar extends Component {
         }
     }
 
+
     OnEndedListener = () => {
-        if (this.props.repeat) {
+        const { queue, repeat, playingIndex, currentAlbum } = this.props;
+        if (repeat) {
             this.audioElement.load();
             this.audioElement.play();
-        } else if (this.props.playingIndex < this.props.queue.length) {
-            this.props.loadNextTrack();
+        } else if (playingIndex < queue.length - 1) {
+            if (typeof queue[playingIndex + 1].album !== 'undefined') {
+                this.props.loadNextTrack(queue[playingIndex + 1].album);
+            } else {
+                this.props.loadNextTrack(currentAlbum);
+            }
+            
             
         } else {
             clearInterval(this.currentTimeInterval); 
-            this.setState(() => ({ value: 0 })); // If no track in queue, reset slider
-            this.props.togglePlaying(); // toggle back to not playing
+            this.setState(() => ({ value: 0 }));
+            this.props.togglePlaying();
         }
 
     }
@@ -246,8 +306,15 @@ class MusicBar extends Component {
                 ref={ (audio) => { this.audioElement = audio; } }
                 src={ preview_url }
                 key="audio"
+                id="audioPlayer"
+                crossOrigin="anonymous"
                 />
-                <div className="discodiv" />
+                <div className="discodiv">
+                    <canvas 
+                    className="disco" 
+                    ref={ (canvas) => { this.canvas = canvas; } } 
+                    />
+                </div>
                     
                 <Playing currentTrack={ currentTrack } key="playing" />
 
@@ -267,12 +334,13 @@ const mapStateToProps = (state) => ({
     volume: state.music.volume,
     isAuthenticated: state.user.isAuthenticated,
     playingIndex: state.music.playingIndex,
+    currentAlbum: state.music.currentAlbum
 });
 
 const mapDispatchToProps = (dispatch) => {
     return {
         togglePlaying: () => dispatch(togglePlaying()),
-        loadNextTrack: () => dispatch(loadNextTrack()),
+        loadNextTrack: (album) => dispatch(loadNextTrack(album)),
         toggleShuffle: () => dispatch(toggleShuffle()),
         toggleRepeat: () => dispatch(toggleRepeat()),
         updateVolume: (volume) => dispatch(updateVolume(volume)),

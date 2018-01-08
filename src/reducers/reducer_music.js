@@ -2,14 +2,16 @@ import { musicActions } from '../constants/actions';
 
 const INITIAL_STATE = {
     repeat: false,
-    currentTrack: {},
+    currentTrack: {
+    },
     isPlaying: false,
     queue: [],
     duration: 30,
     recentlyPlayed: [],
     errorRecentlyPlayed: '',
-    volume: 1,
-    playingIndex: 0
+    volume: 0.5,
+    playingIndex: 0,
+    currentAlbum: {}
     
 };
 
@@ -21,13 +23,27 @@ const musicReducer = (state = INITIAL_STATE, action) => {
             return { ...state, isPlaying: !state.isPlaying };
 
         case musicActions.SELECT_TRACK:
-            return { ...state, currentTrack: action.track, playingIndex: action.index, queue: action.queue };
+            return { ...state, 
+                currentTrack: action.track, 
+                playingIndex: action.index, 
+                queue: action.queue, 
+                currentAlbum: action.track.album };
 
         case musicActions.NEXT_TRACK:
-            return { ...state, currentTrack: state.queue[state.playingIndex + 1], playingIndex: state.playingIndex + 1 };
+            console.log(action.album);
+            return { 
+                ...state, 
+                currentTrack: state.queue[state.playingIndex + 1],
+                playingIndex: state.playingIndex + 1,
+                currentAlbum: action.album };
         
         case musicActions.PREVIOUS_TRACK:
-            return { ...state, currentTrack: state.queue[state.playingIndex - 1], playingIndex: state.playingIndex - 1 };
+            return { 
+                ...state, 
+                currentTrack: 
+                state.queue[state.playingIndex - 1], 
+                playingIndex: state.playingIndex - 1,
+                currentAlbum: [state.playingIndex - 1].album };
             
         case musicActions.TOGGLE_SHUFFLE:
             return { ...state, shuffle: !state.shuffle };
@@ -46,6 +62,16 @@ const musicReducer = (state = INITIAL_STATE, action) => {
 
         case musicActions.UPDATE_VOLUME:
             return { ...state, volume: action.volume };
+
+        case musicActions.PLAY_ALBUM_SUCCESS:
+            console.log(action.album);
+            return { 
+                ...state, 
+                currentTrack: action.tracks[0], 
+                playingIndex: 0, 
+                queue: action.tracks,
+                currentAlbum: action.album
+            };
 
 
         default:
