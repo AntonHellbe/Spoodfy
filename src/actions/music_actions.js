@@ -66,3 +66,20 @@ export const playAlbumError = (error) => ({
     type: musicActions.PLAY_ALBUM_ERROR,
     error
 });
+
+export const topArtistsRequest = () => ({
+    type: musicActions.REQUEST_TOP_ARTISTS
+});
+
+export const topArtistsSuccess = (topArtists) => {
+    // console.log('Success called');
+    return {
+        type: musicActions.TOP_ARTISTS_SUCCESS,
+        topArtists
+    };
+};
+
+export const topArtistsError = (error) => ({
+    type: musicActions.TOP_ARTISTS_ERROR,
+    error
+});

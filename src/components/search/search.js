@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import AlbumItem from '../albumitem';
 import ArtistItem from '../artistitem';
 import Searchbar from './searchbar';
-import TrackTable from '../tracktable';
+import TrackTable from '../tracktable/tracktable';
 import { 
     selectTrack, 
     AddToQueue,

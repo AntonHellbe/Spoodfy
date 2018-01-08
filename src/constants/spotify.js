@@ -12,6 +12,9 @@ export const spotifyUrls = {
     playlists: '/playlists',
     users: '/users',
     albums: '/albums',
+    top: '/top',
+    artists: '/artists',
+    goodLimit: '?limit=18'
 
 };
 

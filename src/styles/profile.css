@@ -1,0 +1,74 @@
+.profile-div{
+    background: #181818;
+    grid-area: 2 / 2 / 5 / 3;
+    /* border: 1px solid green; */
+    padding: 25px;
+    max-height: 100%;
+    max-width: 100%;
+    overflow-y: scroll;
+}
+
+.profile-banner{
+    height:250px;
+    width: 100%;
+    /* padding: 10px; */
+    position: relative;
+}
+
+.profile-banner > img {
+    float: left;
+    height:100%;
+    margin-right: 7px;
+    display: block;
+}
+
+.profile-banner > h1 {
+    color: #fff;
+    font-weight: normal;
+    margin: 0 0 0 0;
+    margin-bottom: 15px;
+    padding: 0;
+    font-size: 24px;
+    
+}
+
+.profile-banner > h2 {
+    color: #fff;
+    font-weight: normal;
+    margin: 5px 0px;
+    padding: 0;
+    font-size: 16px;
+    display: inline;
+}
+
+.user-info {
+    vertical-align: bottom;
+    margin-top: 100px;
+}
+
+.user-info > span {
+    display: block;
+    color: #fff;
+    font-size: 12px;
+}
+
+.profile-content {
+    /* height: calc(100% - 250px); */
+    width: 100%;
+    padding: 10px;
+}
+
+.title{
+    font-weight: normal;
+    font-size: 24px;
+    border-bottom:1px solid #fff;
+    color: #fff;
+}
+
+.artist-div {
+    display:flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    /* border: 1px solid blue; */
+}
+

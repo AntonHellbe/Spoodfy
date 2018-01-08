@@ -5,10 +5,12 @@ import RecentItem from './recentitem';
 class RecentlyPlayed extends Component {
 
     render() {
+        const mostRecent = this.props.recentlyPlayed.slice(0, 7);
+        
         return (
             <div className="recent">
                 <h3>Recently Played</h3>
-                { this.props.recentlyPlayed.map((item) => {
+                { mostRecent.map((item) => {
                     return (
                         <RecentItem item={ item } />
                     );

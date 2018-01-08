@@ -8,7 +8,7 @@ class SearchBar extends Component {
     constructor(props) {
         super(props);
         
-        this.searchThrottled = _.throttle(() => this.props.searchRequested(this.props.term), 300);
+        this.searchThrottled = _.throttle(() => this.props.searchRequested(this.props.term), 200);
     }
     
     onInputChange = (e) => {

@@ -6,8 +6,8 @@ import PlaylistMenu from './playlistmenu';
 import { 
     getUserPlaylists,
     updateActivePlaylist
-} from '../actions/playlist_actions';
-import { DEFAULT_IMAGE_URL } from '../constants/actions';
+} from '../../actions/playlist_actions';
+import { DEFAULT_IMAGE_URL } from '../../constants/actions';
 
 class SideMenu extends Component {
 

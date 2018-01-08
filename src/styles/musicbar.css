@@ -185,3 +185,7 @@ Fixed for Chrome?
 .progress > input[type=range]::-moz-focus-outer {
     border: 0;
 }
+
+.fa-volume-up:hover {
+    cursor: pointer;
+}

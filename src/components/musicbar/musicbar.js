@@ -39,11 +39,11 @@ class MusicBar extends Component {
 
 
     componentWillReceiveProps(nextProps) {
-        console.log(nextProps.currentTrack.preview_url);
         if (nextProps.currentTrack.preview_url !== null && 
             this.props.currentTrack.id !== nextProps.currentTrack.id) {
-            console.log('Clearing interval');
-            clearInterval(this.currentTimeInterval); //Clear interval if it isn't the same track we are receiving, i.e slider needs to back to zero
+            clearInterval(this.currentTimeInterval); 
+            //Clear interval if it isn't the same track we are receiving, 
+            //i.e slider needs to back to zero and then preview url on the incoming track is not null
         }
          if (nextProps.currentTrack.preview_url === null) {
              if (nextProps.queue[nextProps.playingIndex].album && 
@@ -77,6 +77,11 @@ class MusicBar extends Component {
     onMouseUp = () => {
         this.audioElement.play();
     }
+
+    onVolumeClick = () => {
+        this.audioElement.volume = 0;
+        this.props.updateVolume(0);
+    }
     
     onLoadedData = () => {
         // console.log('Loaded Data Called...');
@@ -91,9 +96,9 @@ class MusicBar extends Component {
     
     onChangeVolume = (e) => {
         const volume = e.target.value;
-        console.log(volume);
-        this.props.updateVolume(volume);
         this.audioElement.volume = (volume);
+        this.props.updateVolume(volume);
+        console.log(volume);
     }
 
     initializeVisualization() {
@@ -131,10 +136,10 @@ class MusicBar extends Component {
                 x += barWidth + 2;
             }
 
+            
             requestAnimationFrame(renderAnim);
-
         };
-
+        
         renderAnim();
         
     }
@@ -287,7 +292,12 @@ class MusicBar extends Component {
 
 
                 <div className="volumeControl" key="volume">
-                        <FaVolumeUp color={ '#cfcfd1' } size={ '20px' } />
+                        <FaVolumeUp 
+                        className="fa-volume-up"
+                        color={ '#cfcfd1' } 
+                        size={ '20px' } 
+                        onClick={ this.onVolumeClick } 
+                        />
                     <input
                         className="volumeInput"
                         type="range"
@@ -295,7 +305,7 @@ class MusicBar extends Component {
                         value={ volume }
                         max="1"
                         min="0"
-                        step="0.01"
+                        step="any"
                         onChange={ this.onChangeVolume }
 
                     />

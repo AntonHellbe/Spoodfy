@@ -4,7 +4,7 @@ import FaSpotify from 'react-icons/lib/fa/spotify';
 import FaAngleDown from 'react-icons/lib/fa/angle-down';
 import _ from 'lodash';
 import { connect } from 'react-redux';
-import { logoutRequest } from '../actions/auth_actions';
+import { logoutRequest } from '../../actions/auth_actions';
 
 
 class Header extends Component { 
@@ -65,7 +65,7 @@ class Header extends Component {
                                   <ul>
                                         <li>
                                             <Link 
-                                            to="/" 
+                                            to="/profile" 
                                             onClick={ this.handleOnClick } 
                                             >
                                                 Profile

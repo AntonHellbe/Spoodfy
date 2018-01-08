@@ -5,7 +5,7 @@ import {
     updateActivePlaylist
 } from '../../actions/playlist_actions';
 import PlaylistBanner from './playlist-banner';
-import TrackTable from '../tracktable';
+import TrackTable from '../tracktable/tracktable';
 import { 
     AddToQueue, 
     selectTrack 

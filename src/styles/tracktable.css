@@ -59,6 +59,7 @@ td {
 
 .table-col-index{
     width: 3.3%;
+    min-width: 3.3%;
 }
 
 .table-col-title{
@@ -75,10 +76,12 @@ td {
 
 .table-col-actions{
     width:3.3%;
+    min-width: 3.3%;
 }
 
 .table-col-time{
     width:3.3%;
+    min-width: 3.3%;
 }
 
 .albums{
