@@ -21,8 +21,10 @@
 .inputSearch {
     width: 125px;
     transition: ease-in-out, width, .35s, ease-in-out;
+    -webkit-transition: ease-in-out, width, .35s, ease-in-out;
 }
 
 .inputSearch:focus{
     width:200px;
+    outline: none;
 }

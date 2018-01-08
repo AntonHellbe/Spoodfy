@@ -3,6 +3,8 @@ import React from 'react';
 
 const PlaylistBanner = (props) => {
 
+    const track = props.tracks.total === 1 ? 'track' : 'tracks';
+    const name = props.owner.display_name ? props.owner.display_name : props.owner.id;
     return (
         <div className="playlistBanner">
             { props.images[0] ? 
@@ -13,7 +15,7 @@ const PlaylistBanner = (props) => {
             <h3>playlist</h3>
             <h1>{ props.name }</h1>
             <h3>
-                {props.owner.display_name ? `Owner: ${props.owner.display_name}` : `Owner: ${props.owner.id} ` } { `${props.tracks.total} tracks` }
+                    {`Created By: ${name}, ${props.tracks.total} ${track}`}
             </h3>
             <h2>Tracks</h2>
         </div>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import FaPlay from 'react-icons/lib/fa/play';
 
 
 const AlbumItem = (props) => {
@@ -9,11 +10,13 @@ const AlbumItem = (props) => {
     }
     return (
         <div className="albumItem">
-            <Link to="/">
+            <Link to="/" className="tag">
             <img 
             src={ images[0].url }
-            role="presentation" 
+            role="presentation"
+            className="temp"
             />
+            <FaPlay className="icon-play" size={ '24px' } />
             </Link>
             <ul>
                 <li>{ name }</li>

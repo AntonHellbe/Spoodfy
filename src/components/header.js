@@ -1,22 +1,35 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import FaSpotify from 'react-icons/lib/fa/spotify';
+import FaAngleDown from 'react-icons/lib/fa/angle-down';
+import _ from 'lodash';
 import { connect } from 'react-redux';
 import { logoutRequest } from '../actions/auth_actions';
 
 
 class Header extends Component { 
 
+    state = {
+        isVisible: false
+    }
+
     OnLogoutHandler = () => {
         this.props.logoutRequest();
     }
+
+    handleOnClick = () => {
+        this.setState(() => ({ isVisible: !this.state.isVisible }));
+    }
     
     render() {
+        console.log(this.props);
+        // const name = this.props.user.user.display_name ? this.props.user.user.display_name : this.props.user.user.id;
+        // const { user = null } = this.props.user;
         return (
 
             <div className="header">
                 <div className="brand">
-                    <Link to="/" style={ { textDecoration: 'none' } }> 
+                    <Link to="/"> 
                     <FaSpotify className="brandIcon" size={ '24px' } color={ '#ff6b42' } />
                         <h3>spoodfy </h3>
                     </Link>
@@ -29,15 +42,31 @@ class Header extends Component {
                     </div>
                 
                 </div>
-                <div className="login">
+                <div className="usersection">
                     { this.props.isAuthenticated ?
-                    (
-                        <button className="logout" onClick={ this.OnLogoutHandler }>Logout</button>
+                    (   
+                        <React.Fragment>
+                            <div className="dropdown">
+                                <span onClick={ this.handleOnClick } >{ !(_.isEmpty(this.props.user)) &&
+                                    this.props.user.id
+                                 }</span>
+                                 <FaAngleDown color={ '#fff' } />
+                                 <div className="dropdown-content" style={ this.state.isVisible ? { display: 'block' } : { display: 'none' } } >
+                                  <ul>
+                                      <li><Link to="/" onClick={ this.handleOnClick } >Profile</Link></li>
+                                  </ul>
+                                 
+                                 </div>
+                            </div>
+                            <button className="logout" onClick={ this.OnLogoutHandler }>Logout</button>
+                        </React.Fragment>
                     )
                     :
                     (
-                        <a href="http://localhost:5000/">Login</a>
-                    
+                       <div className="usersection">
+                            <a className="login" href="http://localhost:5000"><p> Login </p></a>
+
+                       </div>
                     )
                     }
                 </div>
