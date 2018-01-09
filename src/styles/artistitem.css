@@ -5,12 +5,19 @@
     height:100px;
 }
 
-.artistItem > img {
+.artistItem > a {
     width: 100%;
     height: 90%;
+    /* border:1px solid green; */
+}
+
+.artistItem > a > img {
+    width: 100%;
+    height: 100%;
     padding:0;
     margin:0;
     border-radius: 50%;
+
 }
 
 .artistItem > p {
@@ -18,6 +25,10 @@
     margin: 0;
     text-align:center;
     font-size: 12px;
-    font-family: 'Montserrat', sans-serif;
     color: #fff;
+}
+
+.artistItem > a:hover {
+    opacity: 0.5;
+    cursor: pointer;
 }

@@ -11,7 +11,6 @@ const INITIAL_STATE = {
     volume: 0.5,
     playingIndex: 0,
     currentAlbum: {},
-    topArtists: []
 };
 
 const musicReducer = (state = INITIAL_STATE, action) => {
@@ -27,6 +26,13 @@ const musicReducer = (state = INITIAL_STATE, action) => {
                 playingIndex: action.index, 
                 queue: action.queue, 
                 currentAlbum: action.track.album };
+
+        case musicActions.SELECT_SINGLE_TRACK:
+            return { ...state,
+                    currentTrack: action.track,
+                    playingIndex: 0,
+                    queue: [],
+                    currentAlbum: action.track.album };
 
         case musicActions.NEXT_TRACK:
             return { 
@@ -80,12 +86,6 @@ const musicReducer = (state = INITIAL_STATE, action) => {
                 playingIndex: 0, 
                 queue: action.tracks,
                 currentAlbum: action.album
-            };
-
-        case musicActions.TOP_ARTISTS_SUCCESS:
-            return {
-                ...state,
-                topArtists: action.topArtists    
             };
 
 

@@ -4,6 +4,7 @@ import { authSagas } from './auth_sagas';
 import { searchSagas } from './search_sagas';
 import { musicSagas } from './music_sagas';
 import { browseSagas } from './browse_sagas';
+import { artistsSagas } from './artists_sagas';
 
 export default function* rootSaga() {
     yield all([
@@ -11,6 +12,7 @@ export default function* rootSaga() {
         ...authSagas,
         ...searchSagas,
         ...musicSagas,
-        ...browseSagas
+        ...browseSagas,
+        ...artistsSagas
     ]);
 }

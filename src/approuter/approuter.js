@@ -13,6 +13,7 @@ import RecentlyPlayed from '../components/recentlyplayed';
 import NewReleases from '../components/new-releases/new-releases';
 import Playlist from '../components/playlist/playlist';
 import Profile from '../components/profile/profile';
+import Artist from '../components/artist/artist';
 
 
 const Routes = (props) => {
@@ -41,6 +42,11 @@ const Routes = (props) => {
                     path="/profile"
                     isAuthenticated={ props.isAuthenticated }
                     component={ Profile }
+                />
+                <PrivateRoute
+                    path="/artist/:id"
+                    isAuthenticated={ props.isAuthenticated }
+                    component={ Artist }
                 />
                 <Route path="/login" component={ Login } />
                 <Route path="/callback" component={ Callback } />

@@ -7,6 +7,7 @@ const RecentItem = (props) => {
     }
     return (
         <div className="recentItem">
+            
             <img 
             src={ track.album.images[0].url }
             role="presentation"

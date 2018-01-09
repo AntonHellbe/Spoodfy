@@ -20,6 +20,8 @@ class SearchBar extends Component {
     }
 
     render() {
+
+        const { term } = this.props;
         return (
             <div className="searchOpt">
                 <div className="searchBar">
@@ -28,6 +30,7 @@ class SearchBar extends Component {
                     type="text" 
                     placeholder="Search...." 
                     onChange={ this.onInputChange } 
+                    value={ term }
                     />
                 </div>
             </div>
