@@ -1,15 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class ArtistBanner extends Component {
+export const ArtistBanner = (props) => {
 
-    render() {
-        if (this.props.loadingArtist) {
-            return (
-            <div className="loader-placement">
-                <div className="loader" />
-            </div>
-            );
-        }
         const {
             genres,
             popularity,
@@ -17,7 +9,7 @@ class ArtistBanner extends Component {
             followers: { total },
             external_urls: { spotify },
             images,
-        } = this.props.artist;
+        } = props.artist;
 
         return (
             <div className="artist-banner">
@@ -48,8 +40,7 @@ class ArtistBanner extends Component {
             
             </div>
         );
-    }
-}
+};
 
 
 export default ArtistBanner;

@@ -4,10 +4,7 @@ import NewReleasesBanner from './new-releases-banner';
 import { 
     newReleasesRequest
 } from '../../actions/browse_actions';
-import {
-    requestPlayAlbum
-} from '../../actions/music_actions';
-import AlbumItem from '../albumitem';
+import AlbumList from '../albumlist/albumlist';
 
 class NewReleases extends Component {
 
@@ -23,22 +20,14 @@ class NewReleases extends Component {
         
     
     render() {
-        const { newReleases, currentAlbum } = this.props;
+        const { newReleases } = this.props;
         return (
             <div className="newReleasesDiv">
                 <NewReleasesBanner handleClick={ this.handleClick } />
                 <h3> New Albums and Singles </h3>
-                <div className="newAlbums">
-                    { newReleases.map((album) => 
-                        (
-                        <AlbumItem 
-                        album={ album } 
-                        currentAlbum={ currentAlbum }
-                        requestPlayAlbum={ this.props.requestPlayAlbum }
-                        />
-                        )
-                    ) }
-                </div>
+                <AlbumList
+                albums={ newReleases }
+                />
             </div>
         );
     }
@@ -46,12 +35,10 @@ class NewReleases extends Component {
 
 const mapStateToProps = (state) => ({
     newReleases: state.browse.newReleases,
-    currentAlbum: state.music.currentAlbum,
 });
 
 const mapDispatchToProps = (dispatch) => ({
     newReleasesRequest: () => dispatch(newReleasesRequest()),
-    requestPlayAlbum: (id, album) => dispatch(requestPlayAlbum(id, album))
 });
 
 

@@ -20,13 +20,6 @@
     font-weight: 200;
     border-bottom:1px solid gray;
 }
-
-.newAlbums {
-    display:flex;
-    flex-flow: row wrap;
-    justify-content: flex-start;
-}
-
 .banner > h3 {
     display:inline-block;
     padding: 0;
@@ -36,7 +29,6 @@
 
 .banner > p {
     color:#fff;
-    font-family: 'Montserrat', sans-serif;
 }
 
 .banner > button {

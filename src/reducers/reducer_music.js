@@ -8,7 +8,7 @@ const INITIAL_STATE = {
     duration: 30,
     recentlyPlayed: [],
     errorRecentlyPlayed: '',
-    volume: 0.5,
+    volume: 0.05,
     playingIndex: 0,
     currentAlbum: {},
 };

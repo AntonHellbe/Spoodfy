@@ -35,6 +35,7 @@ class MusicBar extends Component {
         this.audioElement.addEventListener('loadeddata', this.onLoadedData);
         this.audioElement.addEventListener('pause', this.OnPause);
         this.initializeVisualization();
+        this.audioElement.volume = this.props.volume; //Why?
     }
 
 
@@ -84,7 +85,6 @@ class MusicBar extends Component {
     }
     
     onLoadedData = () => {
-        // console.log('Loaded Data Called...');
         if (!this.props.isPlaying) {
             this.props.togglePlaying();
         }
@@ -98,7 +98,6 @@ class MusicBar extends Component {
         const volume = e.target.value;
         this.audioElement.volume = (volume);
         this.props.updateVolume(volume);
-        console.log(volume);
     }
 
     initializeVisualization() {
@@ -318,6 +317,7 @@ class MusicBar extends Component {
                 key="audio"
                 id="audioPlayer"
                 crossOrigin="anonymous"
+                volume={ volume } //This doesn't work it seems like
                 />
                 <div className="discodiv">
                     <canvas 

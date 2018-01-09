@@ -1,7 +1,14 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import FaClock from 'react-icons/lib/fa/clock-o';
 import PropTypes from 'prop-types';
 import TrackItem from './trackitem';
+import Loader from '../loader/loader';
+import {
+    selectTrack,
+    AddToQueue
+} from '../../actions/music_actions';
+
 
 class TrackTable extends Component {
     
@@ -20,7 +27,13 @@ class TrackTable extends Component {
 
     render() {
 
-    const { tracks, isPlaylist, currentTrack } = this.props;
+    const { tracks, isPlaylist = null, currentTrack, isLoading = null } = this.props;
+    if (isLoading) {
+        return (
+            <Loader />
+        );
+    }
+
     return (
             <table className="table">
                 <tbody>
@@ -61,13 +74,19 @@ class TrackTable extends Component {
     }
 }
 
+const mapStateToProps = (state) => ({
+    currentTrack: state.music.currentTrack
+});
 
-TrackTable.PropTypes = {
+const mapDispatchToProps = (dispatch) => ({
+    AddToQueue: (track) => dispatch(AddToQueue(track)),
+    selectTrack: (index, track, queue) => dispatch(selectTrack(index, track, queue))
+});
+
+
+TrackTable.propTypes = {
     tracks: PropTypes.array.isRequired,
-    selectTrack: PropTypes.func.isRequired,
-    AddToQueue: PropTypes.func.isRequired,
-    isPlaylist: PropTypes.bool.isRequired,
-    currentTrack: PropTypes.object.isRequired
+    isPlaylist: PropTypes.bool.opt,
 };
 
-export default TrackTable;
+export default connect(mapStateToProps, mapDispatchToProps)(TrackTable);

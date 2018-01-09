@@ -5,11 +5,15 @@ import PropTypes from 'prop-types';
 
 const TrackItem = (props) => {
 
-        const { currentTrack, track, index, track: { name, artists, duration_ms, album, id } } = props;
+        const { currentTrack = null, track, index, track: { name, artists, duration_ms, album, id } } = props;
         if (props.track.preview_url === null) {
             return null;
         }
-        const currentId = currentTrack.track ? currentTrack.track.id : currentTrack.id;
+        let currentId = null;
+        if (currentTrack) {
+            currentId = currentTrack.track ? currentTrack.track.id : currentTrack.id;
+        }
+        
         const color = currentId === id ? '#ff6b42' : '#ffffff';
         return (
             <tr className="track" style={ { color } }>

@@ -3,13 +3,12 @@ import { connect } from 'react-redux';
 import ProfileBanner from './profile-banner';
 import {
     topArtistsRequest, 
-    requestArtist,
 } from '../../actions/artist_actions';
 import {
     selectSingleTrack
 } from '../../actions/music_actions';
-import ArtistItem from '../artistitem';
 import RecentTrack from './recent-track';
+import ArtistList from '../artistlist/artistlist';
 
 class Profile extends Component {
 
@@ -48,17 +47,11 @@ class Profile extends Component {
                     { topArtists.length > 0 && 
                         <h1 className="title">Your top artists</h1>
                     }
-                    <div className="artist-div">
-                        { topArtists.map((artist) => 
-                        (
-                            <ArtistItem
-                            artist={ artist }
-                            requestArtist={ this.props.requestArtist }
-                            />
-                        ) 
-                        ) }
+                    <ArtistList
+                        artist={ this.props.topArtists }
+                    />
+                    
 
-                    </div>
                 </div>
             </div>
         );
@@ -70,12 +63,12 @@ const mapStateToProps = (state) => ({
     topArtists: state.artists.topArtists,
     recentlyPlayed: state.music.recentlyPlayed,
     currentTrack: state.music.currentTrack,
+    loadingArtist: state.artists.loadingArtist
 });
 
 const mapDispatchToProps = (dispatch) => ({
     topArtistsRequest: () => dispatch(topArtistsRequest()),
     selectSingleTrack: (track) => dispatch(selectSingleTrack(track)),
-    requestArtist: (id) => dispatch(requestArtist(id))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);

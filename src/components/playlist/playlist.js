@@ -6,10 +6,6 @@ import {
 } from '../../actions/playlist_actions';
 import PlaylistBanner from './playlist-banner';
 import TrackTable from '../tracktable/tracktable';
-import { 
-    AddToQueue, 
-    selectTrack 
-} from '../../actions/music_actions';
 
 const isPlaylist = true;
 
@@ -17,8 +13,17 @@ class Playlist extends Component {
 
 
     render() {
-        const { playlistSongs } = this.props;
-        const { name, owner, images, tracks } = this.props.activePlaylist;
+        const { 
+            playlistSongs,
+            loadingPlaylist,
+            activePlaylist: {
+                name,
+                owner,
+                images,
+                tracks
+            }
+        } = this.props;
+        
         return (
             <React.Fragment>
                 <PlaylistBanner 
@@ -30,11 +35,8 @@ class Playlist extends Component {
                 <div className="playlistTracks">
                     <TrackTable 
                     tracks={ playlistSongs } 
-                    AddToQueue={ this.props.AddToQueue } 
-                    selectTrack={ this.props.selectTrack } 
                     isPlaylist={ isPlaylist }
-                    currentTrack={ this.props.currentTrack }
-                    // searchResult={ this.props.searchResult }
+                    isLoading={ loadingPlaylist }
                     />
                 </div>
             </React.Fragment>
@@ -47,16 +49,12 @@ const mapStateToProps = (state) => ({
     activePlaylist: state.playlists.activePlaylist,
     spotifyId: state.user.spotifyId,
     myPlaylists: state.playlists.myPlaylists,
-    currentTrack: state.music.currentTrack
-
+    loadingPlaylist: state.playlists.loadingPlaylist
 });
 
 const mapDispatchToProps = (dispatch, props) => ({
     requestPlaylistSongs: () => dispatch(requestPlaylistSongs(props.params.match.id)),
     updateActivePlaylist: (playlist) => dispatch(updateActivePlaylist(playlist)),
-    AddToQueue: (track) => dispatch(AddToQueue(track)),
-    selectTrack: (index, track, queue) => dispatch(selectTrack(index, track, queue))
-
 });
 
 

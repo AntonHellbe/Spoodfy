@@ -65,12 +65,6 @@
     color: #fff;
 }
 
-.artist-div {
-    display:flex;
-    flex-flow: row wrap;
-    justify-content: flex-start;
-}
-
 .recent-track-wrapper {
     display:flex;
     flex-flow: row wrap;
