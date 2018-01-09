@@ -20,21 +20,25 @@ class Artist extends Component {
             artistTopTracks,
             artistAlbums
         } = this.props;
-        if (artistTopTracks.length === 0 ||
-            artistAlbums.length === 0 ||
-            artistTopTracks[0].id !== currentArtist.id) {
-            switch (id) {
-                case 'tab2':
-                    console.log('Requesting toptracks');
-                    this.props.requestTopTracks();
-                    break;
-                case 'tab3':
-                    this.props.requestArtistAlbums();
-                    break;
 
-                default:
-                    console.log('ERROR');
-            }
+
+        switch (id) {
+            case 'tab2':
+                console.log('Requesting toptracks');
+                if (artistTopTracks.length === 0 || 
+                    !artistTopTracks[0].artists.find((artist) => currentArtist.id === artist.id)) {
+                    this.props.requestTopTracks();
+                }
+                break;
+            case 'tab3':
+                if (artistAlbums.length === 0 ||
+                    !artistAlbums[0].artists.find((artist) => currentArtist.id === artist.id)) {
+                    this.props.requestArtistAlbums();
+                }
+                break;
+
+            default:
+                console.log('ERROR - DEFAULT CASE ARTIST');
         }
 
     }
@@ -70,7 +74,6 @@ class Artist extends Component {
                     <section id="content1">
                         <ArtistList
                             artists={ relatedArtists }
-                            loadingArtist={ loadingArtist }
                             requestArtist={ this.props.requestArtist }
                         />
                     </section>

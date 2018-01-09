@@ -30,9 +30,13 @@ export function* albumTracksFetch() {
         const URL = `${spotifyUrls.baseURL}${spotifyUrls.version}${spotifyUrls.albums}/${id}${spotifyUrls.tracks}`;
         try {
             const data = yield call(axios.get, URL);
-            // console.log(data.data.items);
-            // console.log(album);
-            yield put(playAlbumSuccess(data.data.items, album));
+            const tracks = data.data.items.map((track) => {
+                return (
+                    { ...track, album }
+                );
+            });
+            // console.log(tracks);
+            yield put(playAlbumSuccess(tracks, album));
         } catch (e) {
             console.log(e);
             yield put(playAlbumError(e));

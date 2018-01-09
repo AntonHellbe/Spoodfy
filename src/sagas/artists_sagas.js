@@ -62,6 +62,7 @@ export function* topTracksFetch({ id }) {
     const URL = `${spotifyUrls.baseURL}${spotifyUrls.version}${spotifyUrls.artists}/${id}${spotifyUrls.topTracks}?country=SE`;
     try {
         const data = yield call(axios.get, URL);
+        console.log(data);
         yield put(topTracksSuccess(data.data.tracks));
     } catch (e) {
         yield put(topTracksError(e));
@@ -73,6 +74,7 @@ export function* artistAlbumsFetch({ id }) {
     console.log(URL);
     try {
         const data = yield call(axios.get, URL);
+        console.log(data);
         yield put(artistAlbumsSuccess(data.data.items));
     } catch (e) {
         console.log(e);

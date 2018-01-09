@@ -21,9 +21,8 @@ export const AddToQueue = (track) => ({
     track
 });
 
-export const loadNextTrack = (album) => ({
+export const loadNextTrack = () => ({
     type: musicActions.NEXT_TRACK,
-    album,
 });
 
 export const toggleShuffle = () => ({

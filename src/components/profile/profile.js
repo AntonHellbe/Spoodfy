@@ -23,15 +23,27 @@ class Profile extends Component {
             user,
             topArtists,
             recentlyPlayed,
-            currentTrack
+            currentTrack,
+            loadingArtist
         } = this.props;
+        
         return (
             <div className="profile-div">
                 <ProfileBanner user={ user } />
 
                 <div className="profile-content">
 
+
+                    { topArtists.length > 0 &&
+                        <h1 className="title">Your top artists</h1>
+                    }
+                    <ArtistList
+                        artists={ topArtists }
+                        loadingArtist={ loadingArtist }
+                    />
+
                     <h1 className="title" > Recently Played Tracks </h1>
+
                     <div className="recent-track-wrapper">
                         { recentlyPlayed.map((item) =>
                             (
@@ -43,15 +55,7 @@ class Profile extends Component {
                             )
                         )}
                     </div>
-
-                    { topArtists.length > 0 && 
-                        <h1 className="title">Your top artists</h1>
-                    }
-                    <ArtistList
-                        artist={ this.props.topArtists }
-                    />
                     
-
                 </div>
             </div>
         );

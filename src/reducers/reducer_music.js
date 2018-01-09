@@ -39,7 +39,7 @@ const musicReducer = (state = INITIAL_STATE, action) => {
                 ...state, 
                 currentTrack: state.queue[state.playingIndex + 1],
                 playingIndex: state.playingIndex + 1,
-                currentAlbum: action.album };
+                currentAlbum: state.queue[state.playingIndex + 1].album };
         
         case musicActions.PREVIOUS_TRACK:
             return { 
