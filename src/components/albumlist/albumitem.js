@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import FaPlay from 'react-icons/lib/fa/play';
 
 
 const AlbumItem = (props) => {
@@ -19,15 +18,18 @@ const AlbumItem = (props) => {
             to="#" 
             className="tag" 
             onClick={ () => { 
+                console.log(id);
+                console.log(album);
                 requestPlayAlbum(id, album);
-            } } 
+
+            } }
             >
             <img 
             src={ images[0].url }
             role="presentation"
             className="temp"
             />
-            <FaPlay className="icon-play" size={ '24px' } />
+            <i className="fa fa-play" aria-hidden="true" /> 
             </Link>
             <ul>
                 <li>{ name }</li>

@@ -47,13 +47,9 @@ class MusicBar extends Component {
             //i.e slider needs to back to zero and then preview url on the incoming track is not null
         }
          if (nextProps.currentTrack.preview_url === null) {
-            this.props.loadNextTrack();
-            //  if (nextProps.queue[nextProps.playingIndex].album && 
-            //     nextProps.playingIndex < nextProps.queue.length - 1) {
-            //     this.props.loadNextTrack(nextProps.queue[nextProps.playingIndex].album);
-            //  } else if (nextProps.playingIndex < nextProps.queue.length - 1) {
-            //      this.props.loadNextTrack(nextProps[this.props.currentAlbum]);
-            //  }
+            if (nextProps.playingIndex < nextProps.queue.length - 1) {
+                this.props.loadNextTrack();
+            }
          }
     }
 
@@ -168,11 +164,6 @@ class MusicBar extends Component {
             this.audioElement.play();
         } else if (playingIndex < queue.length - 1) {
             this.props.loadNextTrack(queue[playingIndex + 1].album);
-            // if (typeof queue[playingIndex + 1].album !== 'undefined') {
-                
-            // } else {
-            //     this.props.loadNextTrack(currentAlbum);
-            // }
             
             
         } else {
@@ -193,6 +184,7 @@ class MusicBar extends Component {
 
     handleMusicControls = (e) => {
         e.stopPropagation();
+        console.log(e.target.id);
         const {  
             currentTrack,
             playingIndex,
@@ -207,10 +199,10 @@ class MusicBar extends Component {
                 break;
 
             case 'play':
-                if (!_.isEmpty(currentTrack)) {
+                // if (!_.isEmpty(currentTrack)) {
                     this.playAudio();
                     this.props.togglePlaying();
-                }
+                // }
                 break;
 
             case 'shuffle':

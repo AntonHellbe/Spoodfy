@@ -44,7 +44,8 @@
     background: #ff6b42;
     border: none;
     color:#fff;
-    font-size:14px;
+    font-size:12px;
+    letter-spacing: 2px;
     /* box-shadow: 0px 4px 0px 8px #fff; */
     
 }

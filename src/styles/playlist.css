@@ -12,16 +12,17 @@
     background: #181818;
     grid-area: 2 / 2 / 3 / 3;
     padding: 25px;
+    height: 100%;
     border-top: 1px solid rgba(125, 125, 135, 0.25);
 }
 
 .playlistBanner > img {
-    height: 85%;
-    width: 20%;
+    height: 160px;
+    width: 160px;
     float:left;
     margin-right: 10px;
-    display:block;
-    margin-bottom:10px;
+    display:block;  
+    margin-bottom: 10px;  
 }
 
 .playlistBanner > h1 {
@@ -30,7 +31,6 @@
     text-align: start;
     font-weight: bold;
     float:none;
-    /* margin-left: 210px; */
 }
 
 .playlistBanner > h3 {
@@ -47,8 +47,11 @@
 
 .playlistBanner > h2 {
     clear:left;
-    float:none;
+    padding: 0;
+    margin: 0;
+    margin-bottom: 10px;
     border-bottom: 1px solid #fff;
+    color: #fff;
 }
 
 

@@ -17,7 +17,8 @@ export const spotifyUrls = {
     goodLimit: '?limit=18',
     relatedArtists: '/related-artists',
     topTracks: '/top-tracks',
-    market: '?market=SE'
+    market: '?market=SE',
+    following: '/following'
 
 };
 

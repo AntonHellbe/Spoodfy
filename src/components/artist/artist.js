@@ -5,7 +5,8 @@ import ArtistBanner from './artist-banner'; //eslint-disable-line
 import { 
     requestArtist,
     requestTopTracks,
-    requestArtistAlbums
+    requestArtistAlbums,
+    requestFollowArtist
 } from '../../actions/artist_actions';
 import ArtistList from '../artistlist/artistlist';
 import TrackTable from '../tracktable/tracktable';
@@ -20,7 +21,6 @@ class Artist extends Component {
             artistTopTracks,
             artistAlbums
         } = this.props;
-
 
         switch (id) {
             case 'tab2':
@@ -44,31 +44,49 @@ class Artist extends Component {
     }
 
     render() {
-        // console.log(this.props);
         const {
             loadingArtist,
             relatedArtists,
             currentArtist,
             artistTopTracks,
-            artistAlbums
+            artistAlbums,
+            followedArtists
         } = this.props;
 
-
+        // console.log(this.props);
         return (
             <div className="artist-layout">
                 { !_.isEmpty(currentArtist) &&
                     <ArtistBanner 
-                    artist={ currentArtist } 
+                    artist={ currentArtist }
+                    isFollowed={ followedArtists.find((artist) => artist.id === currentArtist.id) }
+                    requestFollowArtist={ this.props.requestFollowArtist }
                     />
                 }
                 <div className="tabbed">
-                    <input id="tab1" type="radio" name="tabs" defaultChecked />
+                    <input 
+                    id="tab1" 
+                    type="radio" 
+                    name="tabs" 
+                    defaultChecked 
+                    />
+
                         <label htmlFor="tab1">Related Artists</label>
 
-                    <input id="tab2" type="radio" name="tabs" onChange={ this.handleCheckboxChange } />
+                    <input 
+                    id="tab2" 
+                    type="radio" 
+                    name="tabs" 
+                    onChange={ this.handleCheckboxChange } 
+                    />
                         <label htmlFor="tab2">Top Tracks</label>
 
-                    <input id="tab3" type="radio" name="tabs" onChange={ this.handleCheckboxChange } />
+                    <input 
+                    id="tab3" 
+                    type="radio" 
+                    name="tabs" 
+                    onChange={ this.handleCheckboxChange } 
+                    />
                         <label htmlFor="tab3">Albums</label>
 
                     <section id="content1">
@@ -89,6 +107,7 @@ class Artist extends Component {
                     <section id="content3">
                         <AlbumList
                             albums={ artistAlbums }
+                            isLoading={ loadingArtist }
                         /> 
                     </section>
                 </div>
@@ -105,13 +124,15 @@ const mapStateToProps = (state) => ({
     relatedArtists: state.artists.relatedArtists,
     currentArtist: state.artists.currentArtist,
     artistTopTracks: state.artists.artistTopTracks,
-    artistAlbums: state.artists.artistAlbums
+    artistAlbums: state.artists.artistAlbums,
+    followedArtists: state.artists.followedArtists
 });
 
 const mapDispatchToProps = (dispatch, props) => ({
     requestArtist: (id) => dispatch(requestArtist(id)),
     requestTopTracks: () => dispatch(requestTopTracks(props.match.params.id)),
-    requestArtistAlbums: () => dispatch(requestArtistAlbums(props.match.params.id))
+    requestArtistAlbums: () => dispatch(requestArtistAlbums(props.match.params.id)),
+    requestFollowArtist: (type) => dispatch(requestFollowArtist(props.match.params.id, type))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Artist);

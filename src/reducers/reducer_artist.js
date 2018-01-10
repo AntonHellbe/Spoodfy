@@ -6,7 +6,9 @@ const INITIAL_STATE = {
     loadingArtist: true,
     relatedArtists: [],
     artistTopTracks: [],
-    artistAlbums: []
+    artistAlbums: [],
+    followedArtists: [],
+    error: ''
 };
 
 
@@ -40,6 +42,12 @@ const artistReducer = (state = INITIAL_STATE, action) => {
         
         case artistActions.ARTIST_ALBUMS_SUCCESS:
             return { ...state, artistAlbums: action.albums, loadingArtist: false };
+        
+        case artistActions.FOLLOWED_ARTISTS_SUCCESS:
+            return { ...state, followedArtists: action.artists };
+        
+        case artistActions.FOLLOWED_ARTISTS_ERROR:
+            return { ...state, error: action.error };
 
         default:
             return state;

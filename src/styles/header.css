@@ -49,6 +49,10 @@
     text-decoration: none;
 }
 
+.brand > a:focus {
+    outline: none;
+}
+
 .brand > a > h3 {
     margin-left: 10px;
     font-size: 20px;

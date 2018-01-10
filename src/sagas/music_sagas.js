@@ -13,7 +13,8 @@ import {
 export function* recentlyPlayedFetch() {
     while (true) {
         yield take([authActions.SET_TOKEN, authActions.INITIAL_AUTH_SUCCESS]);
-        const URL = `${spotifyUrls.baseURL}${spotifyUrls.version}${spotifyUrls.userInfo}${spotifyUrls.recentlyPlayed}`; //eslint-disable-line
+        const URL = `${spotifyUrls.baseURL}${spotifyUrls.version}` +
+        `${spotifyUrls.userInfo}${spotifyUrls.recentlyPlayed}`;
         try {
             const data = yield call(axios.get, URL);
             yield put(updateRecentlyPlayed(data.data.items));
@@ -27,7 +28,8 @@ export function* recentlyPlayedFetch() {
 export function* albumTracksFetch() {
     while (true) {
         const { id, album } = yield take(musicActions.REQUEST_PLAY_ALBUM);
-        const URL = `${spotifyUrls.baseURL}${spotifyUrls.version}${spotifyUrls.albums}/${id}${spotifyUrls.tracks}`;
+        const URL = `${spotifyUrls.baseURL}${spotifyUrls.version}` +
+        `${spotifyUrls.albums}/${id}${spotifyUrls.tracks}`;
         try {
             const data = yield call(axios.get, URL);
             const tracks = data.data.items.map((track) => {

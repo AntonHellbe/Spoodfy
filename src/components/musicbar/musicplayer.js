@@ -1,39 +1,58 @@
 import React, { Component } from 'react';
-import FaPlayCircle from 'react-icons/lib/fa/play-circle';
-import FaPauseCircle from 'react-icons/lib/fa/pause-circle';
-import FaRepeat from 'react-icons/lib/fa/repeat';
-import FaRandom from 'react-icons/lib/fa/random';
-import FaStepBackward from 'react-icons/lib/fa/step-backward';
-import FaStepForward from 'react-icons/lib/fa/step-forward';
 import PropTypes from 'prop-types';
 
 
 class MusicPlayer extends Component {
 
-    renderPlayPause() {
-        if (!this.props.isPlaying) {
-            return <FaPlayCircle className="faPlay" id="play" color={ '#cfcfd1' } />;
-        }
-        return <FaPauseCircle className="faPlay" id="pause" color={ '#cfcfd1' } />;
-    }
-
 
     render() {
+        const {
+            isPlaying,
+            shuffle,
+            repeat,
+            handleMusicControls
+        } = this.props;
         return (
             
             <div 
             className="innerDiv" 
-            onClick={ this.props.handleMusicControls } 
-            onKeyDown={ this.props.keyPress }
-            >
-                <FaStepBackward className="faBackward" id="prev" color={ '#cfcfd1' } />
-                <FaRandom 
-                color={ this.props.shuffle ? '#50f442' : '#cfcfd1' } 
-                id="shuffle"
-                />                                        
-                { this.renderPlayPause() }
-                <FaRepeat id="repeat" color={ this.props.repeat ? '#50f442' : '#cfcfd1' } />
-                <FaStepForward className="faForward" id="next" color={ '#cfcfd1' } />
+            onClick={ handleMusicControls } 
+            >   
+            
+                <button id="prev">
+                    <i className="fa fa-step-backward" aria-hidden="true" />
+                </button>
+                <button id="shuffle">
+                    <i 
+                    className="fa fa-random" 
+                    aria-hidden="true" 
+                    style={ shuffle ? { color: '#50f442' } : { color: '#cfcfd1' } } 
+                    />
+
+                </button >
+                { isPlaying ? 
+                    (
+                    <button id="pause">
+                        <i className="fa fa-pause-circle" aria-hidden="true" style={ { fontSize: '32px', color: '#cfcfd1' } } />
+                    </button> 
+                    )
+                    :
+                    (
+                    <button id="play">
+                            <i className="fa fa-play-circle" aria-hidden="true" />
+                    </button>
+                    )
+                }
+                <button id="repeat">
+                    <i 
+                    className="fa fa-repeat"
+                    aria-hidden="true"
+                    style={ repeat ? { color: '#50f442' } : { color: '#cfcfd1' } }
+                    />
+                </button>
+                <button id="next">
+                    <i className="fa fa-step-forward" aria-hidden="true" />
+                </button>
             </div>
             
 

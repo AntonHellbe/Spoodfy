@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import FaClock from 'react-icons/lib/fa/clock-o';
 import PropTypes from 'prop-types';
 import TrackItem from './trackitem';
 import Loader from '../loader/loader';
@@ -42,7 +41,7 @@ class TrackTable extends Component {
                         <th className="table-col-title"> Title </th>
                         <th className="table-col-album"> Artist </th>
                         <th className="table-col-album"> Album </th>
-                        <th className="table-col-time"> <FaClock size={ 24 } /> </th>
+                        <th className="table-col-time"> <i className="fa fa-clock-o" aria-hidden="true" /> </th>
                         <th className="table-col-actions" />
                     </tr>
                     {tracks.map((item, index) => {
@@ -86,7 +85,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 TrackTable.propTypes = {
     tracks: PropTypes.array.isRequired,
-    isPlaylist: PropTypes.bool.opt,
+    // isPlaylist: PropTypes.bool.opt,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(TrackTable);

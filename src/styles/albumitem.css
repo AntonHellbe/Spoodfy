@@ -25,17 +25,22 @@
     margin:0;
     position: relative;
     display: block;
+    /* left: 50%; */
 }
 
-.icon-play {
+.fa.fa-play {
     position:absolute;
     margin: auto;
     top:0; bottom:0; left: 0; right: 0;
-    border-radius: 200%;
     padding: 10px;
+    padding-left: 15px; /* Ghetto solution? */
+    /* margin-left: 5px; */
     border:1px solid #fff;
+    border-radius: 200%;
     color: #fff;
-    
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
     opacity: 0;
     z-index: 1;
 }
@@ -65,7 +70,7 @@
     opacity: 0.5;
 }
 
-.albumItem > a:hover > .icon-play {
+.albumItem > a:hover > .fa.fa-play {
     opacity: 1;
 }
 

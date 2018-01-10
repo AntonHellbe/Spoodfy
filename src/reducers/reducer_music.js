@@ -44,10 +44,9 @@ const musicReducer = (state = INITIAL_STATE, action) => {
         case musicActions.PREVIOUS_TRACK:
             return { 
                 ...state, 
-                currentTrack: 
-                state.queue[state.playingIndex - 1], 
+                currentTrack: state.queue[state.playingIndex - 1], 
                 playingIndex: state.playingIndex - 1,
-                currentAlbum: [state.playingIndex - 1].album };
+                currentAlbum: state.queue[state.playingIndex - 1].album };
             
         case musicActions.TOGGLE_SHUFFLE:
             return { 
@@ -80,6 +79,7 @@ const musicReducer = (state = INITIAL_STATE, action) => {
                 volume: action.volume };
 
         case musicActions.PLAY_ALBUM_SUCCESS:
+                console.log(action);
             return { 
                 ...state, 
                 currentTrack: action.tracks[0], 

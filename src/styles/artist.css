@@ -1,27 +1,28 @@
 .artist-layout {
     grid-area: 2 / 2 / 5 / 3;
     background: #181818;
-    padding: 20px;
-    /* border-top: 0.5px solid rgba(125, 125, 135, 0.25); */
+    padding: 25px;
+    border-top: 0.5px solid rgba(125, 125, 135, 0.25);
+    border-right: 0.5px solid rgba(125, 125, 135, 0.25);
     /* border: 1px solid green; */
-    overflow: hidden;
-    max-height: 100%;
+    box-sizing: border-box;
 }
 
 .artist-banner {
     width: 100%;
-    height: 250px;
-    padding: 5px;
-    border-bottom: 0.5px solid rgba(125, 125, 135, 0.25);
+    height: 200px;
+    margin-bottom: 20px;
+    /* border: 1px solid blue; */
 }
 
 .artist-banner > img {
-    width: 20%;
+    width: 200px;
     min-width: 250px;
     height: 100%;
     float: left;
     margin-right: 10px;
     border-radius: 50%;
+    display: block;
 }
 
 .artist-information {
@@ -52,17 +53,26 @@
 .artist-description {
     height: 50%;
     display: flex;
-    align-items: center;
+    /* align-items: center; */
+    justify-content: flex-end;
     padding: 5px;
     width: 100%;
+    /* border: 1px solid violet; */
+    box-sizing: border-box;
 }
 
 .artist-description > ul {
+    align-self: center;
     list-style: none;
     padding: 0;
-    margin: 0;
+    margin: 0 auto;
+    margin-left: 0;
     font-size:12px;
     color: #fff;
+    border: 1px solid black;
+    box-sizing: border-box;
+    /* width: 0; */
+    /* min-width: 300px; */
 }
 
 .artist-description > ul > li {
@@ -70,6 +80,23 @@
     overflow:hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+}
+
+.follow-button{
+    align-self: flex-end;
+    justify-self: flex-end;
+    border-radius: 34px;
+    background: #ff6b42;
+    color: #fff;
+    border: none;
+    font-size: 12px;
+    width:120px;
+    height: 30px;
+    letter-spacing: 2px;
+}
+
+.follow-button:hover {
+    cursor: pointer;
 }
 
 .artist-description > p {
@@ -81,9 +108,9 @@
 .tabbed {
     margin-top: 10px;
     width: 100%;
-    height: calc(100% - 250px);
+    height: calc(100% - 200px);
     /* border: 1px solid blue; */
-    display: block;
+    box-sizing: border-box;
 }
 
 .tabbed > label {
@@ -91,8 +118,12 @@
     margin: 0 0 -1px;
     padding: 15px 25px;
     text-align: center;
-    border: 1px solid transparent;
+    /* border: 1px solid transparent; */
     color: #fff;
+    user-select: none;
+    -ms-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
 }
 
 .tabbed > label:hover {
@@ -105,13 +136,6 @@
     display:none;
 }
 
-.tabbed > input:checked + label {
-    color: #555;
-    border: 1px solid #ddd;
-    border-top: 2px solid orange;
-    border-bottom: #ddd;
-}
-
 #tab1:checked ~ #content1,
 #tab2:checked ~ #content2,
 #tab3:checked ~ #content3 {
@@ -121,9 +145,29 @@
 .tabbed > section {
     display: none;
     padding: 20px 0 0;
+    border-top: 0.5px solid rgba(125, 125, 135, 0.25);
+    /* border-left: 0.5px solid rgba(125, 125, 135, 0.25); */
     /* border:1px solid green; */
-    height: 100%;
+    /* border-top: 1px solid #ddd; */
+    width: 100%;
+    height: calc(100% - 45px);
     padding: 5px;
     overflow-y: scroll;
+    box-sizing: border-box;
+    /* border: 1px solid white; */
 }
+
+.tabbed > input:checked + label {
+    color: #7b7b7b;
+    border: 0.5px solid rgba(125, 125, 135, 0.25);
+    border-top: 2px solid #ff6b42;
+    border-bottom: none;
+    /* border-bottom: #ddd; */
+}
+
+.tabbed > label {
+    border-bottom: #181818;
+}
+
+
 

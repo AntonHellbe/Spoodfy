@@ -40,5 +40,9 @@ const mapDispatchToProps = (dispatch) => ({
     requestArtist: (id) => dispatch(requestArtist(id))
 });
 
+// const mapStateToProps = (state) => ({
+//     followedArtists: state.artists.followedArtists
+// });
+
 export default connect(null, mapDispatchToProps)(ArtistSection);
 

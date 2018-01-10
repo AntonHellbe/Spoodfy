@@ -33,12 +33,14 @@ class Playlist extends Component {
                 tracks={ tracks }
                 /> 
                 <div className="playlistTracks">
+                
                     <TrackTable 
                     tracks={ playlistSongs } 
                     isPlaylist={ isPlaylist }
                     isLoading={ loadingPlaylist }
                     />
                 </div>
+                
             </React.Fragment>
         );
     }
