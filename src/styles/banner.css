@@ -1,0 +1,140 @@
+.banner-container {
+  width: 100%;
+  height: 300px;
+  /* border: 1px solid green; */
+  display:grid;
+  grid-template-columns: 200px 1fr 100px;
+  grid-template-rows: 100px 100px 1fr;
+}
+
+.image-wrapper{
+  grid-area: 1 / 1 / 3 / 2;
+  /* border: 1px solid blue; */
+  /*background:blue; */
+}
+
+.image-wrapper > img {
+  height: 100%;
+  width: 100%;
+}
+
+.banner-title {
+  grid-area: 1 / 2 / 2 / 3;
+  /* border: 1px solid brown; */
+  padding-left: 10px;
+  padding-top: 10px;
+}
+
+.banner-title > h {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.banner-title > h1 {
+  margin: 0;
+  padding: 0;
+  font-weight:normal;
+  font-size: 24px;
+  margin-bottom: 7px;
+  
+}
+
+.banner-title > h3 {
+  margin:0;
+  padding:0;
+  font-weight:normal;
+  font-size: 16px;
+}
+
+.banner-description {
+  grid-area: 2 / 2 / 3 / 3;
+  /* border: 1px solid red; */
+  margin: auto 0;
+  height: 100%;
+  width: 100%;
+  box-sizing:border-box;
+  padding-left: 10px;
+  padding-top: 10px;
+}
+
+.banner-description > ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 12px;
+}
+
+.banner-description > ul > li {
+  display:block;
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow: ellipsis;
+}
+
+.information-top-right {
+  grid-area: 1 / 3 / 2 / 4;
+  /* border:1px solid blue; */
+  padding:5px;
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+  text-align:right;
+}
+
+.information-top-right > p {
+  margin:0;
+  padding: 0;
+  font-size: 12px;
+}
+
+.information-bottom-right {
+  grid-area: 2 / 3 / 3 / 4;
+  padding: 5px;
+  /* border: 1px solid green; */
+  display:flex;
+  justify-content:center;
+  align-items: flex-end;
+  text-align:right;
+}
+
+.information-bottom-right > p {
+  margin: 0;
+  padding: 0;
+  font-size:12px;
+  /* border:1px solid blue; */
+}
+.action-buttons {
+  grid-area: 3 / 1 / 4 / 4;
+  padding: 10px;
+  /* border: 1px solid pink; */
+  display: flex;
+  flex-flow: row nowrap;
+  align-items:flex-start;
+  justify-content:flex-start;
+}
+
+.action-buttons > button {
+  margin: 0px 15px;
+}
+
+@media (min-width: 300px) and (max-width: 600px) {
+  .banner-container > .information-top-right {
+    display:none;
+    grid-area:none;
+  }
+  .banner-container > .information-bottom-right {
+    display:none;
+  }
+  
+  .banner-container > .banner-title {
+    grid-area: 1 / 2 / 2 / 4;
+  }
+  
+  .banner-container > .banner-description {
+    grid-area: 2 / 2 / 3 / 4;
+  }
+  
+}
+
+

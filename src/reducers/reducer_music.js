@@ -62,7 +62,10 @@ const musicReducer = (state = INITIAL_STATE, action) => {
             console.log(action.track);
             console.log(state.queue.slice(0, state.playingIndex + 1).concat(action.track).concat(state.queue.slice(state.playingIndex + 1)));
             return { 
-                ...state, queue: state.queue.slice(0, state.playingIndex + 1).concat(action.track).concat(state.queue.slice(state.playingIndex + 1)) };
+                ...state, 
+                queue: state.queue.slice(0, state.playingIndex + 1)
+                .concat(action.track)
+                .concat(state.queue.slice(state.playingIndex + 1)) };
 
         case musicActions.UPDATE_RECENTLY_PLAYED:
             return { 
