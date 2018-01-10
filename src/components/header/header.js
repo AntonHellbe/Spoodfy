@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import FaSpotify from 'react-icons/lib/fa/spotify';
-import FaAngleDown from 'react-icons/lib/fa/angle-down';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 import { logoutRequest } from '../../actions/auth_actions';
@@ -13,22 +12,43 @@ class Header extends Component {
         isVisible: false
     }
 
+    
+    componentDidMount() {
+        document.addEventListener('click', this.handleWindowClick);
+    }
+    
+    componentWillUnmount() {
+        document.removeEventListener('click', this.handleWindowClick);
+    }
+
+    handleWindowClick = (e) => {
+        const targetElement = e.target;
+        if (this.state.isVisible && !this.dropdown.contains(targetElement)) {
+            this.setState(() => ({ isVisible: false }));
+        }
+    }
+
+    handleOnClick = () => {
+        this.setState((prevState) => ({ isVisible: !prevState.isVisible }));
+    }
+    
     OnLogoutHandler = () => {
         this.props.logoutRequest();
     }
 
-    handleOnClick = () => {
-        this.setState(() => ({ isVisible: !this.state.isVisible }));
-    }
-    
     render() {
-        // const { user = null } = this.props.user;
+        const {
+            isAuthenticated,
+            user,
+
+        } = this.props;
+
         return (
 
             <div className="header">
                 <div className="brand">
-                    <Link to="/"> 
-                    <FaSpotify className="brandIcon" size={ '24px' } color={ '#ff6b42' } />
+                    <Link to="/">
+                    <i className="fa fa-spotify" aria-hidden="true" />
                         <h3>spoodfy </h3>
                     </Link>
                 </div>
@@ -40,24 +60,26 @@ class Header extends Component {
                     </div>
                 
                 </div>
-                <div className="usersection">
-                    { this.props.isAuthenticated ?
+                <div className="usersection" id="usersection">
+                    { isAuthenticated ?
                     (   
                         <React.Fragment>
                             <div className="dropdown">
                                 <span 
                                 onClick={ this.handleOnClick } 
+                                ref={ (dropdown) => { this.dropdown = dropdown; } }
                                 >
-                                    { !(_.isEmpty(this.props.user)) &&
-                                        this.props.user.id
+                                    { !(_.isEmpty(user)) &&
+                                        user.id
                                     }
                                  </span>
-                                    <FaAngleDown 
-                                    className="fa-angle-down" 
+                                    <i 
+                                    className="fa fa-angle-down" 
+                                    aria-hidden="true"
                                     onClick={ this.handleOnClick } 
                                     />
                                  <div 
-                                 className="dropdown-content" 
+                                 className="dropdown-content"
                                  style={ this.state.isVisible ? 
                                     { display: 'block' } : 
                                     { display: 'none' } } 

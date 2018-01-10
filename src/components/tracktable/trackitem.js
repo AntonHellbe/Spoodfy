@@ -13,17 +13,37 @@ const TrackItem = (props) => {
         if (currentTrack) {
             currentId = currentTrack.track ? currentTrack.track.id : currentTrack.id;
         }
+
+
+        const minutes = Math.floor((Number(duration_ms) / 1000 / 60));
+        let seconds = Math.floor((Number(duration_ms) / 1000 % 60));
+
+        if (seconds < 10) {
+            seconds = `0${seconds}`;
+        }
         
         const color = currentId === id ? '#ff6b42' : '#ffffff';
         return (
             <tr className="track" style={ { color } }>
-            <td className="index-col" > { index } </td>
-                <td onDoubleClick={ () => { props.selectTrack(index, track); } }>{ name }</td>
-            <td> { artists.map((artist) => `${artist.name} `) } </td>
-            <td> { album.name } </td>
-            <td> { (Number(duration_ms) / 1000 / 60).toFixed(2) } </td>
-            <td onClick={ () => props.AddToQueue(props.track) }> <FaPlus color={ '#ffffff' } /> </td>
-        </tr>
+                <td className="index-col" > 
+                    { index } 
+                </td>
+                <td onDoubleClick={ () => { props.selectTrack(index, track); } }>
+                    { name }
+                    </td>
+                <td> 
+                    { artists.map((artist) => `${artist.name} `) } 
+                </td>
+                <td> 
+                    { album.name } 
+                </td>
+                <td> 
+                    { `${minutes}.${seconds}` } 
+                </td>
+                <td onClick={ () => props.AddToQueue(props.track) }> 
+                        <i className="fa fa-plus" aria-hidden="true" /> 
+                </td>
+            </tr>
         );
 };
 

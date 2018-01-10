@@ -36,6 +36,10 @@
     color:#cfcfd1;
 }
 
+.link:focus {
+    outline: none;
+}
+
 .link{
     text-decoration: none;
     color: gray;

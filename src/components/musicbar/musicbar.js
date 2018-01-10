@@ -36,6 +36,7 @@ class MusicBar extends Component {
         this.audioElement.addEventListener('pause', this.OnPause);
         this.initializeVisualization();
         this.audioElement.volume = this.props.volume; //Why?
+        // document.addEventListener('keydown', this.handleKeyPress);
     }
 
 
@@ -59,6 +60,7 @@ class MusicBar extends Component {
         this.audioElement.removeEventListener('ended', this.props.OnEndedListener);
         this.audioElement.removeEventListener('loadeddata', this.onLoadedData);
         this.audioElement.removeEventListener('pause', this.OnPause);
+        // document.removeEventListener('keydown', this.handleKeyPress);
     }
 
     onMouseDown = () => {
@@ -145,8 +147,9 @@ class MusicBar extends Component {
     }
 
     handleKeyPress = (event) => { // Needs to be a global event listener
-        console.log(event.key);
-        if (event.key === 'Space') {
+         
+        if (event.keyCode === 32) {
+            event.preventDefault(); 
             if (this.props.isPlaying) {
                 this.pauseAudio();
             } else {
@@ -254,7 +257,6 @@ class MusicBar extends Component {
                 <div className="musicDisplay" key="musicDisplay">
                     <MusicPlayer 
                     handleMusicControls={ this.handleMusicControls }
-                    keyPress={ this.handleKeyPress }
                     repeat={ repeat }
                     currentTrack={ currentTrack }
                     isPlaying={ isPlaying }

@@ -14,6 +14,11 @@
     padding-left: 25px;
 }
 
+.fa.fa-spotify {
+    font-size: 24px;
+    color: #ff6b42;
+}
+
 .navLinks{
     width:auto;
     height: 100%;
@@ -75,6 +80,10 @@
     display:flex;
     justify-content: space-around;
     align-content: center;
+    -ms-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
 }
 
 .usersection > button:hover {
