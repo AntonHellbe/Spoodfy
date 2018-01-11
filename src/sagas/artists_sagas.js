@@ -9,8 +9,6 @@ import {
     artistError,
     relatedArtistsSuccess,
     relatedArtistsError,
-    topTracksSuccess,
-    topTracksError,
     artistAlbumsSuccess,
     artistAlbumsError,
     followedArtistsSuccess,
@@ -61,17 +59,6 @@ export function* relatedArtistsFetch() {
     }
 }
 
-export function* topTracksFetch({ id }) {
-    const URL = `${spotifyUrls.baseURL}${spotifyUrls.version}` +
-    `${spotifyUrls.artists}/${id}${spotifyUrls.topTracks}?country=SE`;
-    try {
-        const data = yield call(axios.get, URL);
-        // console.log(data);
-        yield put(topTracksSuccess(data.data.tracks));
-    } catch (e) {
-        yield put(topTracksError(e));
-    }
-}
 
 export function* artistAlbumsFetch({ id }) {
     const URL = `${spotifyUrls.baseURL}${spotifyUrls.version}${spotifyUrls.artists}`+
@@ -127,7 +114,6 @@ export const artistsSagas = [
     fork(artistFetch),
     fork(relatedArtistsFetch),
     fork(followedArtistsRequest),
-    takeLatest(artistActions.REQUEST_ARTIST_TOP_TRACKS, topTracksFetch),
     takeLatest(artistActions.REQUEST_ARTIST_ALBUMS, artistAlbumsFetch),
     takeLatest(artistActions.REQUEST_FOLLOW_ARTIST, followActionRequest)
 ];

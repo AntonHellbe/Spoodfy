@@ -21,6 +21,7 @@ const musicReducer = (state = INITIAL_STATE, action) => {
                 isPlaying: !state.isPlaying };
 
         case musicActions.SELECT_TRACK:
+            console.log('Receieved track');
             return { ...state, 
                 currentTrack: action.track, 
                 playingIndex: action.index, 
@@ -59,8 +60,6 @@ const musicReducer = (state = INITIAL_STATE, action) => {
                 repeat: !state.repeat };
 
         case musicActions.ADD_TO_QUEUE:
-            console.log(action.track);
-            console.log(state.queue.slice(0, state.playingIndex + 1).concat(action.track).concat(state.queue.slice(state.playingIndex + 1)));
             return { 
                 ...state, 
                 queue: state.queue.slice(0, state.playingIndex + 1)
@@ -83,7 +82,6 @@ const musicReducer = (state = INITIAL_STATE, action) => {
                 volume: action.volume };
 
         case musicActions.PLAY_ALBUM_SUCCESS:
-                console.log(action);
             return { 
                 ...state, 
                 currentTrack: action.tracks[0], 

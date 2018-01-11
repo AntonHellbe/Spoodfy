@@ -17,6 +17,7 @@ export function* myPlaylists() {
         yield put(playlistsFetched(data.data.items));
     } catch (e) {
         console.log('ERROR OCCURED');
+        console.log(e);
         yield put(playlistError(e));
     }
 }

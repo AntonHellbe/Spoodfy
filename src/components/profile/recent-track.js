@@ -1,5 +1,4 @@
 import React from 'react';
-import FaPlay from 'react-icons/lib/fa/play';
 
 
 const RecentTrack = (props) => {
@@ -18,7 +17,7 @@ const RecentTrack = (props) => {
             src={ album.images[0].url }
             role="presentation"
             />
-            <FaPlay className="icon-play" size={ '24px' } />
+            <i className="fa fa-play" aria-hidden="true" />
             </button>
             <ul>
                 <li>{ track.name }</li>

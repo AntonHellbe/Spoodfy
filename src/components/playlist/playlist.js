@@ -4,12 +4,22 @@ import {
     requestPlaylistSongs,
     updateActivePlaylist
 } from '../../actions/playlist_actions';
-import PlaylistBanner from './playlist-banner';
+import {
+    selectTrack
+} from '../../actions/music_actions';
+import Banner from '../banner/banner';
 import TrackTable from '../tracktable/tracktable';
 
 const isPlaylist = true;
 
 class Playlist extends Component {
+
+
+    onClickPlay = () => {
+        const { playlistSongs } = this.props;
+        console.log(playlistSongs[0]);
+        this.props.selectTrack(playlistSongs[0].track, playlistSongs.map((track) => track.track));
+    }
 
 
     render() {
@@ -18,21 +28,32 @@ class Playlist extends Component {
             loadingPlaylist,
             activePlaylist: {
                 name,
-                owner,
+                owner: {
+                    display_name,
+                    id
+                },
                 images,
-                tracks
+                tracks,
+                tracks: { total },
+                type,
             }
         } = this.props;
-        
         return (
-            <React.Fragment>
-                <PlaylistBanner 
-                name={ name }
-                owner={ owner }
-                images={ images }
-                tracks={ tracks }
+            <div className="main-content">
+                <div className="main-content-wrapper">
+                <Banner
+                title={ name }
+                subtitle={ type }
+                bottomRightInformation={ this.props.activePlaylist.public ? 'Public Playlist' : 'Private Playlist' }
+                topRightInformation={ `${id}` }
+                item1={ display_name ? `Created by ${display_name}` : `${id}` }
+                item2={ `Total tracks: ${total}` }
+                image={ images[0].url }
+                playButton={ true }
+                playAction={ this.onClickPlay }
                 /> 
-                <div className="playlistTracks">
+                
+                <div className="main-content-bottom">
                 
                     <TrackTable 
                     tracks={ playlistSongs } 
@@ -40,8 +61,9 @@ class Playlist extends Component {
                     isLoading={ loadingPlaylist }
                     />
                 </div>
+                </div>
+            </div>
                 
-            </React.Fragment>
         );
     }
 }
@@ -57,6 +79,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch, props) => ({
     requestPlaylistSongs: () => dispatch(requestPlaylistSongs(props.params.match.id)),
     updateActivePlaylist: (playlist) => dispatch(updateActivePlaylist(playlist)),
+    selectTrack: (track, queue) => dispatch(selectTrack(0, track, queue))
 });
 
 

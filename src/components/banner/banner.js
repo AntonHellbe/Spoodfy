@@ -1,62 +1,183 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 
-const Banner = () => {
+class Banner extends Component {
 
-    return (
-        <div className="banner-container">
-            <div className="image-wrapper">
-                <img
-                    src="https://d1wn0q81ehzw6k.cloudfront.net/additional/thul/media/0eaa14d11e8930f5?w=400&h=400"
-                    role="presentation"
-                />
+    onClickFollow = (e) => {
+        const id = e.target.id;
+        this.props.followAction(id);
+    }
 
-                </div>
-                <div className="banner-title">
-                    <h1>
-                        Spooodfy
-                    </h1>
-                    <h3>
-                        Some subtitle
-                    </h3>
-                </div>
+    renderAllButtons = () => {
+        const { isFollowing, playAction } = this.props;
 
-                <div className="banner-description">
-                    <ul>
-                        <li>Test1</li>
-                        <li>Test2</li>
-                        <li>Test3</li>
-                    </ul>
+        const followingButton = isFollowing ?
+        (
+            <button 
+            className="btn-unfollow" 
+            id="unfollow" 
+            onClick={ this.onClickFollow }
+            >
+                    Unfollow
+            </button>
+        ) :
+        (
+            <button className="btn-follow" id="follow" onClick={ this.onClickFollow } >
+                Follow
+            </button>
+        );
 
-                </div>  
+        return (
+            <React.Fragment>
+                { followingButton }
 
-            <div className="information-top-right">
-                <p>
-                    Popularity
-                    128,365
-                </p>
-
-            </div>
-
-            <div className="information-bottom-right">
-                <p>
-                    Followers
-                    383,612
-                </p>
-            </div>
-
-            <div className="action-buttons">
-                <button className="btn-play">
+                <button className="btn-play" onClick={ playAction } >
                     Play
                 </button>
-                <button className="btn-follow">
-                    Follow
-                </button>
 
+                <button className="btn-share">
+                    ...
+                </button>
+            </React.Fragment>
+        );
+    }
+
+    renderFollowButton = () => {
+        const { 
+            isFollowing = false, 
+            followButton = false,
+        } = this.props;
+        
+
+        if (followButton) {
+            if (isFollowing) {
+                return (
+                    <button className="btn-follow" id="unfollow" onClick={ this.onClickFollow } >
+                        Unfollow
+                    </button>
+                );
+            }
+            return (
+            <button className="btn-follow" id="follow" onClick={ this.onClickFollow } >
+                Follow
+            </button>
+            );
+
+            }
+        return null;
+
+        }
+        
+
+    renderPlayButton = () => {
+        const { playButton = false, playAction } = this.props;
+        if (playButton) {
+            return (
+                <button className="btn-play" onClick={ playAction } >
+                    Play
+                </button>
+            );
+        }
+        return null;
+    }
+
+    renderShareButton = () => {
+        const { shareButton = false } = this.props;
+        if (shareButton) {
+            return (
+                <button className="btn-share">
+                    ...
+                </button>
+            );
+        }
+
+        return null;
+        
+    }
+
+    renderImage = () => {
+        const { image } = this.props;
+        if (image) {
+            return (
+                <img 
+                src={ image }
+                role="presentation"
+                />
+            );
+        }
+
+        return (
+            <img
+                src="https://d1wn0q81ehzw6k.cloudfront.net/additional/thul/media/0eaa14d11e8930f5?w=400&h=400"
+                role="presentation"
+            />
+        );
+    }
+
+
+    render() {
+
+        const {
+            subtitle = null,
+            title = null,
+            item1 = null,
+            item2 = null,
+            item3 = null,
+            topRightInformation = null,
+            bottomRightInformation = null,
+            renderAllButtons = false
+            
+        } = this.props;
+
+        return (
+            <div className="banner-container">
+                <div className="image-wrapper">
+                    { this.renderImage() }
+
+                    </div>
+                    <div className="banner-title">
+                        <h3>
+                            { subtitle }
+                        </h3>
+                        <h1>
+                            { title }
+                        </h1>
+                    </div>
+
+                    <div className="banner-description">
+                        <ul>
+                            <li>{ item1 }</li>
+                            <li>{ item2 }</li>
+                            <li>{ item3 }</li>
+                        </ul>
+
+                    </div>  
+
+                <div className="information-top-right">
+                    <p>
+                        { topRightInformation }
+                    </p>
+
+                </div>
+
+                <div className="information-bottom-right">
+                    <p>
+                        { bottomRightInformation }
+                    </p>
+                </div>
+
+                <div className="action-buttons">
+                    { renderAllButtons &&
+                    this.renderAllButtons()
+                    }
+                    { this.renderPlayButton() }
+                    { this.renderFollowButton() }
+                    { this.renderShareButton() }
                 </div>
             </div>
 
-    );
-};
+        );
+    }
+}
 
 export default Banner;
