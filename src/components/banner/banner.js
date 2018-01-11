@@ -8,6 +8,54 @@ class Banner extends Component {
         this.props.followAction(id);
     }
 
+    renderButtons = () => {
+        const buttons = [];
+
+        const {
+            isFollowing = false,
+            followButton = false,
+            playButton = false, 
+            playAction = null,
+            shareButton = false
+        } = this.props;
+
+
+        if (followButton) {
+            if (isFollowing) {
+                buttons[0] = (
+                    <button className="btn-follow" id="unfollow" onClick={ this.onClickFollow  } >
+                        Unfollow
+                    </button>
+                );
+            }
+            buttons[0] = (
+                <button className="btn-follow" id="follow" onClick={ this.onClickFollow } >
+                    Follow
+            </button>
+            );
+
+        }
+
+        if (playButton) {
+            buttons[1] = (
+                <button className="btn-play" onClick={ playAction } >
+                    Play
+                </button>
+            );
+        }
+
+        if (shareButton) {
+            buttons[2] = (
+                <button className="btn-share">
+                    ...
+                </button>
+            );
+        }
+
+        return buttons;
+
+    }
+
     renderAllButtons = () => {
         const { isFollowing, playAction } = this.props;
 
@@ -18,7 +66,7 @@ class Banner extends Component {
             id="unfollow" 
             onClick={ this.onClickFollow }
             >
-                    Unfollow
+                Unfollow
             </button>
         ) :
         (

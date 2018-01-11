@@ -52,6 +52,7 @@ class MusicBar extends Component {
                 this.props.loadNextTrack();
             }
          }
+
     }
 
     componentWillUnmount() {

@@ -45,8 +45,9 @@ const PlaylistItem = (props) => {
                         role="presentation"
                     />
                 )}
-                {/* <i className="fa fa-volume-up" aria-hidden="true" /> */}
+                
                 <p>{ playlist.name } </p>
+                {/* <i className="fa fa-volume-up" aria-hidden="true" /> */}
             </Link>
         </li>
     );

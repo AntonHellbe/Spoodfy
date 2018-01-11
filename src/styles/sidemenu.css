@@ -83,3 +83,7 @@
     border: 1px solid #cfcfd1;
     border-radius: 5px;
 }
+
+.fa.fa-volume-up {
+    margin: auto 0;
+}

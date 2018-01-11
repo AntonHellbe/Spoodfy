@@ -22,6 +22,7 @@ class Playlist extends Component {
 
     onClickPlay = () => {
         const { playlistSongs } = this.props;
+        console.log(playlistSongs);
         this.props.selectTrack(playlistSongs[0].track, playlistSongs.map((track) => track.track));
     }
 

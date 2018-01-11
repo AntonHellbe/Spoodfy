@@ -6,8 +6,14 @@ class Login extends Component {
 
     componentWillMount() {
         this.props.initialAuthRequest();
-        
     }
+
+    // componentDidMount() {
+    //     window.onbeforeunload = () => {
+    //         localStorage.removeItem('token');
+    //         return '';
+    //     };
+    // }
 
     render() {
         return (

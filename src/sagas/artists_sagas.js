@@ -16,10 +16,6 @@ import {
     followActionSuccess
 } from '../actions/artist_actions';
 
-import {
-    followPlaylistSuccess
-} from '../actions/playlist_actions';
-
 export function* topArtistsFetch() {
     while (true) {
         yield take(artistActions.REQUEST_TOP_ARTISTS);
@@ -83,7 +79,7 @@ export function* followedArtistsRequest() {
         yield take([authActions.SET_TOKEN, 
             authActions.INITIAL_AUTH_SUCCESS, 
             artistActions.FOLLOW_ACTION_SUCCESS]);
-        console.log('Fetching followed artists!');
+        // console.log('Fetching followed artists!');
         const URL = `${spotifyUrls.baseURL}${spotifyUrls.version}` +
         `${spotifyUrls.userInfo}${spotifyUrls.following}?type=artist`;
         try {
@@ -106,7 +102,7 @@ export function* followArtistRequest({ id, action }) {
         yield call(axios.put, URL) : 
         yield call(axios.delete, URL);
         if (data.status === 204) {
-            console.log('Status is OK, yielding Action success');
+            // console.log('Status is OK, yielding Action success');
             yield put(followActionSuccess());
         }
 
