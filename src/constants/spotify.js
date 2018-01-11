@@ -18,7 +18,12 @@ export const spotifyUrls = {
     relatedArtists: '/related-artists',
     topTracks: '/top-tracks',
     market: '?market=SE',
-    following: '/following'
+    following: '/following',
+    queryType: '?type=',
+    queryIds: '&ids=',
+    followers: '/followers',
+    contains: '/contains',
+    queryAlbumType: '&album_type='
 
 };
 

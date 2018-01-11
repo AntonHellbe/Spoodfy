@@ -29,14 +29,42 @@ export const playlistTracksError = (error) => ({
     error
 });
 
-export const updateActivePlaylist = (playlist) => {
+export const updateActivePlaylist = (playlist, spotifyId) => {
     return {
         type: playlistActions.UPDATE_PLAYLIST_ID,
-        playlist
+        playlist,
+        spotifyId
     };
 };
 
-export const updateActivePlaylistWithId = (playlistId) => ({
-    type: playlistActions.UPDATE_PLAYLIST_ID,
-    playlistId
+export const isFollowingPlaylistSuccess = (bool) => ({
+    type: playlistActions.IS_FOLLOWING_SUCCESS,
+    bool
+});
+
+export const isFollowingPlaylistError = (error) => ({
+    type: playlistActions.IS_FOLLOWING_ERROR,
+    error
+});
+
+export const requestFollowPlaylist = (playlist, action, spotifyId) => ({
+    type: playlistActions.REQUEST_FOLLOW_PLAYLIST,
+    playlist,
+    action,
+    spotifyId
+});
+
+export const followPlaylistSuccess = (playlist, spotifyId) => ({
+    type: playlistActions.FOLLOW_PLAYLIST_SUCCESS,
+    playlist,
+    spotifyId
+});
+
+export const followPlaylistError = (error) => ({
+    type: playlistActions.FOLLOW_PLAYLIST_ERROR,
+    error
+});
+
+export const clearActivePlaylist = () => ({
+    type: playlistActions.CLEAR_ACTIVE_PLAYLIST
 });

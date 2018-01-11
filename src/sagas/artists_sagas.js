@@ -1,7 +1,7 @@
 import { take, put, call, fork, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
 import { spotifyUrls } from '../constants/spotify';
-import { artistActions, authAuctions, authActions } from '../constants/actions';
+import { artistActions, authActions } from '../constants/actions';
 import {
     topArtistsSuccess,
     topArtistsError,
@@ -15,6 +15,10 @@ import {
     followedArtistsError,
     followActionSuccess
 } from '../actions/artist_actions';
+
+import {
+    followPlaylistSuccess
+} from '../actions/playlist_actions';
 
 export function* topArtistsFetch() {
     while (true) {
@@ -61,9 +65,9 @@ export function* relatedArtistsFetch() {
 
 
 export function* artistAlbumsFetch({ id }) {
-    const URL = `${spotifyUrls.baseURL}${spotifyUrls.version}${spotifyUrls.artists}`+
-    `/${id}${spotifyUrls.albums}${spotifyUrls.market}`;
-    // console.log(URL);
+    const URL = `${spotifyUrls.baseURL}${spotifyUrls.version}${spotifyUrls.artists}` +
+    `/${id}${spotifyUrls.albums}${spotifyUrls.market}${spotifyUrls.queryAlbumType}album`;
+    console.log(URL);
     try {
         const data = yield call(axios.get, URL);
         // console.log(data);
@@ -76,7 +80,9 @@ export function* artistAlbumsFetch({ id }) {
 
 export function* followedArtistsRequest() {
     while (true) {
-        yield take([authActions.SET_TOKEN, authActions.INITIAL_AUTH_SUCCESS, artistActions.FOLLOW_ACTION_SUCCESS]);
+        yield take([authActions.SET_TOKEN, 
+            authActions.INITIAL_AUTH_SUCCESS, 
+            artistActions.FOLLOW_ACTION_SUCCESS]);
         console.log('Fetching followed artists!');
         const URL = `${spotifyUrls.baseURL}${spotifyUrls.version}` +
         `${spotifyUrls.userInfo}${spotifyUrls.following}?type=artist`;
@@ -90,17 +96,20 @@ export function* followedArtistsRequest() {
     }
 }
 
-export function* followActionRequest({ id, action }) {
+export function* followArtistRequest({ id, action }) {
+    console.log(id, action);
     const URL = `${spotifyUrls.baseURL}${spotifyUrls.version}${spotifyUrls.userInfo}` +
-        `${spotifyUrls.following}?type=artist&ids=${id}`;
+        `${spotifyUrls.following}${spotifyUrls.queryType}${id}${spotifyUrls.queryIds}${id}`;
+
     try {
-        const data = action === 'follow' ? yield call(axios.put, URL) : yield call(axios.delete, URL);
+        const data = action === 'follow' ? 
+        yield call(axios.put, URL) : 
+        yield call(axios.delete, URL);
         if (data.status === 204) {
             console.log('Status is OK, yielding Action success');
             yield put(followActionSuccess());
         }
 
-        //Handle error
         console.log(data);
     } catch (e) {
         console.log(e);
@@ -115,5 +124,5 @@ export const artistsSagas = [
     fork(relatedArtistsFetch),
     fork(followedArtistsRequest),
     takeLatest(artistActions.REQUEST_ARTIST_ALBUMS, artistAlbumsFetch),
-    takeLatest(artistActions.REQUEST_FOLLOW_ARTIST, followActionRequest)
+    takeLatest([artistActions.REQUEST_FOLLOW_ARTIST], followArtistRequest)
 ];

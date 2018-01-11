@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
     requestPlaylistSongs,
-    updateActivePlaylist
+    updateActivePlaylist,
+    requestFollowPlaylist
 } from '../../actions/playlist_actions';
 import {
     selectTrack
@@ -10,15 +11,28 @@ import {
 import Banner from '../banner/banner';
 import TrackTable from '../tracktable/tracktable';
 
+
 const isPlaylist = true;
 
 class Playlist extends Component {
 
+    componentWillUnmount() {
+        
+    }
 
     onClickPlay = () => {
         const { playlistSongs } = this.props;
-        console.log(playlistSongs[0]);
         this.props.selectTrack(playlistSongs[0].track, playlistSongs.map((track) => track.track));
+    }
+
+    onClickFollow = (action) => {
+        console.log(action);
+        const {
+            activePlaylist,
+            spotifyId
+        } = this.props;
+        this.props.requestFollowPlaylist(activePlaylist, action, spotifyId);
+
     }
 
 
@@ -36,7 +50,9 @@ class Playlist extends Component {
                 tracks,
                 tracks: { total },
                 type,
-            }
+            },
+            spotifyId,
+            isFollowingActivePlaylist
         } = this.props;
         return (
             <div className="main-content">
@@ -44,13 +60,18 @@ class Playlist extends Component {
                 <Banner
                 title={ name }
                 subtitle={ type }
-                bottomRightInformation={ this.props.activePlaylist.public ? 'Public Playlist' : 'Private Playlist' }
+                bottomRightInformation={ this.props.activePlaylist.public 
+                    ? 'Public Playlist' 
+                    : 'Private Playlist' }
                 topRightInformation={ `${id}` }
-                item1={ display_name ? `Created by ${display_name}` : `${id}` }
+                item1={ display_name ? `Created by: ${display_name}` : `Created by: ${id}` }
                 item2={ `Total tracks: ${total}` }
-                image={ images[0].url }
+                image={ images[0] ? images[0].url : null }
                 playButton={ true }
                 playAction={ this.onClickPlay }
+                followButton={ spotifyId !== id }
+                isFollowing={ isFollowingActivePlaylist }
+                followAction={ this.onClickFollow }
                 /> 
                 
                 <div className="main-content-bottom">
@@ -71,15 +92,17 @@ class Playlist extends Component {
 const mapStateToProps = (state) => ({
     playlistSongs: state.playlists.playlistSongs,
     activePlaylist: state.playlists.activePlaylist,
-    spotifyId: state.user.spotifyId,
     myPlaylists: state.playlists.myPlaylists,
-    loadingPlaylist: state.playlists.loadingPlaylist
+    loadingPlaylist: state.playlists.loadingPlaylist,
+    spotifyId: state.user.spotifyId,
+    isFollowingActivePlaylist: state.playlists.isFollowingActivePlaylist
 });
 
 const mapDispatchToProps = (dispatch, props) => ({
     requestPlaylistSongs: () => dispatch(requestPlaylistSongs(props.params.match.id)),
     updateActivePlaylist: (playlist) => dispatch(updateActivePlaylist(playlist)),
-    selectTrack: (track, queue) => dispatch(selectTrack(0, track, queue))
+    selectTrack: (track, queue) => dispatch(selectTrack(0, track, queue)),
+    requestFollowPlaylist: (playlist, action, spotifyId) => dispatch(requestFollowPlaylist(playlist, action, spotifyId)),
 });
 
 

@@ -18,10 +18,7 @@ const AlbumItem = (props) => {
             to="#" 
             className="tag" 
             onClick={ () => { 
-                console.log(id);
-                console.log(album);
                 requestPlayAlbum(id, album);
-
             } }
             >
             <img 

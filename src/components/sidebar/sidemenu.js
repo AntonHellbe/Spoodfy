@@ -11,10 +11,15 @@ import { DEFAULT_IMAGE_URL } from '../../constants/actions';
 
 class SideMenu extends Component {
 
+    
     componentWillReceiveProps(nextProps) {
         if (nextProps.playlists.length === 0) {
             this.props.getUserPlaylists();
         }
+    }
+
+    onUpdateActivePlaylist = (playlist) => {
+        this.props.updateActivePlaylist(playlist, this.props.spotifyId);
     }
 
     renderAlbumImage = () => {
@@ -32,6 +37,7 @@ class SideMenu extends Component {
 
     }
 
+
     render() {
         return (
             <div className="sidemenu">
@@ -46,7 +52,8 @@ class SideMenu extends Component {
                     (
                         <PlaylistMenu 
                         playlists={ this.props.playlists } 
-                        updateActivePlaylist={ this.props.updateActivePlaylist }
+                        updateActivePlaylist={ this.onUpdateActivePlaylist }
+                        activePlaylist={ this.props.activePlaylist }
                         />
                     ) 
                 }
@@ -62,17 +69,20 @@ class SideMenu extends Component {
 const mapStateToProps = (state) => {
     return {
         isAuthenticated: state.user.isAuthenticated,
-        token: state.user.token,
+        spotifyId: state.user.spotifyId,
         playlists: state.playlists.myPlaylists,
+        activePlaylist: state.playlists.activePlaylist,
         currentTrack: state.music.currentTrack,
-        currentAlbum: state.music.currentAlbum
+        currentAlbum: state.music.currentAlbum,
     };
 };
 
 
-const mapDispatchToProps = (dispatch) => ({
-    getUserPlaylists: () => dispatch(getUserPlaylists()),
-    updateActivePlaylist: (playlist) => dispatch(updateActivePlaylist(playlist)),
-});
+const mapDispatchToProps = (dispatch, props) => {
+    return {
+        getUserPlaylists: () => dispatch(getUserPlaylists()),
+        updateActivePlaylist: (playlist, spotifyId) => dispatch(updateActivePlaylist(playlist, spotifyId)),
+    };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(SideMenu));

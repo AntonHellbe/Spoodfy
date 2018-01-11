@@ -3,8 +3,9 @@ import { playlistActions } from '../constants/actions';
 const INITIAL_STATE = {
     myPlaylists: [],
     playlistSongs: [],
-    activePlaylist: '',
-    loadingPlaylist: false
+    activePlaylist: {},
+    loadingPlaylist: false,
+    isFollowingActivePlaylist: false
 };
 
 const playlistReducer = (state = INITIAL_STATE, action) => {
@@ -18,6 +19,12 @@ const playlistReducer = (state = INITIAL_STATE, action) => {
         
         case playlistActions.PLAYLISTS_SUCCESS:
             return { ...state, myPlaylists: action.playlists };
+
+        case playlistActions.IS_FOLLOWING_SUCCESS:
+            return { ...state, isFollowingActivePlaylist: action.bool };
+
+        case playlistActions.CLEAR_ACTIVE_PLAYLIST:
+            return { ...state, activePlaylist: {} };
         default:
             return state;
     }

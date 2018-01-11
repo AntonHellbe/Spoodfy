@@ -18,6 +18,7 @@
     font-weight: normal;
     text-transform: uppercase;
     border-bottom: 0.5px solid rgba(125, 125, 135, 0.35);
+    padding-bottom: 5px;
 }
 
 .recentItem{

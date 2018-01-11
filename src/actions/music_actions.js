@@ -4,15 +4,12 @@ export const togglePlaying = () => ({
     type: musicActions.TOGGLE_PLAYING,
 });
 
-export const selectTrack = (index, track, queue) => {
-    console.log(index, track, queue);
-    return {
-        type: musicActions.SELECT_TRACK,
-        index,
-        track,
-        queue
-    };
-};
+export const selectTrack = (index, track, queue) => ({
+    type: musicActions.SELECT_TRACK,
+    index,
+    track,
+    queue
+});
 
 export const selectSingleTrack = (track) => ({
     type: musicActions.SELECT_SINGLE_TRACK,

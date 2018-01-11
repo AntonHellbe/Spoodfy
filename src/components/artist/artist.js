@@ -18,6 +18,8 @@ import ArtistList from '../artistlist/artistlist';
 import TrackTable from '../tracktable/tracktable';
 import AlbumList from '../albumlist/albumlist';
 
+const queryType = 'artist';
+
 class Artist extends Component {
 
     onClickPlay = () => {
@@ -30,6 +32,10 @@ class Artist extends Component {
         } else {
             this.props.requestPlayArtistTopTracks();
         }
+    }
+
+    onClickFollow = (action) => {
+        this.props.requestFollowArtist(queryType, action);
     }
 
     handleCheckboxChange = (e) => {
@@ -81,12 +87,12 @@ class Artist extends Component {
                 <Banner
                 title={ this.props.currentArtist.name }
                 subtitle={ this.props.currentArtist.type }
-                topRightInformation={ `popularity ${this.props.currentArtist.popularity}` }
-                bottomRightInformation={ `followers ${this.props.currentArtist.followers.total}` }
+                topRightInformation={ `Popularity ${this.props.currentArtist.popularity}` }
+                bottomRightInformation={ `Followers <br> ${this.props.currentArtist.followers.total}` }
                 image={ this.props.currentArtist.images ? this.props.currentArtist.images[0].url : null }
                 isFollowing={ followedArtists.find((artist) => currentArtist.id === artist.id) }
                 renderAllButtons = { true } //eslint-disable-line
-                followAction={ this.props.requestFollowArtist }
+                followAction={ this.onClickFollow }
                 playAction={ this.onClickPlay }
                 />
                 }
@@ -100,7 +106,6 @@ class Artist extends Component {
                         />
 
                         <label htmlFor="tab1">Related artists</label>
-
 
                         <input
                             id="tab2"
@@ -164,7 +169,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch, props) => ({
     requestArtist: (id) => dispatch(requestArtist(id)),
     requestArtistAlbums: () => dispatch(requestArtistAlbums(props.match.params.id)),
-    requestFollowArtist: (type) => dispatch(requestFollowArtist(props.match.params.id, type)),
+    requestFollowArtist: (action, queryType) => dispatch(requestFollowArtist(props.match.params.id, action, queryType)),
     requestArtistTopTracks: () => dispatch(requestArtistTopTracks(props.match.params.id)),
     requestPlayArtistTopTracks: () => dispatch(requestPlayArtistTopTracks(props.match.params.id)),
     selectTrack: (track, queue) => dispatch(selectTrack(0, track, queue)),

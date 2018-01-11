@@ -7,14 +7,17 @@ import {
     selectTrack,
     AddToQueue
 } from '../../actions/music_actions';
+import {
+    requestArtist
+} from '../../actions/artist_actions';
 
 
 class TrackTable extends Component {
     
-    addToQueueHandler = (track) => {
-        this.props.AddToQueue(track);
+    onClickArtist = (id) => {
+        this.props.requestArtist(id);
     }
-
+    
     selectTrackHandler = (index, track) => {
         if (this.props.isPlaylist) {
             const queue = this.props.tracks.map((item) => item.track);
@@ -23,6 +26,11 @@ class TrackTable extends Component {
             this.props.selectTrack(index, track, this.props.tracks);
         }
     }
+
+    addToQueueHandler = (track) => {
+        this.props.AddToQueue(track);
+    }
+
 
     render() {
 
@@ -54,6 +62,7 @@ class TrackTable extends Component {
                                 AddToQueue={ this.addToQueueHandler }
                                 index={ index }
                                 currentTrack={ currentTrack }
+                                requestArtist={ this.onClickArtist }
                                 />
                             );
                         }
@@ -64,6 +73,7 @@ class TrackTable extends Component {
                                 AddToQueue={ this.addToQueueHandler }
                                 index={ index }
                                 currentTrack={ currentTrack }
+                                requestArtist={ this.onClickArtist }
                             />
                         );
                     })}
@@ -79,7 +89,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     AddToQueue: (track) => dispatch(AddToQueue(track)),
-    selectTrack: (index, track, queue) => dispatch(selectTrack(index, track, queue))
+    selectTrack: (index, track, queue) => dispatch(selectTrack(index, track, queue)),
+    requestArtist: (id) => dispatch(requestArtist(id))
 });
 
 

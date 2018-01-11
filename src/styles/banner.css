@@ -80,7 +80,8 @@
   display:flex;
   justify-content:center;
   align-items:flex-start;
-  text-align:right;
+  /* text-align:left; */
+  text-align: center;
 }
 
 .information-top-right > p {
@@ -88,6 +89,7 @@
   padding: 0;
   font-size: 13px;
   color: #858585;
+  display: inline;
 }
 
 .information-bottom-right {
@@ -97,7 +99,7 @@
   display:flex;
   justify-content:center;
   align-items: flex-end;
-  text-align:right;
+  text-align:center;
   color: #858585;
 }
 
@@ -105,6 +107,7 @@
   margin: 0;
   padding: 0;
   font-size:13px;
+  display: inline;
   /* border:1px solid blue; */
 }
 .action-buttons {

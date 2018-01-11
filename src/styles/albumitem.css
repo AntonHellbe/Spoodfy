@@ -1,11 +1,13 @@
 .albumItem{
-    margin: 20px 20px;
+    margin: 15px 15px;
     padding:5px;
     width:200px;
     max-width: 200px;
     height:200px;
     max-height: 200px;
     display: block;
+    /* box-sizing: border-box; */
+    /* box-shadow: 0 4px 8px 0 #181818; */
 }
 
 
@@ -15,6 +17,7 @@
     width: inherit;
     height: 80%;
     display:block;
+    box-sizing: border-box;
 }
 
 .albumItem > a > img {
@@ -25,6 +28,7 @@
     margin:0;
     position: relative;
     display: block;
+    box-sizing: border-box;
     /* left: 50%; */
 }
 

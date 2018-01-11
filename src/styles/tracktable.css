@@ -49,6 +49,15 @@ td {
     font-size: 14px;
 }
 
+td > a {
+    text-decoration: none;
+    color:#fff;
+}
+
+td > a:hover {
+    text-decoration: underline;
+}
+
 .track{
     border-bottom: 1px solid rgba(125, 125, 135, 0.25);
 }   

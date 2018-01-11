@@ -1,5 +1,5 @@
 import React from 'react';
-import FaPlus from 'react-icons/lib/fa/plus';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 
@@ -13,15 +13,13 @@ const TrackItem = (props) => {
         if (currentTrack) {
             currentId = currentTrack.track ? currentTrack.track.id : currentTrack.id;
         }
-
-
+        // console.log(currentId);
         const minutes = Math.floor((Number(duration_ms) / 1000 / 60));
         let seconds = Math.floor((Number(duration_ms) / 1000 % 60));
 
         if (seconds < 10) {
             seconds = `0${seconds}`;
         }
-        
         const color = currentId === id ? '#ff6b42' : '#ffffff';
         return (
             <tr className="track" style={ { color } }>
@@ -30,9 +28,15 @@ const TrackItem = (props) => {
                 </td>
                 <td onDoubleClick={ () => { props.selectTrack(index, track); } }>
                     { name }
-                    </td>
-                <td> 
-                    { artists.map((artist) => `${artist.name} `) } 
+                </td>
+                <td>
+                    <Link 
+                    to={ `/artist/${artists[0].id}` }
+                    onClick={ () => props.requestArtist(artists[0].id) }
+                    style={ { color } }
+                    >
+                    { artists[0].name } 
+                    </Link>
                 </td>
                 <td> 
                     { album.name } 
