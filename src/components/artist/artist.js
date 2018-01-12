@@ -33,11 +33,13 @@ class Artist extends Component {
             artistTopTracks[0].artists.find((artist) => currentArtist.id === artist.id) 
             : 
             null;
+        // console.log(isCorrectTracks);
         console.log(isCorrectTracks);
-        if (typeof isCorrectTracks === 'undefined') {
+        if (isCorrectTracks) {
             this.props.selectTrack(artistTopTracks[0], artistTopTracks, currentArtist.id);
         } else {
-            this.props.requestPlayArtistTopTracks();
+            console.log('Fetching topTracks');
+            this.props.requestPlayArtistTopTracks(currentArtist.id);
         }
     }
 

@@ -57,7 +57,7 @@ function* playArtistTopTracksHelper() {
         const data = yield call(axios.get, URL);
         console.log('Fetching...');
         console.log(data);
-        yield put(selectTrack(0, data.data.tracks[0], data.data.tracks, id));
+        yield put(selectTrack(0, data.data.tracks[0], data.data.tracks));
         yield put(artistTopTracksSuccess(data.data.tracks));
     } catch (e) {
         console.log(e);
