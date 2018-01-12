@@ -12,10 +12,12 @@ const PlaylistItem = (props) => {
             id
         },
         updateActivePlaylist,
-        activePlaylist
+        activePlaylist: {
+            playlistId
+        }
     } = props;
     let color = '#fff';
-    if (!_.isEmpty(activePlaylist) && activePlaylist.id === id) {
+    if (playlistId !== '' && playlistId === id) {
         color = '#ff6b42';
     }
     return (

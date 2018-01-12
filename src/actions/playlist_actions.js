@@ -65,6 +65,10 @@ export const followPlaylistError = (error) => ({
     error
 });
 
-export const clearActivePlaylist = () => ({
-    type: playlistActions.CLEAR_ACTIVE_PLAYLIST
+export const updateActivePlaylistId = () => ({
+    type: playlistActions.UPDATE_ACTIVE_PLAYLIST_ID
+});
+
+export const clearActivePlaylistId = () => ({
+    type: playlistActions.CLEAR_ACTIVE_PLAYLIST_ID
 });

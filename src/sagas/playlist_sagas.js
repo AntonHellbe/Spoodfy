@@ -33,9 +33,10 @@ function* playlistTracks() {
         const URL = `${playlist.href}${spotifyUrls.tracks}?=limit50`;
         try {
             const data = yield call(axios.get, URL);
-            console.log(data);
+            // console.log(data);
             yield put(playlistTracksSuccess(data.data.items));
         } catch (e) {
+            console.log('ERROR OCCURED - PLAYLISTTRACKS');
             yield put(playlistTracksError(e));
         }
     }

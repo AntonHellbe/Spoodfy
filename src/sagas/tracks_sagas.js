@@ -40,7 +40,6 @@ function* topTracksFetch({ id }) {
         `${spotifyUrls.artists}/${id}${spotifyUrls.topTracks}?country=SE`;
     try {
         const data = yield call(axios.get, URL);
-        // console.log(data);
         yield put(artistTopTracksSuccess(data.data.tracks));
     } catch (e) {
         console.log(e);

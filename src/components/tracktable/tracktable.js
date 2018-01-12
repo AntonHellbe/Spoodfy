@@ -20,7 +20,9 @@ class TrackTable extends Component {
     
     selectTrackHandler = (index, track) => {
         const { 
-            activePlaylist, 
+            activePlaylist: {
+                playlistId
+             }, 
             isPlaylist = false, 
             isArtist = false,
             currentArtist,
@@ -29,7 +31,7 @@ class TrackTable extends Component {
 
         if (isPlaylist) {
             const playlistTracks = tracks.map((item) => item.track);
-            this.props.selectTrack(index, track, playlistTracks, activePlaylist.id);
+            this.props.selectTrack(index, track, playlistTracks, playlistId);
         } else if (isArtist) {
             this.props.selectTrack(index, track, tracks, currentArtist.id);
         } else {

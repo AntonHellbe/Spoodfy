@@ -4,7 +4,8 @@ import {
     requestPlaylistSongs,
     updateActivePlaylist,
     requestFollowPlaylist,
-    clearActivePlaylist
+    clearActivePlaylistId,
+    updateActivePlaylistId
 } from '../../actions/playlist_actions';
 import {
     playPlaylist,
@@ -14,24 +15,27 @@ import Banner from '../banner/banner';
 import TrackTable from '../tracktable/tracktable';
 
 
-const isPlaylist = true;
-
 class Playlist extends Component {
 
+    componentWillMount() {
+        this.props.updateActivePlaylistId();
+    }
+
     componentWillUnmount() {
-        this.props.clearActivePlaylist();
+        this.props.clearActivePlaylistId();
     }
 
     onClickPlay = () => {
         const { 
             playlistSongs, 
-            activePlaylist 
+            activePlaylist: {
+                playlistId
+            } 
         } = this.props;
-        this.props.playPlaylist(playlistSongs.map((song) => song.track), activePlaylist.id);    
+        this.props.playPlaylist(playlistSongs.map((song) => song.track), playlistId);    
     }
 
     onClickFollow = (action) => {
-        // console.log(action);
         const {
             activePlaylist,
             spotifyId
@@ -45,37 +49,39 @@ class Playlist extends Component {
             playlistSongs,
             loadingPlaylist,
             activePlaylist: {
-                name,
-                owner: {
-                    display_name,
-                    id
+                    playlist: {
+                    name,
+                    owner: {
+                        display_name,
+                        id
+                    },
+                    images,
+                    tracks: { total },
+                    type,
                 },
-                images,
-                tracks,
-                tracks: { total },
-                type,
             },
-            activePlaylist,
+            activePlaylist: { 
+                playlist,
+                playlistId
+            },
             spotifyId,
             isFollowingActivePlaylist,
             isPlaying,
             tracklistId
         } = this.props;
 
-        console.log(tracklistId);
         let playingCurrentPlaylist = false;
 
         if (tracklistId !== '') {
-            playingCurrentPlaylist = tracklistId === activePlaylist.id;
+            playingCurrentPlaylist = tracklistId === playlistId;
         }
-
         return (
             <div className="main-content">
                 <div className="main-content-wrapper">
                 <Banner
                 title={ name }
                 subtitle={ type }
-                bottomRightInformation={ this.props.activePlaylist.public 
+                bottomRightInformation={ playlist.public 
                     ? 'Public Playlist' 
                     : 'Private Playlist' }
                 topRightInformation={ `${id}` }
@@ -94,7 +100,7 @@ class Playlist extends Component {
                 
                     <TrackTable 
                     tracks={ playlistSongs } 
-                    isPlaylist={ isPlaylist }
+                    isPlaylist={ type === 'playlist' }
                     isLoading={ loadingPlaylist }
                     />
                 </div>
@@ -113,7 +119,7 @@ const mapStateToProps = (state) => ({
     spotifyId: state.user.spotifyId,
     isFollowingActivePlaylist: state.playlists.isFollowingActivePlaylist,
     tracklistId: state.music.tracklistId,
-    isPlaying: state.music.isPlaying
+    isPlaying: state.music.isPlaying,
 });
 
 const mapDispatchToProps = (dispatch, props) => ({
@@ -123,7 +129,8 @@ const mapDispatchToProps = (dispatch, props) => ({
     requestFollowPlaylist: (playlist, action, spotifyId) => 
         dispatch(requestFollowPlaylist(playlist, action, spotifyId)),
     togglePlaying: () => dispatch(togglePlaying()),
-    clearActivePlaylist: () => dispatch(clearActivePlaylist())
+    clearActivePlaylistId: () => dispatch(clearActivePlaylistId()),
+    updateActivePlaylistId: () => dispatch(updateActivePlaylistId())
     
     
 });
