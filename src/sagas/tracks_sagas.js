@@ -35,17 +35,17 @@ function* userTopTracksFetch() {
     
 }
 
-function* topTracksFetch({ id }) {
-    const URL = `${spotifyUrls.baseURL}${spotifyUrls.version}` +
-        `${spotifyUrls.artists}/${id}${spotifyUrls.topTracks}?country=SE`;
-    try {
-        const data = yield call(axios.get, URL);
-        yield put(artistTopTracksSuccess(data.data.tracks));
-    } catch (e) {
-        console.log(e);
-        yield put(artistTopTracksError(e));
-    }
-}
+// function* topTracksFetch({ id }) {
+//     const URL = `${spotifyUrls.baseURL}${spotifyUrls.version}` +
+//         `${spotifyUrls.artists}/${id}${spotifyUrls.topTracks}?country=SE`;
+//     try {
+//         const data = yield call(axios.get, URL);
+//         yield put(artistTopTracksSuccess(data.data.tracks));
+//     } catch (e) {
+//         console.log(e);
+//         yield put(artistTopTracksError(e));
+//     }
+// }
 
 function* playArtistTopTracksHelper() {
     const { id } = yield take(musicActions.REQUEST_PLAY_ARTIST_TOP_TRACKS);
@@ -56,7 +56,7 @@ function* playArtistTopTracksHelper() {
         const data = yield call(axios.get, URL);
         console.log('Fetching...');
         console.log(data);
-        yield put(selectTrack(0, data.data.tracks[0], data.data.tracks));
+        yield put(selectTrack(0, data.data.tracks[0], data.data.tracks, id));
         yield put(artistTopTracksSuccess(data.data.tracks));
     } catch (e) {
         console.log(e);
@@ -64,7 +64,8 @@ function* playArtistTopTracksHelper() {
     }
 }
 
-export function* recentlyPlayedFetch() {
+
+function* recentlyPlayedFetch() {
     while (true) {
         yield take([authActions.SET_TOKEN, authActions.INITIAL_AUTH_SUCCESS]);
         const URL = `${spotifyUrls.baseURL}${spotifyUrls.version}` +
@@ -84,7 +85,7 @@ const trackSagas = [
     fork(userTopTracksFetch),
     fork(playArtistTopTracksHelper),
     fork(recentlyPlayedFetch),
-    takeLatest(trackActions.REQUEST_ARTIST_TOP_TRACKS, topTracksFetch),
+    // takeLatest(trackActions.REQUEST_ARTIST_TOP_TRACKS, topTracksFetch),
 ];
 
 export default trackSagas;

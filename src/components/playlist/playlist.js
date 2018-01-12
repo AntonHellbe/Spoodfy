@@ -17,10 +17,6 @@ import TrackTable from '../tracktable/tracktable';
 
 class Playlist extends Component {
 
-    componentWillMount() {
-        this.props.updateActivePlaylistId();
-    }
-
     componentWillUnmount() {
         this.props.clearActivePlaylistId();
     }

@@ -1,7 +1,8 @@
 import { take, put, call, fork, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
 import { spotifyUrls } from '../constants/spotify';
-import { artistActions, authActions } from '../constants/actions';
+import { artistActions, 
+    authActions } from '../constants/actions';
 import {
     topArtistsSuccess,
     topArtistsError,
@@ -9,14 +10,12 @@ import {
     artistError,
     relatedArtistsSuccess,
     relatedArtistsError,
-    artistAlbumsSuccess,
-    artistAlbumsError,
     followedArtistsSuccess,
     followedArtistsError,
     followActionSuccess
 } from '../actions/artist_actions';
 
-export function* topArtistsFetch() {
+function* topArtistsFetch() {
     while (true) {
         yield take(artistActions.REQUEST_TOP_ARTISTS);
         const URL = `${spotifyUrls.baseURL}${spotifyUrls.version}${spotifyUrls.userInfo}` +
@@ -31,7 +30,7 @@ export function* topArtistsFetch() {
     }
 }
 
-export function* artistFetch() {
+function* artistFetch() {
     while (true) {
         const { id } = yield take(artistActions.REQUEST_ARTIST);
         const URL = `${spotifyUrls.baseURL}${spotifyUrls.version}${spotifyUrls.artists}/${id}`;
@@ -45,7 +44,7 @@ export function* artistFetch() {
     }
 }
 
-export function* relatedArtistsFetch() {
+function* relatedArtistsFetch() {
     while (true) {
         const { id } = yield take(artistActions.REQUEST_ARTIST);
         const URL = `${spotifyUrls.baseURL}${spotifyUrls.version}` +
@@ -60,21 +59,7 @@ export function* relatedArtistsFetch() {
 }
 
 
-export function* artistAlbumsFetch({ id }) {
-    const URL = `${spotifyUrls.baseURL}${spotifyUrls.version}${spotifyUrls.artists}` +
-    `/${id}${spotifyUrls.albums}${spotifyUrls.market}${spotifyUrls.queryAlbumType}album`;
-    console.log(URL);
-    try {
-        const data = yield call(axios.get, URL);
-        // console.log(data);
-        yield put(artistAlbumsSuccess(data.data.items));
-    } catch (e) {
-        console.log(e);
-        yield put(artistAlbumsError(e));
-    }
-}
-
-export function* followedArtistsRequest() {
+function* followedArtistsRequest() {
     while (true) {
         yield take([authActions.SET_TOKEN, 
             authActions.INITIAL_AUTH_SUCCESS, 
@@ -94,7 +79,7 @@ export function* followedArtistsRequest() {
     }
 }
 
-export function* followArtistRequest({ id, action }) {
+function* followArtistRequest({ id, action }) {
     const URL = `${spotifyUrls.baseURL}${spotifyUrls.version}${spotifyUrls.userInfo}` +
         `${spotifyUrls.following}${spotifyUrls.queryType}artist${spotifyUrls.queryIds}${id}`;
     try {
@@ -113,12 +98,12 @@ export function* followArtistRequest({ id, action }) {
 
 }
 
-
-export const artistsSagas = [
+const artistsSagas = [
     fork(topArtistsFetch),
     fork(artistFetch),
     fork(relatedArtistsFetch),
     fork(followedArtistsRequest),
-    takeLatest(artistActions.REQUEST_ARTIST_ALBUMS, artistAlbumsFetch),
-    takeLatest([artistActions.REQUEST_FOLLOW_ARTIST], followArtistRequest)
+    takeLatest(artistActions.REQUEST_FOLLOW_ARTIST, followArtistRequest)
 ];
+
+export default artistsSagas;

@@ -77,7 +77,7 @@ const musicReducer = (state = INITIAL_STATE, action) => {
                 currentTrack: action.tracks[0], 
                 playingIndex: 0, 
                 queue: action.tracks,
-                currentAlbum: action.album
+                currentAlbum: action.tracks[0].album
             };
         
         case musicActions.PLAY_PLAYLIST:
@@ -89,7 +89,6 @@ const musicReducer = (state = INITIAL_STATE, action) => {
                 currentAlbum: action.tracks[0].album,
                 tracklistId: action.playlistId
             };
-
 
         default:
             return state;

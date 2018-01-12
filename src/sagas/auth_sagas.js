@@ -1,4 +1,11 @@
-import { call, put, takeEvery, takeLatest, take, fork } from 'redux-saga/effects';
+import { 
+    call, 
+    put, 
+    takeEvery, 
+    takeLatest, 
+    take, 
+    fork 
+} from 'redux-saga/effects';
 import axios from 'axios';
 import { authActions } from '../constants/actions';
 import { 
@@ -14,7 +21,7 @@ import { spotifyUrls } from '../constants/spotify';
 import history from '../history';
 
 
-export function* requestToken() {
+function* requestToken() {
     const URL = 'http://localhost:5000/token';
     try {
         const data = yield call(axios.get, URL);
@@ -29,7 +36,7 @@ export function* requestToken() {
 
 }
 
-export function* initialAuth() {
+function* initialAuth() {
     const token = window.localStorage.getItem('token');
     if (token != null) {
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`; //eslint-disable-line
@@ -38,7 +45,7 @@ export function* initialAuth() {
     }
 }
 
-export function* logoutHandler() {
+function* logoutHandler() {
     window.localStorage.removeItem('token');
     axios.defaults.headers.common['Authorization'] = ''; //eslint-disable-line
     yield put(clearToken());
@@ -46,7 +53,7 @@ export function* logoutHandler() {
 }
 
 
-export function* requestUserinformation() {
+function* requestUserinformation() {
     while (true) {
         yield take([authActions.SET_TOKEN, authActions.INITIAL_AUTH_SUCCESS]);
         const URL = `${spotifyUrls.baseURL}${spotifyUrls.version}${spotifyUrls.userInfo}`;
@@ -61,9 +68,11 @@ export function* requestUserinformation() {
     }
 }
 
-export const authSagas = [
+const authSagas = [
     takeEvery(authActions.REQUEST_TOKEN, requestToken),
     takeLatest(authActions.INITIAL_AUTH_REQUESTED, initialAuth),
     takeLatest(authActions.LOGOUT_REQUESTED, logoutHandler),
     fork(requestUserinformation),
 ];
+
+export default authSagas;

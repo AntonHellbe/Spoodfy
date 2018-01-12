@@ -40,21 +40,6 @@ export const relatedArtistsError = (error) => ({
     error
 });
 
-export const requestArtistAlbums = (id) => ({
-    type: artistActions.REQUEST_ARTIST_ALBUMS,
-    id
-});
-
-export const artistAlbumsSuccess = (albums) => ({
-    type: artistActions.ARTIST_ALBUMS_SUCCESS,
-    albums
-});
-
-export const artistAlbumsError = (error) => ({
-    type: artistActions.ARTIST_ALBUMS_ERROR,
-    error
-});
-
 export const followedArtistsSuccess = (artists) => ({
     type: artistActions.FOLLOWED_ARTISTS_SUCCESS,
     artists

@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 import { 
     requestArtist,
-    requestArtistAlbums,
     requestFollowArtist,
     clearCurrentArtist
 } from '../../actions/artist_actions';
@@ -15,6 +14,9 @@ import {
     requestPlayArtistTopTracks,
     togglePlaying
 } from '../../actions/music_actions';
+import {
+    requestArtistAlbums
+} from '../../actions/album_actions';
 import Banner from '../banner/banner';
 import ArtistList from '../artistlist/artistlist';
 import TrackTable from '../tracktable/tracktable';
@@ -36,6 +38,7 @@ class Artist extends Component {
         // console.log(isCorrectTracks);
         console.log(isCorrectTracks);
         if (isCorrectTracks) {
+            console.log(currentArtist.id);
             this.props.selectTrack(artistTopTracks[0], artistTopTracks, currentArtist.id);
         } else {
             console.log('Fetching topTracks');
@@ -78,17 +81,19 @@ class Artist extends Component {
     render() {
         const {
             loadingArtist,
+            loadingTracks,
+            loadingAlbum,
             relatedArtists,
             artistTopTracks,
             artistAlbums,
             followedArtists,
-            loadingTracks,
             currentArtist,
             tracklistId,
             isPlaying
         } = this.props;
 
         const isPlayingCurrentArtist = currentArtist.id === tracklistId;
+        // console.log(isPlayingCurrentArtist, isPlaying);
         return (
             <div className="main-content">
                 <div className="main-content-wrapper">
@@ -155,7 +160,7 @@ class Artist extends Component {
                         <section id="content3">
                             <AlbumList
                             albums={ artistAlbums }
-                            isLoading={ loadingArtist }
+                            isLoading={ loadingAlbum }
                             />
 
 
@@ -177,8 +182,9 @@ const mapStateToProps = (state) => ({
     loadingArtist: state.artists.loadingArtist,
     relatedArtists: state.artists.relatedArtists,
     currentArtist: state.artists.currentArtist,
-    artistAlbums: state.artists.artistAlbums,
     followedArtists: state.artists.followedArtists,
+    artistAlbums: state.albums.artistAlbums,
+    loadingAlbum: state.albums.loadingAlbum,
     artistTopTracks: state.tracks.artistTopTracks,
     loadingTracks: state.tracks.loadingTracks,
     tracklistId: state.music.tracklistId,

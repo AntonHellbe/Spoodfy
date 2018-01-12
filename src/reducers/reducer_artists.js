@@ -5,7 +5,6 @@ const INITIAL_STATE = {
     currentArtist: {},
     loadingArtist: true,
     relatedArtists: [],
-    artistAlbums: [],
     followedArtists: [],
     error: ''
 };
@@ -30,13 +29,6 @@ const artistReducer = (state = INITIAL_STATE, action) => {
         case artistActions.RELATED_ARTISTS_SUCCESS:
             return { ...state, relatedArtists: action.artists };
       
-
-        case artistActions.REQUEST_ARTIST_ALBUMS:
-            return { ...state, loadingArtist: true };
-        
-        case artistActions.ARTIST_ALBUMS_SUCCESS:
-            return { ...state, artistAlbums: action.albums, loadingArtist: false };
-        
         case artistActions.FOLLOWED_ARTISTS_SUCCESS:
             return { ...state, followedArtists: action.artists };
         

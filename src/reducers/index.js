@@ -4,8 +4,9 @@ import PlaylistReducer from './reducer_playlists';
 import SearchReducer from './reducer_search';
 import MusicReducer from './reducer_music';
 import BrowseReducer from './reducer_browse';
-import ArtistReducer from './reducer_artist';
+import ArtistReducer from './reducer_artists';
 import TrackReducer from './reducer_track';
+import AlbumReducer from './reducer_albums';
 
 const rootReducer = combineReducers({
     user: AuthReducer,
@@ -14,7 +15,8 @@ const rootReducer = combineReducers({
     music: MusicReducer,
     browse: BrowseReducer,
     artists: ArtistReducer,
-    tracks: TrackReducer
+    tracks: TrackReducer,
+    albums: AlbumReducer
 });
 
 export default rootReducer;

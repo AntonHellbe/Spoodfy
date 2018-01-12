@@ -8,7 +8,7 @@ import {
 } from '../actions/browse_actions';
 
 
-export function* fetchNewReleases() {
+function* fetchNewReleases() {
     const URL = `${spotifyUrls.baseURL}${spotifyUrls.version}${spotifyUrls.browse}${spotifyUrls.newReleases}`;
     try {
         const data = yield call(axios.get, URL);
@@ -19,6 +19,8 @@ export function* fetchNewReleases() {
 }
 
 
-export const browseSagas = [
+const browseSagas = [
     takeLatest(browseActions.NEW_RELEASES_REQUESTED, fetchNewReleases),
 ];
+
+export default browseSagas;

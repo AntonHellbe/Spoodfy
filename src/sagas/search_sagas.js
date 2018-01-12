@@ -1,4 +1,10 @@
-import { call, put, takeLatest, take, fork } from 'redux-saga/effects';
+import { 
+    call, 
+    put, 
+    takeLatest, 
+    take, 
+    fork 
+} from 'redux-saga/effects';
 import axios from 'axios';
 import { searchActions } from '../constants/actions';
 import { 
@@ -8,7 +14,7 @@ import {
 import { spotifyUrls } from '../constants/spotify';
 
 
-export function* searchRequested({ term }) {
+function* searchRequested({ term }) {
     const searchResult = {};
     const searchUrl = `${spotifyUrls.baseURL}${spotifyUrls.version}${spotifyUrls.search}q=${term}&type=track,album,artist`; //eslint-disable-line
     try {
@@ -23,7 +29,7 @@ export function* searchRequested({ term }) {
     }
 }
 
-export function* getTopResult() {
+function* getTopResult() {
     while (true) {
         let { result } = yield take(searchActions.SEARCH_SUCCESS);
         if (result.length > 5) {
@@ -34,7 +40,9 @@ export function* getTopResult() {
 }
 
 
-export const searchSagas = [
+const searchSagas = [
     takeLatest(searchActions.SEARCH_REQUESTED, searchRequested),
     fork(getTopResult),
 ];
+
+export default searchSagas;

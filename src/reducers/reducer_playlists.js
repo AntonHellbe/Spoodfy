@@ -16,13 +16,11 @@ const playlistReducer = (state = INITIAL_STATE, action) => {
 
         case playlistActions.UPDATE_PLAYLIST_ID:
             return { ...state, 
-                activePlaylist: { playlist: action.playlist }, 
+                activePlaylist: { 
+                    playlist: action.playlist,
+                    playlistId: action.playlist.id
+                }, 
                 loadingPlaylist: true };
-
-        case playlistActions.UPDATE_ACTIVE_PLAYLIST_ID:
-            return { ...state, 
-                activePlaylist: { ...state.activePlaylist, 
-                playlistId: state.activePlaylist.playlist.id } };
 
         case playlistActions.PLAYLIST_TRACKS_SUCCESS:
             return { ...state, playlistSongs: action.tracks, loadingPlaylist: false };
