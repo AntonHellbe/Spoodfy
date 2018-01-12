@@ -28,3 +28,14 @@ export const artistTopTracksError = (error) => ({
     type: trackActions.ARTIST_TOP_TRACKS_ERROR,
     error
 });
+
+
+export const updateRecentlyPlayed = (recentTracks) => ({
+    type: trackActions.UPDATE_RECENTLY_PLAYED,
+    recentTracks
+});
+
+export const errorRecentlyPlayed = (error) => ({
+    type: trackActions.ERROR_RECENTLY_PLAYED,
+    error
+});

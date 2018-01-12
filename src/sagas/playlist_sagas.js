@@ -33,6 +33,7 @@ function* playlistTracks() {
         const URL = `${playlist.href}${spotifyUrls.tracks}?=limit50`;
         try {
             const data = yield call(axios.get, URL);
+            console.log(data);
             yield put(playlistTracksSuccess(data.data.items));
         } catch (e) {
             yield put(playlistTracksError(e));
@@ -50,10 +51,10 @@ function* followedPlaylistsFetch() {
         const URL = `${spotifyUrls.baseURL}${spotifyUrls.version}${spotifyUrls.users}/` +
         `${owner.id}${spotifyUrls.playlists}/${id}${spotifyUrls.followers}` +
         `${spotifyUrls.contains}?${spotifyUrls.queryIds}${spotifyId}`;
-        console.log(URL);
+        // console.log(URL);
         try {
             const data = yield call(axios.get, URL);
-            console.log(data.data);
+            // console.log(data.data);
             yield put(isFollowingPlaylistSuccess(data.data[0]));
         } catch (e) {
             console.log(e);
@@ -65,11 +66,11 @@ function* followedPlaylistsFetch() {
 function* followPlaylistRequest() {
     while (true) {
         const { playlist: { id, owner }, action, playlist, spotifyId } = yield take(playlistActions.REQUEST_FOLLOW_PLAYLIST);
-        console.log(spotifyId);
-        console.log(playlist, action);
+        // console.log(spotifyId);
+        // console.log(playlist, action);
         const URL = `${spotifyUrls.baseURL}${spotifyUrls.version}${spotifyUrls.users}` +
         `/${owner.id}${spotifyUrls.playlists}/${id}${spotifyUrls.followers}`;
-        console.log(URL);
+        // console.log(URL);
         try {
             const data = action === 'follow' ? 
                 yield call(axios.put, URL) :

@@ -6,9 +6,9 @@ import PropTypes from 'prop-types';
 const TrackItem = (props) => {
 
         const { currentTrack = null, track, index, track: { name, artists, duration_ms, album, id } } = props;
-        if (props.track.preview_url === null) {
-            return null;
-        }
+        // if (props.track.preview_url === null) {
+        //     return null;
+        // }
         let currentId = null;
         if (currentTrack) {
             currentId = currentTrack.track ? currentTrack.track.id : currentTrack.id;
@@ -24,7 +24,7 @@ const TrackItem = (props) => {
         return (
             <tr className="track" style={ { color } }>
                 <td className="index-col" > 
-                    { index } 
+                    { track.preview_url ? index : <i className="fa fa-times" aria-hidden="true" /> } 
                 </td>
                 <td onDoubleClick={ () => { props.selectTrack(index, track); } }>
                     { name }

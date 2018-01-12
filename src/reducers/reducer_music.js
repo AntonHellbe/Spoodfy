@@ -5,12 +5,11 @@ const INITIAL_STATE = {
     currentTrack: {},
     isPlaying: false,
     queue: [],
-    duration: 30,
-    recentlyPlayed: [],
     errorRecentlyPlayed: '',
     volume: 0.05,
     playingIndex: 0,
     currentAlbum: {},
+    tracklistId: ''
 };
 
 const musicReducer = (state = INITIAL_STATE, action) => {
@@ -21,19 +20,20 @@ const musicReducer = (state = INITIAL_STATE, action) => {
                 isPlaying: !state.isPlaying };
 
         case musicActions.SELECT_TRACK:
-            console.log('Receieved track');
             return { ...state, 
                 currentTrack: action.track, 
                 playingIndex: action.index, 
                 queue: action.queue, 
-                currentAlbum: action.track.album };
+                currentAlbum: action.track.album,
+                tracklistId: action.tracklistId };
 
         case musicActions.SELECT_SINGLE_TRACK:
             return { ...state,
                     currentTrack: action.track,
                     playingIndex: 0,
                     queue: [],
-                    currentAlbum: action.track.album };
+                    currentAlbum: action.track.album,
+                    playingPlaylist: null };
 
         case musicActions.NEXT_TRACK:
             return { 
@@ -66,16 +66,6 @@ const musicReducer = (state = INITIAL_STATE, action) => {
                 .concat(action.track)
                 .concat(state.queue.slice(state.playingIndex + 1)) };
 
-        case musicActions.UPDATE_RECENTLY_PLAYED:
-            return { 
-                ...state, 
-                recentlyPlayed: action.recentTracks };
-
-        case musicActions.ERROR_RECENTLY_PLAYED:
-            return { 
-                ...state, 
-                errorRecentlyPlayed: action.error };
-
         case musicActions.UPDATE_VOLUME:
             return { 
                 ...state, 
@@ -88,6 +78,16 @@ const musicReducer = (state = INITIAL_STATE, action) => {
                 playingIndex: 0, 
                 queue: action.tracks,
                 currentAlbum: action.album
+            };
+        
+        case musicActions.PLAY_PLAYLIST:
+            return {
+                ...state,
+                currentTrack: action.tracks[0],
+                playingIndex: 0,
+                queue: action.tracks,
+                currentAlbum: action.tracks[0].album,
+                tracklistId: action.playlistId
             };
 
 

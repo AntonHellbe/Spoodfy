@@ -5,7 +5,7 @@ import TrackItem from './trackitem';
 import Loader from '../loader/loader';
 import {
     selectTrack,
-    AddToQueue
+    AddToQueue,
 } from '../../actions/music_actions';
 import {
     requestArtist
@@ -19,11 +19,21 @@ class TrackTable extends Component {
     }
     
     selectTrackHandler = (index, track) => {
-        if (this.props.isPlaylist) {
-            const queue = this.props.tracks.map((item) => item.track);
-            this.props.selectTrack(index, track, queue);
+        const { 
+            activePlaylist, 
+            isPlaylist = false, 
+            isArtist = false,
+            currentArtist,
+            tracks
+        } = this.props;
+
+        if (isPlaylist) {
+            const playlistTracks = tracks.map((item) => item.track);
+            this.props.selectTrack(index, track, playlistTracks, activePlaylist.id);
+        } else if (isArtist) {
+            this.props.selectTrack(index, track, tracks, currentArtist.id);
         } else {
-            this.props.selectTrack(index, track, this.props.tracks);
+            this.props.selectTrack(index, track, tracks);
         }
     }
 
@@ -34,7 +44,13 @@ class TrackTable extends Component {
 
     render() {
 
-    const { tracks, isPlaylist = null, currentTrack, isLoading = null } = this.props;
+    const { 
+        tracks, 
+        isPlaylist = false, 
+        currentTrack, 
+        isLoading = null 
+    } = this.props;
+    
     if (isLoading) {
         return (
             <Loader />
@@ -84,13 +100,16 @@ class TrackTable extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    currentTrack: state.music.currentTrack
+    currentTrack: state.music.currentTrack,
+    activePlaylist: state.playlists.activePlaylist,
+    currentArtist: state.artists.currentArtist
 });
 
 const mapDispatchToProps = (dispatch) => ({
     AddToQueue: (track) => dispatch(AddToQueue(track)),
-    selectTrack: (index, track, queue) => dispatch(selectTrack(index, track, queue)),
-    requestArtist: (id) => dispatch(requestArtist(id))
+    selectTrack: (index, track, queue, tracklistId) => dispatch(selectTrack(index, track, queue, tracklistId)),
+    requestArtist: (id) => dispatch(requestArtist(id)),
+    
 });
 
 

@@ -1,11 +1,17 @@
 import axios from 'axios';
 import { take, call, put, fork, takeLatest } from 'redux-saga/effects';
-import { trackActions, musicActions } from '../constants/actions';
+import { 
+    trackActions, 
+    musicActions, 
+    authActions 
+} from '../constants/actions';
 import {
     userTopTracksSuccess, 
     userTopTracksError,
     artistTopTracksSuccess,
-    artistTopTracksError
+    artistTopTracksError,
+    updateRecentlyPlayed,
+    errorRecentlyPlayed
 } from '../actions/track_actions';
 import {
     spotifyUrls
@@ -51,7 +57,7 @@ function* playArtistTopTracksHelper() {
         const data = yield call(axios.get, URL);
         console.log('Fetching...');
         console.log(data);
-        yield put(selectTrack(0, data.data.tracks[0], data.data.tracks));
+        yield put(selectTrack(0, data.data.tracks[0], data.data.tracks, id));
         yield put(artistTopTracksSuccess(data.data.tracks));
     } catch (e) {
         console.log(e);
@@ -59,10 +65,26 @@ function* playArtistTopTracksHelper() {
     }
 }
 
+export function* recentlyPlayedFetch() {
+    while (true) {
+        yield take([authActions.SET_TOKEN, authActions.INITIAL_AUTH_SUCCESS]);
+        const URL = `${spotifyUrls.baseURL}${spotifyUrls.version}` +
+            `${spotifyUrls.userInfo}${spotifyUrls.recentlyPlayed}`;
+        try {
+            const data = yield call(axios.get, URL);
+            yield put(updateRecentlyPlayed(data.data.items));
+
+        } catch (e) {
+            yield put(errorRecentlyPlayed(e));
+        }
+    }
+}
+
 
 const trackSagas = [
     fork(userTopTracksFetch),
     fork(playArtistTopTracksHelper),
+    fork(recentlyPlayedFetch),
     takeLatest(trackActions.REQUEST_ARTIST_TOP_TRACKS, topTracksFetch),
 ];
 

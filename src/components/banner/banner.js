@@ -13,10 +13,11 @@ class Banner extends Component {
 
         const {
             isFollowing = false,
-            followButton = false,
-            playButton = false, 
             playAction = null,
-            shareButton = false
+            shareButton = false,
+            isPlaying = false,
+            pauseAction = null,
+            followButton = false
         } = this.props;
 
 
@@ -27,21 +28,29 @@ class Banner extends Component {
                         Unfollow
                     </button>
                 );
-            }
+            } else {
             buttons[0] = (
                 <button className="btn-follow" id="follow" onClick={ this.onClickFollow } >
                     Follow
             </button>
             );
+            }
 
         }
-
-        if (playButton) {
+        if (playAction) {
+            if (isPlaying) {
+                buttons[1] = (
+                <button className="btn-play" onClick={ pauseAction } >
+                        Pause
+                </button>    
+                );
+            } else {
             buttons[1] = (
                 <button className="btn-play" onClick={ playAction } >
                     Play
                 </button>
             );
+            }
         }
 
         if (shareButton) {
@@ -90,59 +99,6 @@ class Banner extends Component {
         );
     }
 
-    renderFollowButton = () => {
-        const { 
-            isFollowing = false, 
-            followButton = false,
-        } = this.props;
-        
-
-        if (followButton) {
-            if (isFollowing) {
-                return (
-                    <button className="btn-follow" id="unfollow" onClick={ this.onClickFollow } >
-                        Unfollow
-                    </button>
-                );
-            }
-            return (
-            <button className="btn-follow" id="follow" onClick={ this.onClickFollow } >
-                Follow
-            </button>
-            );
-
-            }
-        return null;
-
-        }
-        
-
-    renderPlayButton = () => {
-        const { playButton = false, playAction } = this.props;
-        if (playButton) {
-            return (
-                <button className="btn-play" onClick={ playAction } >
-                    Play
-                </button>
-            );
-        }
-        return null;
-    }
-
-    renderShareButton = () => {
-        const { shareButton = false } = this.props;
-        if (shareButton) {
-            return (
-                <button className="btn-share">
-                    ...
-                </button>
-            );
-        }
-
-        return null;
-        
-    }
-
     renderImage = () => {
         const { image } = this.props;
         if (image) {
@@ -168,9 +124,7 @@ class Banner extends Component {
         const {
             subtitle = null,
             title = null,
-            item1 = null,
-            item2 = null,
-            item3 = null,
+            items = [],
             topRightInformation = null,
             bottomRightInformation = null,
             renderAllButtons = false
@@ -194,9 +148,9 @@ class Banner extends Component {
 
                     <div className="banner-description">
                         <ul>
-                            <li>{ item1 }</li>
-                            <li>{ item2 }</li>
-                            <li>{ item3 }</li>
+                            { items.map((item) => (
+                                <li>{ item }</li>
+                            )) }
                         </ul>
 
                     </div>  
@@ -215,12 +169,18 @@ class Banner extends Component {
                 </div>
 
                 <div className="action-buttons">
-                    { renderAllButtons &&
-                    this.renderAllButtons()
+                    { renderAllButtons ?
+                        (
+                            this.renderAllButtons() 
+                        ) :
+                        (
+                            this.renderButtons() 
+                        )
                     }
-                    { this.renderPlayButton() }
+                    {  }
+                    {/* { this.renderPlayButton() }
                     { this.renderFollowButton() }
-                    { this.renderShareButton() }
+                    { this.renderShareButton() } */}
                 </div>
             </div>
 

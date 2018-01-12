@@ -82,8 +82,10 @@ export function* followedArtistsRequest() {
         // console.log('Fetching followed artists!');
         const URL = `${spotifyUrls.baseURL}${spotifyUrls.version}` +
         `${spotifyUrls.userInfo}${spotifyUrls.following}?type=artist`;
+        // console.log(URL);
         try {
             const data = yield call(axios.get, URL);
+            // console.log(data);
             yield put(followedArtistsSuccess(data.data.artists.items));
         } catch (e) {
             console.log(e);
@@ -93,10 +95,8 @@ export function* followedArtistsRequest() {
 }
 
 export function* followArtistRequest({ id, action }) {
-    console.log(id, action);
     const URL = `${spotifyUrls.baseURL}${spotifyUrls.version}${spotifyUrls.userInfo}` +
-        `${spotifyUrls.following}${spotifyUrls.queryType}${id}${spotifyUrls.queryIds}${id}`;
-
+        `${spotifyUrls.following}${spotifyUrls.queryType}artist${spotifyUrls.queryIds}${id}`;
     try {
         const data = action === 'follow' ? 
         yield call(axios.put, URL) : 
@@ -106,7 +106,7 @@ export function* followArtistRequest({ id, action }) {
             yield put(followActionSuccess());
         }
 
-        console.log(data);
+        // console.log(data);
     } catch (e) {
         console.log(e);
     }

@@ -123,7 +123,7 @@ class Profile extends Component {
 const mapStateToProps = (state) => ({
     user: state.user.user,
     topArtists: state.artists.topArtists,
-    recentlyPlayed: state.music.recentlyPlayed,
+    recentlyPlayed: state.tracks.recentlyPlayed,
     currentTrack: state.music.currentTrack,
     loadingArtist: state.artists.loadingArtist,
     userTopTracks: state.tracks.userTopTracks,

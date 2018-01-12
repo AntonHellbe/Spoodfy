@@ -4,38 +4,45 @@ import _ from 'lodash';
 import { 
     requestArtist,
     requestArtistAlbums,
-    requestFollowArtist
+    requestFollowArtist,
+    clearCurrentArtist
 } from '../../actions/artist_actions';
 import {
     requestArtistTopTracks
 } from '../../actions/track_actions';
 import {
     selectTrack,
-    requestPlayArtistTopTracks
+    requestPlayArtistTopTracks,
+    togglePlaying
 } from '../../actions/music_actions';
 import Banner from '../banner/banner';
 import ArtistList from '../artistlist/artistlist';
 import TrackTable from '../tracktable/tracktable';
 import AlbumList from '../albumlist/albumlist';
 
-const queryType = 'artist';
-
 class Artist extends Component {
+
+
+    componentWillUnmount() {
+        this.props.clearCurrentArtist();
+    }
 
     onClickPlay = () => {
         const { artistTopTracks, currentArtist } = this.props;
-        const isCorrectTracks = artistTopTracks.length !== 0 ? artistTopTracks[0].artists.find((artist) => currentArtist.id === artist.id) : null;
+        const isCorrectTracks = artistTopTracks.length !== 0 ? 
+            artistTopTracks[0].artists.find((artist) => currentArtist.id === artist.id) 
+            : 
+            null;
         console.log(isCorrectTracks);
-        if (isCorrectTracks) {
-            this.props.selectTrack(artistTopTracks[0], artistTopTracks);
-            // console.log(artistTopTracks[0], artistTopTracks);
+        if (typeof isCorrectTracks === 'undefined') {
+            this.props.selectTrack(artistTopTracks[0], artistTopTracks, currentArtist.id);
         } else {
             this.props.requestPlayArtistTopTracks();
         }
     }
 
     onClickFollow = (action) => {
-        this.props.requestFollowArtist(queryType, action);
+        this.props.requestFollowArtist(action);
     }
 
     handleCheckboxChange = (e) => {
@@ -48,7 +55,6 @@ class Artist extends Component {
 
         switch (id) {
             case 'tab2':
-                console.log('Requesting toptracks');
                 if (artistTopTracks.length === 0 || 
                     !artistTopTracks[0].artists.find((artist) => currentArtist.id === artist.id)) {
                     this.props.requestArtistTopTracks();
@@ -75,11 +81,12 @@ class Artist extends Component {
             artistAlbums,
             followedArtists,
             loadingTracks,
-            currentArtist
+            currentArtist,
+            tracklistId,
+            isPlaying
         } = this.props;
 
-        // console.log(this.props);
-
+        const isPlayingCurrentArtist = currentArtist.id === tracklistId;
         return (
             <div className="main-content">
                 <div className="main-content-wrapper">
@@ -87,13 +94,19 @@ class Artist extends Component {
                 <Banner
                 title={ this.props.currentArtist.name }
                 subtitle={ this.props.currentArtist.type }
-                topRightInformation={ `Popularity ${this.props.currentArtist.popularity}` }
-                bottomRightInformation={ `Followers <br> ${this.props.currentArtist.followers.total}` }
-                image={ this.props.currentArtist.images ? this.props.currentArtist.images[0].url : null }
+                topRightInformation={ 
+                    `Popularity ${this.props.currentArtist.popularity}` }
+                bottomRightInformation={ 
+                    `Followers <br> ${this.props.currentArtist.followers.total}` }
+                image={ this.props.currentArtist.images ? 
+                    this.props.currentArtist.images[0].url : 
+                    null }
+                followButton={ true } // eslint-disable-line
                 isFollowing={ followedArtists.find((artist) => currentArtist.id === artist.id) }
-                renderAllButtons = { true } //eslint-disable-line
                 followAction={ this.onClickFollow }
-                playAction={ this.onClickPlay }
+                isPlaying={ isPlayingCurrentArtist && isPlaying }
+                playAction={ isPlayingCurrentArtist ? this.props.togglePlaying : this.onClickPlay }
+                pauseAction={ this.props.togglePlaying }
                 />
                 }
 
@@ -134,6 +147,7 @@ class Artist extends Component {
                             <TrackTable
                             tracks={ artistTopTracks }
                             isLoading={ loadingTracks }
+                            isArtist={ true } //eslint-disable-line
                             />
                         </section>
                         <section id="content3">
@@ -163,16 +177,21 @@ const mapStateToProps = (state) => ({
     currentArtist: state.artists.currentArtist,
     artistAlbums: state.artists.artistAlbums,
     followedArtists: state.artists.followedArtists,
-    artistTopTracks: state.tracks.artistTopTracks
+    artistTopTracks: state.tracks.artistTopTracks,
+    loadingTracks: state.tracks.loadingTracks,
+    tracklistId: state.music.tracklistId,
+    isPlaying: state.music.isPlaying
 });
 
 const mapDispatchToProps = (dispatch, props) => ({
     requestArtist: (id) => dispatch(requestArtist(id)),
     requestArtistAlbums: () => dispatch(requestArtistAlbums(props.match.params.id)),
-    requestFollowArtist: (action, queryType) => dispatch(requestFollowArtist(props.match.params.id, action, queryType)),
+    requestFollowArtist: (action) => dispatch(requestFollowArtist(props.match.params.id, action)),
     requestArtistTopTracks: () => dispatch(requestArtistTopTracks(props.match.params.id)),
     requestPlayArtistTopTracks: () => dispatch(requestPlayArtistTopTracks(props.match.params.id)),
-    selectTrack: (track, queue) => dispatch(selectTrack(0, track, queue)),
+    selectTrack: (track, queue, id) => dispatch(selectTrack(0, track, queue, id)),
+    togglePlaying: () => dispatch(togglePlaying()),
+    clearCurrentArtist: () => dispatch(clearCurrentArtist())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Artist);

@@ -24,7 +24,7 @@ class MusicBar extends Component {
     }
 
     state = {
-        value: 0.0,
+        value: 0
     }
 
 
@@ -43,6 +43,7 @@ class MusicBar extends Component {
     componentWillReceiveProps(nextProps) {
         if (nextProps.currentTrack.preview_url !== null && 
             this.props.currentTrack.id !== nextProps.currentTrack.id) {
+            this.setState(() => ({ value: 0 }));
             clearInterval(this.currentTimeInterval); 
             //Clear interval if it isn't the same track we are receiving, 
             //i.e slider needs to back to zero and then preview url on the incoming track is not null
@@ -52,6 +53,16 @@ class MusicBar extends Component {
                 this.props.loadNextTrack();
             }
          }
+
+        if (!nextProps.isPlaying && this.props.isPlaying) {
+             clearInterval(this.currentTimeInterval);
+             this.audioElement.pause();
+         }
+
+        if (nextProps.isPlaying && !this.props.isPlaying) {
+            this.audioElement.play();
+        }
+
 
     }
 
@@ -147,19 +158,6 @@ class MusicBar extends Component {
         clearInterval(this.currentTimeInterval);
     }
 
-    handleKeyPress = (event) => { // Needs to be a global event listener
-         
-        if (event.keyCode === 32) {
-            event.preventDefault(); 
-            if (this.props.isPlaying) {
-                this.pauseAudio();
-            } else {
-                this.playAudio();
-            }
-            this.props.togglePlaying();
-        }
-    }
-
 
     OnEndedListener = () => {
         const { queue, repeat, playingIndex } = this.props;
@@ -167,10 +165,12 @@ class MusicBar extends Component {
             this.audioElement.load();
             this.audioElement.play();
         } else if (playingIndex < queue.length - 1) {
+            this.setState(() => ({ value: 0 }));
             this.props.loadNextTrack(queue[playingIndex + 1].album);
             
             
         } else {
+            console.log('We are here');
             clearInterval(this.currentTimeInterval); 
             this.setState(() => ({ value: 0 }));
             this.props.togglePlaying();
@@ -180,9 +180,11 @@ class MusicBar extends Component {
 
 
     OnPlay = () => {
+        this.audioElement.currentTime = this.state.value;
         this.currentTimeInterval = setInterval(() => {
             this.setState(() => ({ value: this.audioElement.currentTime }));
         }, 500);
+        this.audioElement.play();
 
     }
 
@@ -248,7 +250,6 @@ class MusicBar extends Component {
             currentTrack,
             isPlaying,
             shuffle,
-            duration,
             volume
             
          } = this.props;
@@ -274,7 +275,7 @@ class MusicBar extends Component {
                     type="range"
                     name="points" 
                     min="0"
-                    max={ duration }
+                    max={ 30 }
                     onMouseDown={ this.onMouseDown }
                     onMouseUp={ this.onMouseUp }
                     onChange={ this.onChange }
@@ -282,7 +283,7 @@ class MusicBar extends Component {
                     />
                     <ul>
                         <li className="currentVal">{ (this.state.value / 100).toFixed(2) }</li>
-                        <li>{ (duration / 100).toFixed(2) }</li>
+                        <li>{ (30 / 100).toFixed(2) }</li>
                     </ul>    
                     </div>
 
@@ -337,7 +338,6 @@ const mapStateToProps = (state) => ({
     queue: state.music.queue,
     currentTrack: state.music.currentTrack,
     shuffle: state.music.shuffle,
-    duration: state.music.duration,
     volume: state.music.volume,
     isAuthenticated: state.user.isAuthenticated,
     playingIndex: state.music.playingIndex,

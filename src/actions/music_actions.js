@@ -4,11 +4,12 @@ export const togglePlaying = () => ({
     type: musicActions.TOGGLE_PLAYING,
 });
 
-export const selectTrack = (index, track, queue) => ({
+export const selectTrack = (index, track, queue, tracklistId = '') => ({
     type: musicActions.SELECT_TRACK,
     index,
     track,
-    queue
+    queue,
+    tracklistId
 });
 
 export const selectSingleTrack = (track) => ({
@@ -31,16 +32,6 @@ export const toggleShuffle = () => ({
 
 export const toggleRepeat = () => ({
     type: musicActions.TOGGLE_REPEAT,
-});
-
-export const updateRecentlyPlayed = (recentTracks) => ({
-    type: musicActions.UPDATE_RECENTLY_PLAYED,
-    recentTracks
-});
-
-export const errorRecentlyPlayed = (error) => ({
-    type: musicActions.ERROR_RECENTLY_PLAYED,
-    error
 });
 
 export const updateVolume = (volume) => ({
@@ -72,4 +63,10 @@ export const playAlbumError = (error) => ({
 export const requestPlayArtistTopTracks = (id) => ({
     type: musicActions.REQUEST_PLAY_ARTIST_TOP_TRACKS,
     id
+});
+
+export const playPlaylist = (tracks, playlistId) => ({
+    type: musicActions.PLAY_PLAYLIST,
+    tracks,
+    playlistId
 });

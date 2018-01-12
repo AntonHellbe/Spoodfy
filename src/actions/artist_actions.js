@@ -74,3 +74,7 @@ export const requestFollowArtist = (id, action) => ({
 export const followActionSuccess = () => ({
     type: artistActions.FOLLOW_ACTION_SUCCESS,
 });
+
+export const clearCurrentArtist = () => ({
+    type: artistActions.CLEAR_CURRENT_ARTIST
+});

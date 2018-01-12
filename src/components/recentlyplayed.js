@@ -22,7 +22,7 @@ class RecentlyPlayed extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    recentlyPlayed: state.music.recentlyPlayed,
+    recentlyPlayed: state.tracks.recentlyPlayed,
 });
 
 export default connect(mapStateToProps, null)(RecentlyPlayed);

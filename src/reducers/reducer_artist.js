@@ -43,6 +43,9 @@ const artistReducer = (state = INITIAL_STATE, action) => {
         case artistActions.FOLLOWED_ARTISTS_ERROR:
             return { ...state, error: action.error };
 
+        case artistActions.CLEAR_CURRENT_ARTIST:
+            return { ...state, currentArtist: {} };
+
         default:
             return state;
     }

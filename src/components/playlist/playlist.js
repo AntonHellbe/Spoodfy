@@ -3,10 +3,12 @@ import { connect } from 'react-redux';
 import {
     requestPlaylistSongs,
     updateActivePlaylist,
-    requestFollowPlaylist
+    requestFollowPlaylist,
+    clearActivePlaylist
 } from '../../actions/playlist_actions';
 import {
-    selectTrack
+    playPlaylist,
+    togglePlaying,
 } from '../../actions/music_actions';
 import Banner from '../banner/banner';
 import TrackTable from '../tracktable/tracktable';
@@ -17,23 +19,24 @@ const isPlaylist = true;
 class Playlist extends Component {
 
     componentWillUnmount() {
-        
+        this.props.clearActivePlaylist();
     }
 
     onClickPlay = () => {
-        const { playlistSongs } = this.props;
-        console.log(playlistSongs);
-        this.props.selectTrack(playlistSongs[0].track, playlistSongs.map((track) => track.track));
+        const { 
+            playlistSongs, 
+            activePlaylist 
+        } = this.props;
+        this.props.playPlaylist(playlistSongs.map((song) => song.track), activePlaylist.id);    
     }
 
     onClickFollow = (action) => {
-        console.log(action);
+        // console.log(action);
         const {
             activePlaylist,
             spotifyId
         } = this.props;
         this.props.requestFollowPlaylist(activePlaylist, action, spotifyId);
-
     }
 
 
@@ -52,9 +55,20 @@ class Playlist extends Component {
                 tracks: { total },
                 type,
             },
+            activePlaylist,
             spotifyId,
-            isFollowingActivePlaylist
+            isFollowingActivePlaylist,
+            isPlaying,
+            tracklistId
         } = this.props;
+
+        console.log(tracklistId);
+        let playingCurrentPlaylist = false;
+
+        if (tracklistId !== '') {
+            playingCurrentPlaylist = tracklistId === activePlaylist.id;
+        }
+
         return (
             <div className="main-content">
                 <div className="main-content-wrapper">
@@ -65,11 +79,12 @@ class Playlist extends Component {
                     ? 'Public Playlist' 
                     : 'Private Playlist' }
                 topRightInformation={ `${id}` }
-                item1={ display_name ? `Created by: ${display_name}` : `Created by: ${id}` }
-                item2={ `Total tracks: ${total}` }
+                items={ [display_name ? `Created by: ${display_name}` : `Created by: ${id}`,
+                    `Total tracks: ${total}`] }
                 image={ images[0] ? images[0].url : null }
-                playButton={ true }
-                playAction={ this.onClickPlay }
+                playAction={ playingCurrentPlaylist ? this.props.togglePlaying : this.onClickPlay }
+                pauseAction={ this.props.togglePlaying }
+                isPlaying={ isPlaying && playingCurrentPlaylist }
                 followButton={ spotifyId !== id }
                 isFollowing={ isFollowingActivePlaylist }
                 followAction={ this.onClickFollow }
@@ -96,14 +111,21 @@ const mapStateToProps = (state) => ({
     myPlaylists: state.playlists.myPlaylists,
     loadingPlaylist: state.playlists.loadingPlaylist,
     spotifyId: state.user.spotifyId,
-    isFollowingActivePlaylist: state.playlists.isFollowingActivePlaylist
+    isFollowingActivePlaylist: state.playlists.isFollowingActivePlaylist,
+    tracklistId: state.music.tracklistId,
+    isPlaying: state.music.isPlaying
 });
 
 const mapDispatchToProps = (dispatch, props) => ({
     requestPlaylistSongs: () => dispatch(requestPlaylistSongs(props.params.match.id)),
     updateActivePlaylist: (playlist) => dispatch(updateActivePlaylist(playlist)),
-    selectTrack: (track, queue) => dispatch(selectTrack(0, track, queue)),
-    requestFollowPlaylist: (playlist, action, spotifyId) => dispatch(requestFollowPlaylist(playlist, action, spotifyId)),
+    playPlaylist: (tracks, playlist) => dispatch(playPlaylist(tracks, playlist)),
+    requestFollowPlaylist: (playlist, action, spotifyId) => 
+        dispatch(requestFollowPlaylist(playlist, action, spotifyId)),
+    togglePlaying: () => dispatch(togglePlaying()),
+    clearActivePlaylist: () => dispatch(clearActivePlaylist())
+    
+    
 });
 
 
