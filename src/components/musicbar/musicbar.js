@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import FaVolumeUp from 'react-icons/lib/fa/volume-up';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 import {
@@ -289,11 +288,10 @@ class MusicBar extends Component {
 
 
                 <div className="volumeControl" key="volume">
-                        <FaVolumeUp 
-                        className="fa-volume-up"
-                        color={ '#cfcfd1' } 
-                        size={ '20px' } 
-                        onClick={ this.onVolumeClick } 
+                        <i 
+                        className="fa fa-volume-up" 
+                        aria-hidden="true"
+                        onClick={ this.onVolumeClick }  
                         />
                     <input
                         className="volumeInput"

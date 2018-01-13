@@ -25,15 +25,20 @@ export const requestRelatedArtists = (id) => ({
     id
 });
 
-// export const artistSuccess = (artist) => ({
-//     type: artistActions.ARTIST_SUCCESS,
-//     artist
-// });
+export const requestArtist = (id) => ({
+    type: artistActions.REQUEST_ARTIST,
+    id
+});
 
-// export const artistError = (error) => ({
-//     type: artistActions.ARTIST_ERROR,
-//     error
-// });
+export const artistSuccess = (artist) => ({
+    type: artistActions.ARTIST_SUCCESS,
+    artist
+});
+
+export const artistError = (error) => ({
+    type: artistActions.ARTIST_ERROR,
+    error
+});
 
 export const relatedArtistsSuccess = (artists) => ({
     type: artistActions.RELATED_ARTISTS_SUCCESS,

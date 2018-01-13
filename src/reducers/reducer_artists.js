@@ -17,6 +17,12 @@ const artistReducer = (state = INITIAL_STATE, action) => {
         case artistActions.REQUEST_TOP_ARTISTS:
             return { ...state, loadingArtist: true };
 
+        case artistActions.REQUEST_ARTIST:
+            return { ...state, loadingArtist: true };
+        
+        case artistActions.ARTIST_SUCCESS:
+            return { ...state, currentArtist: action.artist, loadingArtist: false };
+
         case artistActions.TOP_ARTISTS_SUCCESS:
             return { ...state, topArtists: action.topArtists, loadingArtist: false };
         

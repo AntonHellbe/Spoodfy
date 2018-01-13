@@ -36,7 +36,7 @@ class Artist extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.currentArtist.id !== this.props.currentArtist.id) {
+        if (nextProps.match.params.id !== this.props.currentArtist.id) {
             this.props.requestRelatedArtists(nextProps.currentArtist.id);
         }
     }

@@ -14,8 +14,8 @@ import {
 
 class TrackTable extends Component {
     
-    onClickArtist = (id) => {
-        this.props.requestArtist(id);
+    onClickArtist = (artist) => {
+        this.props.requestArtist(artist);
     }
     
     selectTrackHandler = (index, track) => {
@@ -112,7 +112,7 @@ const mapDispatchToProps = (dispatch) => ({
     AddToQueue: (track) => dispatch(AddToQueue(track)),
     selectTrack: (index, track, queue, tracklistId) => 
         dispatch(selectTrack(index, track, queue, tracklistId)),
-    requestArtist: (id) => dispatch(requestArtist(id)),
+    requestArtist: (id) => dispatch(requestArtist(id))
     
 });
 

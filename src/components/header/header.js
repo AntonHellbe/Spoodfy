@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import FaSpotify from 'react-icons/lib/fa/spotify';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 import { logoutRequest } from '../../actions/auth_actions';

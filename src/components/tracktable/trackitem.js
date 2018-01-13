@@ -6,9 +6,7 @@ import PropTypes from 'prop-types';
 const TrackItem = (props) => {
 
         const { currentTrack = null, track, index, track: { name, artists, duration_ms, album, id } } = props;
-        // if (props.track.preview_url === null) {
-        //     return null;
-        // }
+
         let currentId = null;
         if (currentTrack) {
             currentId = currentTrack.track ? currentTrack.track.id : currentTrack.id;
