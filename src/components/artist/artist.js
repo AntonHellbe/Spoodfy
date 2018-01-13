@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import { 
-    requestArtist,
-    requestFollowArtist,
-    clearCurrentArtist
+    requestRelatedArtists,
+    requestFollowArtist
 } from '../../actions/artist_actions';
 import {
     requestArtistTopTracks
@@ -24,30 +23,36 @@ import AlbumList from '../albumlist/albumlist';
 
 class Artist extends Component {
 
+    componentWillMount() {
+        const {
+            relatedArtists,
+            artistTopTracks,
+            currentArtist
+        } = this.props;
+        if (relatedArtists.length === 0 || 
+            !artistTopTracks.find((artist) => currentArtist.id === artist.id)) {
+            this.props.requestRelatedArtists(currentArtist.id);
+        }
+    }
 
-    componentWillUnmount() {
-        this.props.clearCurrentArtist();
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.currentArtist.id !== this.props.currentArtist.id) {
+            this.props.requestRelatedArtists(nextProps.currentArtist.id);
+        }
     }
 
     onClickPlay = () => {
         const { artistTopTracks, currentArtist } = this.props;
-        const isCorrectTracks = artistTopTracks.length !== 0 ? 
-            artistTopTracks[0].artists.find((artist) => currentArtist.id === artist.id) 
-            : 
-            null;
-        // console.log(isCorrectTracks);
-        console.log(isCorrectTracks);
-        if (isCorrectTracks) {
-            console.log(currentArtist.id);
+        if (artistTopTracks.length !== 0 && 
+            artistTopTracks.find((artist) => currentArtist.id === artist.id)) {
             this.props.selectTrack(artistTopTracks[0], artistTopTracks, currentArtist.id);
         } else {
-            console.log('Fetching topTracks');
             this.props.requestPlayArtistTopTracks(currentArtist.id);
         }
     }
 
     onClickFollow = (action) => {
-        this.props.requestFollowArtist(action);
+        this.props.requestFollowArtist(action); //action = follow or unfollow
     }
 
     handleCheckboxChange = (e) => {
@@ -62,6 +67,8 @@ class Artist extends Component {
             case 'tab2':
                 if (artistTopTracks.length === 0 || 
                     !artistTopTracks[0].artists.find((artist) => currentArtist.id === artist.id)) {
+                    // Only fetch is we have no toptracks or the current toptracks are not for
+                    // the current artist
                     this.props.requestArtistTopTracks();
                 }
                 break;
@@ -93,7 +100,8 @@ class Artist extends Component {
         } = this.props;
 
         const isPlayingCurrentArtist = currentArtist.id === tracklistId;
-        // console.log(isPlayingCurrentArtist, isPlaying);
+        const imageUrl = currentArtist.images ? currentArtist.images[0].url : null;
+        console.log(loadingArtist);
         return (
             <div className="main-content">
                 <div className="main-content-wrapper">
@@ -104,10 +112,8 @@ class Artist extends Component {
                 topRightInformation={ 
                     `Popularity ${this.props.currentArtist.popularity}` }
                 bottomRightInformation={ 
-                    `Followers <br> ${this.props.currentArtist.followers.total}` }
-                image={ this.props.currentArtist.images ? 
-                    this.props.currentArtist.images[0].url : 
-                    null }
+                    `Followers ${this.props.currentArtist.followers.total}` }
+                image={ imageUrl }
                 followButton={ true } // eslint-disable-line
                 isFollowing={ followedArtists.find((artist) => currentArtist.id === artist.id) }
                 followAction={ this.onClickFollow }
@@ -192,14 +198,13 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch, props) => ({
-    requestArtist: (id) => dispatch(requestArtist(id)),
     requestArtistAlbums: () => dispatch(requestArtistAlbums(props.match.params.id)),
     requestFollowArtist: (action) => dispatch(requestFollowArtist(props.match.params.id, action)),
     requestArtistTopTracks: () => dispatch(requestArtistTopTracks(props.match.params.id)),
     requestPlayArtistTopTracks: () => dispatch(requestPlayArtistTopTracks(props.match.params.id)),
     selectTrack: (track, queue, id) => dispatch(selectTrack(0, track, queue, id)),
     togglePlaying: () => dispatch(togglePlaying()),
-    clearCurrentArtist: () => dispatch(clearCurrentArtist())
+    requestRelatedArtists: (id) => dispatch(requestRelatedArtists(id))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Artist);

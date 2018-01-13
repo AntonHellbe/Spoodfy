@@ -6,8 +6,6 @@ import { artistActions,
 import {
     topArtistsSuccess,
     topArtistsError,
-    artistSuccess,
-    artistError,
     relatedArtistsSuccess,
     relatedArtistsError,
     followedArtistsSuccess,
@@ -30,23 +28,23 @@ function* topArtistsFetch() {
     }
 }
 
-function* artistFetch() {
-    while (true) {
-        const { id } = yield take(artistActions.REQUEST_ARTIST);
-        const URL = `${spotifyUrls.baseURL}${spotifyUrls.version}${spotifyUrls.artists}/${id}`;
-        try {
-            const data = yield call(axios.get, URL);
-            // console.log(data);
-            yield put(artistSuccess(data.data));
-        } catch (e) {
-            yield put(artistError(e));
-        }
-    }
-}
+// function* artistFetch() {
+//     while (true) {
+//         const { id } = yield take(artistActions.REQUEST_ARTIST);
+//         const URL = `${spotifyUrls.baseURL}${spotifyUrls.version}${spotifyUrls.artists}/${id}`;
+//         try {
+//             const data = yield call(axios.get, URL);
+//             // console.log(data);
+//             yield put(artistSuccess(data.data));
+//         } catch (e) {
+//             yield put(artistError(e));
+//         }
+//     }
+// }
 
 function* relatedArtistsFetch() {
     while (true) {
-        const { id } = yield take(artistActions.REQUEST_ARTIST);
+        const { id } = yield take(artistActions.REQUEST_RELATED_ARTISTS);
         const URL = `${spotifyUrls.baseURL}${spotifyUrls.version}` +
         `${spotifyUrls.artists}/${id}${spotifyUrls.relatedArtists}`;
         try {
@@ -100,7 +98,6 @@ function* followArtistRequest({ id, action }) {
 
 const artistsSagas = [
     fork(topArtistsFetch),
-    fork(artistFetch),
     fork(relatedArtistsFetch),
     fork(followedArtistsRequest),
     takeLatest(artistActions.REQUEST_FOLLOW_ARTIST, followArtistRequest)

@@ -15,20 +15,25 @@ export const topArtistsError = (error) => ({
     error
 });
 
-export const requestArtist = (id) => ({
-    type: artistActions.REQUEST_ARTIST,
-    id
-});
-
-export const artistSuccess = (artist) => ({
-    type: artistActions.ARTIST_SUCCESS,
+export const updateCurrentArtist = (artist) => ({
+    type: artistActions.UPDATE_CURRENT_ARTIST,
     artist
 });
 
-export const artistError = (error) => ({
-    type: artistActions.ARTIST_ERROR,
-    error
+export const requestRelatedArtists = (id) => ({
+    type: artistActions.REQUEST_RELATED_ARTISTS,
+    id
 });
+
+// export const artistSuccess = (artist) => ({
+//     type: artistActions.ARTIST_SUCCESS,
+//     artist
+// });
+
+// export const artistError = (error) => ({
+//     type: artistActions.ARTIST_ERROR,
+//     error
+// });
 
 export const relatedArtistsSuccess = (artists) => ({
     type: artistActions.RELATED_ARTISTS_SUCCESS,
@@ -58,8 +63,4 @@ export const requestFollowArtist = (id, action) => ({
 
 export const followActionSuccess = () => ({
     type: artistActions.FOLLOW_ACTION_SUCCESS,
-});
-
-export const clearCurrentArtist = () => ({
-    type: artistActions.CLEAR_CURRENT_ARTIST
 });

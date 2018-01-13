@@ -14,6 +14,7 @@ import NewReleases from '../components/new-releases/new-releases';
 import Playlist from '../components/playlist/playlist';
 import Profile from '../components/profile/profile';
 import Artist from '../components/artist/artist';
+import Album from '../components/albumpage/album';
 
 
 const Routes = (props) => {
@@ -44,9 +45,14 @@ const Routes = (props) => {
                     component={ Profile }
                 />
                 <PrivateRoute
-                    path="/artist/:id"
+                    path="/artists/:id"
                     isAuthenticated={ props.isAuthenticated }
                     component={ Artist }
+                />
+                <PrivateRoute
+                    path="/albums/:id"
+                    isAuthenticated={ props.isAuthenticated }
+                    component={ Album }
                 />
                 <Route path="/login" component={ Login } />
                 <Route path="/callback" component={ Callback } />

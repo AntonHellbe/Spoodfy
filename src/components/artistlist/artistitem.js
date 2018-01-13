@@ -9,8 +9,8 @@ const ArtistItem = (props) => {
     return (
         <div className="artistItem">
             <Link 
-            to={ `/artist/${id}` }
-            onClick={ () => props.requestArtist(id) }
+            to={ `/artists/${id}` }
+            onClick={ () => props.updateCurrentArtist(props.artist) }
             >
                 <img 
                 src={ images[0].url }

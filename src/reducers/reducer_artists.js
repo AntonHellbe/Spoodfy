@@ -17,17 +17,17 @@ const artistReducer = (state = INITIAL_STATE, action) => {
         case artistActions.REQUEST_TOP_ARTISTS:
             return { ...state, loadingArtist: true };
 
-        case artistActions.REQUEST_ARTIST:
-            return { ...state, loadingArtist: true };
-
         case artistActions.TOP_ARTISTS_SUCCESS:
             return { ...state, topArtists: action.topArtists, loadingArtist: false };
+        
+        case artistActions.REQUEST_RELATED_ARTISTS:
+            return { ...state, loadingArtist: true };
 
-        case artistActions.ARTIST_SUCCESS:
-            return { ...state, currentArtist: action.artist, loadingArtist: false };
+        case artistActions.UPDATE_CURRENT_ARTIST:
+            return { ...state, currentArtist: action.artist };
         
         case artistActions.RELATED_ARTISTS_SUCCESS:
-            return { ...state, relatedArtists: action.artists };
+            return { ...state, relatedArtists: action.artists, loadingArtist: false };
       
         case artistActions.FOLLOWED_ARTISTS_SUCCESS:
             return { ...state, followedArtists: action.artists };

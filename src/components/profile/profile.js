@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import ProfileBanner from './profile-banner';
 import {
     topArtistsRequest, 
 } from '../../actions/artist_actions';

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import ArtistItem from './artistitem';
 import Loader from '../loader/loader';
 import {
-    requestArtist
+    updateCurrentArtist
 } from '../../actions/artist_actions';
 
 
@@ -25,7 +25,7 @@ class ArtistSection extends Component {
                 { artists.map((artist) => (
                     <ArtistItem
                     artist={ artist }
-                    requestArtist={ this.props.requestArtist }
+                    updateCurrentArtist={ this.props.updateCurrentArtist }
                     />
 
                 )) }
@@ -37,7 +37,7 @@ class ArtistSection extends Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    requestArtist: (id) => dispatch(requestArtist(id))
+    updateCurrentArtist: (artist) => dispatch(updateCurrentArtist(artist))
 });
 
 // const mapStateToProps = (state) => ({

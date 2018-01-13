@@ -8,8 +8,8 @@ import {
     updateActivePlaylistId
 } from '../../actions/playlist_actions';
 import {
-    playPlaylist,
     togglePlaying,
+    selectTrack,
 } from '../../actions/music_actions';
 import Banner from '../banner/banner';
 import TrackTable from '../tracktable/tracktable';
@@ -24,11 +24,9 @@ class Playlist extends Component {
     onClickPlay = () => {
         const { 
             playlistSongs, 
-            activePlaylist: {
-                playlistId
-            } 
         } = this.props;
-        this.props.playPlaylist(playlistSongs.map((song) => song.track), playlistId);    
+        console.log('Dispatching selectTrack');
+        this.props.selectTrack(playlistSongs[0].track, playlistSongs.map((song) => song.track));    
     }
 
     onClickFollow = (action) => {
@@ -67,7 +65,7 @@ class Playlist extends Component {
         } = this.props;
 
         let playingCurrentPlaylist = false;
-
+        console.log(type);
         if (tracklistId !== '') {
             playingCurrentPlaylist = tracklistId === playlistId;
         }
@@ -96,7 +94,7 @@ class Playlist extends Component {
                 
                     <TrackTable 
                     tracks={ playlistSongs } 
-                    isPlaylist={ type === 'playlist' }
+                    type={ type }
                     isLoading={ loadingPlaylist }
                     />
                 </div>
@@ -121,12 +119,12 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch, props) => ({
     requestPlaylistSongs: () => dispatch(requestPlaylistSongs(props.params.match.id)),
     updateActivePlaylist: (playlist) => dispatch(updateActivePlaylist(playlist)),
-    playPlaylist: (tracks, playlist) => dispatch(playPlaylist(tracks, playlist)),
     requestFollowPlaylist: (playlist, action, spotifyId) => 
         dispatch(requestFollowPlaylist(playlist, action, spotifyId)),
     togglePlaying: () => dispatch(togglePlaying()),
     clearActivePlaylistId: () => dispatch(clearActivePlaylistId()),
-    updateActivePlaylistId: () => dispatch(updateActivePlaylistId())
+    updateActivePlaylistId: () => dispatch(updateActivePlaylistId()),
+    selectTrack: (track, queue) => dispatch(selectTrack(0, track, queue, props.match.params.id))
     
     
 });

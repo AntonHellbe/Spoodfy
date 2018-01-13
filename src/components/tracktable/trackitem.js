@@ -31,7 +31,7 @@ const TrackItem = (props) => {
                 </td>
                 <td>
                     <Link 
-                    to={ `/artist/${artists[0].id}` }
+                    to={ `/artists/${artists[0].id}` }
                     onClick={ () => props.requestArtist(artists[0].id) }
                     style={ { color } }
                     >

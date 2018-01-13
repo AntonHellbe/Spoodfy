@@ -23,14 +23,18 @@ class SideMenu extends Component {
     }
 
     renderAlbumImage = () => {
+        const {
+            currentTrack
+        } = this.props;
+
         if (this.props.isAuthenticated) {
-            if (_.isEmpty(this.props.currentAlbum)) {
+            if (_.isEmpty(currentTrack) || typeof currentTrack.album.images[0] === 'undefined') {
                 return <img className="imgAlbum" src={ DEFAULT_IMAGE_URL } role="presentation" />;
             }
 
             return (<img 
                     className="imgAlbum" 
-                    src={ this.props.currentAlbum.images[0].url }
+                    src={ currentTrack.album.images[0].url }
                     role="presentation" 
                     />);
         }
@@ -73,15 +77,15 @@ const mapStateToProps = (state) => {
         playlists: state.playlists.myPlaylists,
         activePlaylist: state.playlists.activePlaylist,
         currentTrack: state.music.currentTrack,
-        currentAlbum: state.music.currentAlbum,
     };
 };
 
 
-const mapDispatchToProps = (dispatch, props) => {
+const mapDispatchToProps = (dispatch) => {
     return {
         getUserPlaylists: () => dispatch(getUserPlaylists()),
-        updateActivePlaylist: (playlist, spotifyId) => dispatch(updateActivePlaylist(playlist, spotifyId)),
+        updateActivePlaylist: (playlist, spotifyId) => 
+            dispatch(updateActivePlaylist(playlist, spotifyId)),
     };
 };
 

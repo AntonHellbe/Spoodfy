@@ -23,13 +23,13 @@ class TrackTable extends Component {
             activePlaylist: {
                 playlistId
              }, 
-            isPlaylist = false, 
             isArtist = false,
             currentArtist,
-            tracks
+            tracks,
+            type
         } = this.props;
 
-        if (isPlaylist) {
+        if (type === 'playlist') {
             const playlistTracks = tracks.map((item) => item.track);
             this.props.selectTrack(index, track, playlistTracks, playlistId);
         } else if (isArtist) {
@@ -48,7 +48,7 @@ class TrackTable extends Component {
 
     const { 
         tracks, 
-        isPlaylist = false, 
+        type, 
         currentTrack, 
         isLoading = null 
     } = this.props;
@@ -58,7 +58,6 @@ class TrackTable extends Component {
             <Loader />
         );
     }
-
     return (
             <table className="table">
                 <tbody>
@@ -67,11 +66,13 @@ class TrackTable extends Component {
                         <th className="table-col-title"> Title </th>
                         <th className="table-col-album"> Artist </th>
                         <th className="table-col-album"> Album </th>
-                        <th className="table-col-time"> <i className="fa fa-clock-o" aria-hidden="true" /> </th>
+                        <th className="table-col-time"> 
+                            <i className="fa fa-clock-o" aria-hidden="true" /> 
+                        </th>
                         <th className="table-col-actions" />
                     </tr>
                     {tracks.map((item, index) => {
-                        if (isPlaylist) {
+                        if (type === 'playlist') {
                             const { track } = item;
                             return (
                                 <TrackItem
@@ -109,7 +110,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     AddToQueue: (track) => dispatch(AddToQueue(track)),
-    selectTrack: (index, track, queue, tracklistId) => dispatch(selectTrack(index, track, queue, tracklistId)),
+    selectTrack: (index, track, queue, tracklistId) => 
+        dispatch(selectTrack(index, track, queue, tracklistId)),
     requestArtist: (id) => dispatch(requestArtist(id)),
     
 });
@@ -117,7 +119,6 @@ const mapDispatchToProps = (dispatch) => ({
 
 TrackTable.propTypes = {
     tracks: PropTypes.array.isRequired,
-    // isPlaylist: PropTypes.bool.opt,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(TrackTable);

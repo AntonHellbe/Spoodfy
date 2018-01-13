@@ -32,8 +32,8 @@ function* albumTracksFetch() {
                 );
             });
             // console.log(tracks);
-            yield put(playAlbumSuccess(tracks));
             yield put(albumTracksSuccess(tracks));
+            yield put(playAlbumSuccess(tracks));
         } catch (e) {
             console.log(e);
             yield put(playAlbumError(e));

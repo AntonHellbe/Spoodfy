@@ -8,18 +8,22 @@ const AlbumItem = (props) => {
     if (images === null) {
         return null;
     }
-    const style = props.currentAlbum ? props.currentAlbum.id === id ? '0 4px 8px 0 #ff6b42' : null : null; //eslint-disable-line
+
+    let style;
+
+    if (props.currentAlbum) {
+        style = props.currentAlbum.id === id ? '0 4px 8px 0 #ff6b42' : null;
+    }
+    // () => { requestPlayAlbum(id, album); }
     return (
         <div 
         className="albumItem"
-            style={ props.currentAlbum.id === id ? { boxShadow: style } : null }
+            style={ { boxShadow: style } }
         >
             <Link 
-            to="#" 
-            className="tag" 
-            onClick={ () => { 
-                requestPlayAlbum(id, album);
-            } }
+            to={ `/albums/${id}` }
+            onClick={ () => props.updateActiveAlbum(album) }
+            className="tag"
             >
             <img 
             src={ images[0].url }
@@ -27,6 +31,7 @@ const AlbumItem = (props) => {
             className="temp"
             />
             <i className="fa fa-play" aria-hidden="true" /> 
+            
             </Link>
             <ul>
                 <li>{ name }</li>

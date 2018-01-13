@@ -15,8 +15,9 @@ export const artistAlbumsError = (error) => ({
     error
 });
 
-export const requestAlbumTracks = (album) => ({
+export const requestAlbumTracks = (id, album) => ({
     type: albumActions.REQUEST_ALBUM_TRACKS,
+    id,
     album
 });
 
@@ -28,4 +29,10 @@ export const albumTracksSuccess = (tracks) => ({
 export const albumTracksError = (error) => ({
     type: albumActions.ALBUM_TRACKS_ERROR,
     error
+});
+
+
+export const updateCurrentAlbum = (album) => ({
+    type: albumActions.UPDATE_CURRENT_ALBUM,
+    album
 });

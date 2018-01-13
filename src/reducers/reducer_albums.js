@@ -11,7 +11,7 @@ const INITIAL_STATE = {
 const albumReducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case albumActions.REQUEST_ALBUM_TRACKS:
-            return { ...state, loadingAlbum: true, currentAlbum: action.album };
+            return { ...state, loadingAlbum: true };
         
         case albumActions.ALBUM_TRACKS_SUCCESS:
             return { ...state, albumTracks: action.tracks, loadingAlbum: false };
@@ -21,6 +21,10 @@ const albumReducer = (state = INITIAL_STATE, action) => {
 
         case albumActions.ARTIST_ALBUMS_SUCCESS:
             return { ...state, artistAlbums: action.albums, loadingAlbum: false };
+        
+        case albumActions.UPDATE_CURRENT_ALBUM:
+            return { ...state, currentAlbum: action.album };
+            
         default:
             return state;
     }
