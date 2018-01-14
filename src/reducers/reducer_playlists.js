@@ -33,6 +33,9 @@ const playlistReducer = (state = INITIAL_STATE, action) => {
 
         case playlistActions.CLEAR_ACTIVE_PLAYLIST_ID:
             return { ...state, activePlaylist: { ...state.activePlaylist, playlistId: null } };
+        
+        case playlistActions.PLAY_PLAYLIST_SUCCESS:
+            return { ...state, activePlaylist: { id: action.playlist.id, playlist: action.playlist }, playlistSongs: action.tracks };
         default:
             return state;
     }

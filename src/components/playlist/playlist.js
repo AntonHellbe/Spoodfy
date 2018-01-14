@@ -5,7 +5,7 @@ import {
     updateActivePlaylist,
     requestFollowPlaylist,
     clearActivePlaylistId,
-    updateActivePlaylistId
+    requestPlaylist,
 } from '../../actions/playlist_actions';
 import {
     togglePlaying,
@@ -117,14 +117,11 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch, props) => ({
     requestPlaylistSongs: () => dispatch(requestPlaylistSongs(props.params.match.id)),
-    updateActivePlaylist: (playlist) => dispatch(updateActivePlaylist(playlist)),
     requestFollowPlaylist: (playlist, action, spotifyId) => 
         dispatch(requestFollowPlaylist(playlist, action, spotifyId)),
     togglePlaying: () => dispatch(togglePlaying()),
     clearActivePlaylistId: () => dispatch(clearActivePlaylistId()),
-    updateActivePlaylistId: () => dispatch(updateActivePlaylistId()),
-    selectTrack: (track, queue) => dispatch(selectTrack(0, track, queue, props.match.params.id))
-    
+    selectTrack: (track, queue) => dispatch(selectTrack(0, track, queue, props.match.params.id)),
     
 });
 

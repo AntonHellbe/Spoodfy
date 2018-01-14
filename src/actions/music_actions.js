@@ -64,3 +64,9 @@ export const requestPlayArtistTopTracks = (id) => ({
     type: musicActions.REQUEST_PLAY_ARTIST_TOP_TRACKS,
     id
 });
+
+export const requestPlayPlaylist = (playlistUrl, playlist) => ({
+    type: musicActions.REQUEST_PLAY_PLAYLIST,
+    playlistUrl,
+    playlist
+});

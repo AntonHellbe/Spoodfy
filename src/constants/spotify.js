@@ -23,6 +23,7 @@ export const spotifyUrls = {
     queryIds: '&ids=',
     followers: '/followers',
     contains: '/contains',
+    categories: '/categories',
     queryAlbumType: '&album_type='
 
 };

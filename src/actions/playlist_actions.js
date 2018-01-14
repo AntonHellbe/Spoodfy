@@ -29,13 +29,11 @@ export const playlistTracksError = (error) => ({
     error
 });
 
-export const updateActivePlaylist = (playlist, spotifyId) => {
-    return {
-        type: playlistActions.UPDATE_PLAYLIST_ID,
-        playlist,
-        spotifyId
-    };
-};
+export const updateActivePlaylist = (playlist, spotifyId) => ({
+    type: playlistActions.UPDATE_PLAYLIST_ID,
+    playlist,
+    spotifyId
+});
 
 export const isFollowingPlaylistSuccess = (bool) => ({
     type: playlistActions.IS_FOLLOWING_SUCCESS,
@@ -67,4 +65,10 @@ export const followPlaylistError = (error) => ({
 
 export const clearActivePlaylistId = () => ({
     type: playlistActions.CLEAR_ACTIVE_PLAYLIST_ID
+});
+
+export const playPlaylistSuccess = (playlist, tracks) => ({
+    type: playlistActions.PLAY_PLAYLIST_SUCCESS,
+    playlist,
+    tracks
 });

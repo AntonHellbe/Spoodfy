@@ -2,7 +2,8 @@ import { put, call, takeLatest, take, fork } from 'redux-saga/effects';
 import axios from 'axios';
 import { spotifyUrls } from '../constants/spotify';
 import { 
-    playlistActions
+    playlistActions,
+    musicActions
 } from '../constants/actions';
 import { 
     playlistsFetched, 
@@ -11,8 +12,10 @@ import {
     playlistTracksSuccess,
     isFollowingPlaylistSuccess,
     isFollowingPlaylistError,
-    followPlaylistSuccess
+    followPlaylistSuccess,
+    playPlaylistSuccess
 } from '../actions/playlist_actions';
+import { selectTrack } from '../actions/music_actions';
 
 
 function* myPlaylists() {
@@ -67,8 +70,6 @@ function* followedPlaylistsFetch() {
 function* followPlaylistRequest() {
     while (true) {
         const { playlist: { id, owner }, action, playlist, spotifyId } = yield take(playlistActions.REQUEST_FOLLOW_PLAYLIST);
-        // console.log(spotifyId);
-        // console.log(playlist, action);
         const URL = `${spotifyUrls.baseURL}${spotifyUrls.version}${spotifyUrls.users}` +
         `/${owner.id}${spotifyUrls.playlists}/${id}${spotifyUrls.followers}`;
         // console.log(URL);
@@ -90,11 +91,26 @@ function* followPlaylistRequest() {
     
 }
 
+function* playPlaylistHelper({ playlistUrl, playlist }) {
+    const URL = `${playlistUrl}${spotifyUrls.tracks}`;
+
+    try {
+        const data = yield call(axios.get, URL);
+        const tracks = data.data.items.map((item) => item.track);
+        yield put(playPlaylistSuccess(playlist, data.data.items));
+        yield put(selectTrack(0, data.data.items[0].track, tracks, playlist.id));
+        console.log(data);
+    } catch (e) {
+        console.log(e);
+    }
+}
+
 
 const playlistSagas = [
     fork(playlistTracks),
     fork(followedPlaylistsFetch),
     fork(followPlaylistRequest),
+    takeLatest(musicActions.REQUEST_PLAY_PLAYLIST, playPlaylistHelper),
     takeLatest(playlistActions.MY_PLAYLISTS, myPlaylists),
 ];
 

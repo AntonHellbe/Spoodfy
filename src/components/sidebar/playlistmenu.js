@@ -6,9 +6,9 @@ class PlaylistMenu extends Component {
     render() {
         const {
             playlists,
-            updateActivePlaylist,
             activePlaylist,
-            tracklistId
+            tracklistId,
+            updateActivePlaylist
         } = this.props;
 
 
@@ -17,9 +17,9 @@ class PlaylistMenu extends Component {
                 { playlists.map((playlist) => (
                     <PlaylistItem 
                     playlist={ playlist }
-                    updateActivePlaylist={ updateActivePlaylist }
                     activePlaylist={ activePlaylist }
                     tracklistId={ tracklistId }
+                    updateActivePlaylist={ updateActivePlaylist }
                     />
                     
                 ))}

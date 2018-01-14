@@ -56,9 +56,9 @@ class SideMenu extends Component {
                     (
                         <PlaylistMenu 
                         playlists={ this.props.playlists } 
-                        updateActivePlaylist={ this.onUpdateActivePlaylist }
                         activePlaylist={ this.props.activePlaylist }
                         tracklistId={ this.props.tracklistId }
+                        updateActivePlaylist={ this.onUpdateActivePlaylist }
                         />
                     ) 
                 }

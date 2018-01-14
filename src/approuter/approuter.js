@@ -15,7 +15,8 @@ import Playlist from '../components/playlist/playlist';
 import Profile from '../components/profile/profile';
 import Artist from '../components/artist/artist';
 import Album from '../components/albumpage/album';
-import Categories from '../components/category/categories';
+import Browse from '../components/browse/browse';
+import Category from '../components/browse/category';
 
 
 const Routes = (props) => {
@@ -58,7 +59,12 @@ const Routes = (props) => {
                 <PrivateRoute
                     path="/browse"
                     isAuthenticated={ props.isAuthenticated }
-                    component={ Categories }
+                    component={ Browse }
+                />
+                <PrivateRoute
+                    path="/category/:id"
+                    isAuthenticated={ props.isAuthenticated }
+                    component={ Category }
                 />
                 <Route path="/login" component={ Login } />
                 <Route path="/callback" component={ Callback } />

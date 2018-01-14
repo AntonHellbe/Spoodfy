@@ -11,11 +11,11 @@ const PlaylistItem = (props) => {
             images,
             id
         },
-        updateActivePlaylist,
         activePlaylist: {
             playlistId
         },
-        tracklistId
+        tracklistId,
+        updateActivePlaylist
     } = props;
     let color = '#7b7b7b';
     let border = 'none';
@@ -35,8 +35,8 @@ const PlaylistItem = (props) => {
         >
             <Link
             to={ `/playlists/${playlist.id}` }
-            onClick={ () => updateActivePlaylist(playlist) }
             style={ { borderLeft: border } }
+            onClick={ () => updateActivePlaylist(playlist) }
             >
                 { images[0] ? 
                 (
