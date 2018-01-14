@@ -55,7 +55,7 @@ class Header extends Component {
                     <div className="links">
                         <Link to="/"><p>Search</p></Link>
                         <Link to="/new-releases"><p>New Releases</p></Link>
-                        <Link to="/"><p>Browse</p></Link>
+                        <Link to="/browse"><p>Browse</p></Link>
                     </div>
                 
                 </div>

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 
 class Banner extends Component {
@@ -24,7 +25,7 @@ class Banner extends Component {
         if (followButton) {
             if (isFollowing) {
                 buttons[0] = (
-                    <button className="btn-follow" id="unfollow" onClick={ this.onClickFollow  } >
+                    <button className="btn-follow" id="unfollow" onClick={ this.onClickFollow }>
                         Unfollow
                     </button>
                 );
@@ -127,7 +128,9 @@ class Banner extends Component {
             items = [],
             topRightInformation = null,
             bottomRightInformation = null,
-            renderAllButtons = false
+            renderAllButtons = false,
+            link = null,
+            linkAction = null
             
         } = this.props;
 
@@ -148,9 +151,32 @@ class Banner extends Component {
 
                     <div className="banner-description">
                         <ul>
-                            { items.map((item) => (
-                                <li>{ item }</li>
-                            )) }
+                            
+                            { link ? 
+                            (   
+                                <React.Fragment>
+                                    <li>
+                                        <Link 
+                                        to={ `${link}` }
+                                        onClick={ linkAction }
+                                        >
+                                            { items[0]}
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        { items[1] }
+                                    </li>
+                                </React.Fragment>
+                            ) :
+                            (
+                                items.map((item) => (
+                                    <li>
+                                        { item }
+                                    </li>
+                                ))
+                                
+                            )}
+                            
                         </ul>
 
                     </div>  
@@ -177,10 +203,7 @@ class Banner extends Component {
                             this.renderButtons() 
                         )
                     }
-                    {  }
-                    {/* { this.renderPlayButton() }
-                    { this.renderFollowButton() }
-                    { this.renderShareButton() } */}
+                    
                 </div>
             </div>
 

@@ -51,7 +51,6 @@
 
 .banner-description {
   grid-area: 2 / 2 / 3 / 3;
-  /* border: 1px solid red; */
   margin: auto 0;
   height: 100%;
   width: 100%;
@@ -72,6 +71,15 @@
   overflow:hidden;
   white-space:nowrap;
   text-overflow: ellipsis;
+}
+
+.banner-description > ul > li > a {
+  text-decoration: none;
+  color: #fff;
+}
+
+.banner-description > ul > li > a:hover {
+  text-decoration: underline;
 }
 
 .information-top-right {

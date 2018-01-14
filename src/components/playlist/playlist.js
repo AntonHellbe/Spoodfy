@@ -25,7 +25,6 @@ class Playlist extends Component {
         const { 
             playlistSongs, 
         } = this.props;
-        console.log('Dispatching selectTrack');
         this.props.selectTrack(playlistSongs[0].track, playlistSongs.map((song) => song.track));    
     }
 

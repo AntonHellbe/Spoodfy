@@ -10,6 +10,9 @@ import {
     requestPlayAlbum,
     togglePlaying
 } from '../../actions/music_actions';
+import {
+    requestArtist
+} from '../../actions/artist_actions';
 
 
 class Album extends Component {
@@ -42,13 +45,16 @@ class Album extends Component {
         } = this.props;
 
         if (albumTracks[0].album !== currentAlbum.id) {
-            console.log('Selecting tracks');
-            console.log(albumTracks[0]);
             this.props.selectTrack(albumTracks[0], albumTracks);
         } else {
             this.props.requestPlayAlbum(currentAlbum.id, currentAlbum);
         }
 
+    }
+
+    onClickArtist = () => {
+        console.log(this.props.currentAlbum.artists[0].id);
+        this.props.requestArtist(this.props.currentAlbum.artists[0].id);
     }
 
     render() {
@@ -69,7 +75,7 @@ class Album extends Component {
         } = this.props;
 
         const isPlayingCurrentAlbum = tracklistId === id;
-
+        console.log(this.props.currentAlbum);
         return (
             <div className="main-content">
                 <div className="main-content-wrapper">
@@ -82,6 +88,8 @@ class Album extends Component {
                 playAction={ isPlayingCurrentAlbum ? this.props.togglePlaying : this.onClickPlay }
                 isPlaying={ isPlayingCurrentAlbum && isPlaying }
                 pauseAction={ this.props.togglePlaying }
+                link={ `/artists/${artists[0].id}` }
+                linkAction={ this.onClickArtist }
 
                 />
                 
@@ -114,7 +122,8 @@ const mapDispatchToProps = (dispatch, props) => ({
     requestAlbumTracks: (album) => dispatch(requestAlbumTracks(props.match.params.id, album)),
     selectTrack: (track, queue) => dispatch(selectTrack(0, track, queue, props.match.params.id)),
     requestPlayAlbum: (id, album) => dispatch(requestPlayAlbum(id, album)),
-    togglePlaying: () => dispatch(togglePlaying())
+    togglePlaying: () => dispatch(togglePlaying()),
+    requestArtist: (id) => dispatch(requestArtist(id))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Album);

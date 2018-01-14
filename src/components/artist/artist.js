@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 import { 
     requestRelatedArtists,
-    requestFollowArtist
+    requestFollowArtist,
 } from '../../actions/artist_actions';
 import {
     requestArtistTopTracks
@@ -25,22 +25,13 @@ class Artist extends Component {
     
     constructor(props) {
         super(props);
-
-        const {
-            relatedArtists,
-            artistTopTracks,
-            currentArtist
-        } = this.props;
-        if (relatedArtists.length === 0 ||
-            !artistTopTracks.find((artist) => currentArtist.id === artist.id)) {
-            console.log('Requesting Related artists!');
-            this.props.requestRelatedArtists(currentArtist.id);
-        }
+        
+        this.props.requestRelatedArtists(this.props.match.params.id); // At every mount, fetch related artists
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.match.params.id !== this.props.currentArtist.id) {
-            this.props.requestRelatedArtists(nextProps.currentArtist.id);
+        if (nextProps.currentArtist.id !== this.props.currentArtist.id) {
+            this.props.requestRelatedArtists(nextProps.currentArtist.id); //During mount, fetch new related artists if currentArtist changes
         }
     }
 
@@ -206,7 +197,7 @@ const mapDispatchToProps = (dispatch, props) => ({
     requestPlayArtistTopTracks: () => dispatch(requestPlayArtistTopTracks(props.match.params.id)),
     selectTrack: (track, queue, id) => dispatch(selectTrack(0, track, queue, id)),
     togglePlaying: () => dispatch(togglePlaying()),
-    requestRelatedArtists: (id) => dispatch(requestRelatedArtists(id))
+    requestRelatedArtists: (id) => dispatch(requestRelatedArtists(id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Artist);
