@@ -71,7 +71,7 @@ const musicReducer = (state = INITIAL_STATE, action) => {
                 ...state, 
                 currentTrack: action.tracks[0], 
                 playingIndex: 0, 
-                queue: action.tracks
+                queue: action.tracks,
             };
 
         default:

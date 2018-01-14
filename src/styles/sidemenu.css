@@ -8,23 +8,6 @@
     /* border: 2px solid purple; */
 }
 
-.playlists{
-    height: 70%;
-    max-height: 70%;
-    display: flex;
-    flex-flow: wrap;
-    justify-content: flex-start;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    overflow-y: scroll;
-    margin: 0px;
-    padding: 0px 0px 5px 0px;
-    white-space: nowrap;
-    font-size: 14px;
-    border-radius: 10px;
-    
-}
-
 .playlistTitle {
     color: #fff;
     font-size: 13px;
@@ -32,29 +15,59 @@
     border-bottom: 0.5px solid rgba(125, 125, 135, 0.35);
 
 }
-.link:hover {
-    color:#cfcfd1;
-}
 
-.link:focus {
-    outline: none;
-}
-
-.link{
-    text-decoration: none;
-    color: gray;
-}
-.link > p {
-    display: inline-block;
-    vertical-align: middle;
-    margin-left: 5px;
+.playlists{
+    height: 70%;
+    max-height: 70%;
+    width: 100%;
+    overflow: hidden;
+    overflow-y: auto;
+    margin: 0px;
+    padding: 0px 0px 5px 0px;
+    line-height: 1.25;
     font-size: 12px;
+    overflow: hidden;
+    overflow-y: auto;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
-.playlist{
-    flex: 1 0 100%;
-    padding-top: 5px;
-    
+.playlists > li {
+    height: 36px;
+    position:relative;
+    display:block;
+    margin:0;
+    padding: 0;
+    /* border: 1px solid blue; */
+}
+
+.playlists > li > a > img {
+    margin-right: 5px;
+}
+.playlists > li > a {
+    display:flex;
+    height: 36px;
+    overflow: hidden;
+    width: 200px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    align-items: center;
+    font-size: 12px;
+    text-decoration: none;
+    box-sizing: border-box;
+}
+
+.playlists > li > a > span {
+    font-size: 12px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    align-items: center;
+
+}
+
+.playlists > li > a:focus {
+    outline: none;
 }
 
 .playlistAvatar{
@@ -72,7 +85,6 @@
 .albumImage {
     margin-top:10px;
     grid-area: 4 / 1 / 5 / 1;
-    /* border: 2px solid green; */
     height:22%;
 }
 
@@ -85,5 +97,8 @@
 }
 
 .fa.fa-volume-up {
-    margin: auto 0;
+    position: absolute;
+    left: 90%;
+    font-size:12px;
+    display: none;
 }

@@ -46,9 +46,12 @@ function* artistFetch() {
 
 function* relatedArtistsFetch() {
     while (true) {
-        const { id } = yield take(artistActions.REQUEST_RELATED_ARTISTS);
+        const { id } = yield take([artistActions.REQUEST_RELATED_ARTISTS, artistActions.REQUEST_ARTIST]);
         const URL = `${spotifyUrls.baseURL}${spotifyUrls.version}` +
         `${spotifyUrls.artists}/${id}${spotifyUrls.relatedArtists}`;
+        if (typeof id === 'undefined') {
+            return;
+        }
         try {
             const data = yield call(axios.get, URL);
             yield put(relatedArtistsSuccess(data.data.artists));
@@ -57,7 +60,6 @@ function* relatedArtistsFetch() {
         }
     }
 }
-
 
 function* followedArtistsRequest() {
     while (true) {

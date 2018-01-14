@@ -6,6 +6,9 @@ import {
 import {
     updateCurrentAlbum
 } from '../../actions/album_actions';
+import {
+    requestArtist
+} from '../../actions/artist_actions';
 import AlbumItem from './albumitem';
 import Loader from '../loader/loader';
 
@@ -29,8 +32,9 @@ class AlbumSection extends Component {
                     <AlbumItem
                     album={ album }
                     requestPlayAlbum={ this.props.requestPlayAlbum }
-                    updateActiveAlbum={ this.props.updateCurrentAlbum }
-                    currentAlbum={ this.props.currentAlbum }
+                    updateCurrentAlbum={ this.props.updateCurrentAlbum }
+                    requestArtist={ this.props.requestArtist }
+                    currentTrack={ this.props.currentTrack }
                     />
                 )) }
             </div>
@@ -39,12 +43,13 @@ class AlbumSection extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    currentAlbum: state.music.currentAlbum
+    currentTrack: state.music.currentTrack
 });
 
 const mapDispatchToProps = (dispatch) => ({
     requestPlayAlbum: (id, album) => dispatch(requestPlayAlbum(id, album)),
-    updateCurrentAlbum: (album) => dispatch(updateCurrentAlbum(album))
+    updateCurrentAlbum: (album) => dispatch(updateCurrentAlbum(album)),
+    requestArtist: (id) => dispatch(requestArtist(id))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AlbumSection);

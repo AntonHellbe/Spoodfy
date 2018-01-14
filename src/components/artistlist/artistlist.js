@@ -7,7 +7,7 @@ import {
 } from '../../actions/artist_actions';
 
 
-class ArtistSection extends Component {
+class ArtistList extends Component {
 
 
     render() {
@@ -37,12 +37,13 @@ class ArtistSection extends Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    artistSuccess: (artist) => dispatch(artistSuccess(artist)) // We already have the artist object, utilize that
+    artistSuccess: (artist) => dispatch(artistSuccess(artist)) 
+    // We already have the artist object, utilize that
 });
 
 // const mapStateToProps = (state) => ({
 //     followedArtists: state.artists.followedArtists
 // });
 
-export default connect(null, mapDispatchToProps)(ArtistSection);
+export default connect(null, mapDispatchToProps)(ArtistList);
 

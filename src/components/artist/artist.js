@@ -22,15 +22,18 @@ import TrackTable from '../tracktable/tracktable';
 import AlbumList from '../albumlist/albumlist';
 
 class Artist extends Component {
+    
+    constructor(props) {
+        super(props);
 
-    componentWillMount() {
         const {
             relatedArtists,
             artistTopTracks,
             currentArtist
         } = this.props;
-        if (relatedArtists.length === 0 || 
+        if (relatedArtists.length === 0 ||
             !artistTopTracks.find((artist) => currentArtist.id === artist.id)) {
+            console.log('Requesting Related artists!');
             this.props.requestRelatedArtists(currentArtist.id);
         }
     }
@@ -43,8 +46,7 @@ class Artist extends Component {
 
     onClickPlay = () => {
         const { artistTopTracks, currentArtist } = this.props;
-        if (artistTopTracks.length !== 0 && 
-            artistTopTracks.find((artist) => currentArtist.id === artist.id)) {
+        if (artistTopTracks.find((artist) => currentArtist.id === artist.id)) {
             this.props.selectTrack(artistTopTracks[0], artistTopTracks, currentArtist.id);
         } else {
             this.props.requestPlayArtistTopTracks(currentArtist.id);
@@ -101,7 +103,7 @@ class Artist extends Component {
 
         const isPlayingCurrentArtist = currentArtist.id === tracklistId;
         const imageUrl = currentArtist.images ? currentArtist.images[0].url : null;
-        console.log(loadingArtist);
+        // console.log(loadingArtist);
         return (
             <div className="main-content">
                 <div className="main-content-wrapper">

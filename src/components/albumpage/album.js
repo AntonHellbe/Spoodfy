@@ -6,38 +6,70 @@ import {
     requestAlbumTracks
 } from '../../actions/album_actions';
 import {
-    selectTrack
+    selectTrack,
+    requestPlayAlbum,
+    togglePlaying
 } from '../../actions/music_actions';
 
 
 class Album extends Component {
 
-    componentWillMount() {
+    constructor(props) {
+        super(props);
+
         const {
             albumTracks,
             currentAlbum,
         } = this.props;
 
-        if (albumTracks.length === 0 || 
-            albumTracks[0].album.id !== currentAlbum.id) {
+        if (albumTracks.length === 0 ||
+            albumTracks[0].album.id !== currentAlbum.id
+            ) {
             this.props.requestAlbumTracks(currentAlbum);
         }
     }
 
-    render() {
+    // componentWillReceiveProps(nextProps) {
+    //     if (nextProps.currentAlbum.id !== this.props.albumTracks[0].album.id) {
+    //         this.props.requestAlbumTracks(nextProps.currentAlbum);
+    //     }
+    // }
+
+    onClickPlay = () => {
         const {
-            currentAlbum,
+            albumTracks,
+            currentAlbum
+        } = this.props;
+
+        if (albumTracks[0].album !== currentAlbum.id) {
+            console.log('Selecting tracks');
+            console.log(albumTracks[0]);
+            this.props.selectTrack(albumTracks[0], albumTracks);
+        } else {
+            this.props.requestPlayAlbum(currentAlbum.id, currentAlbum);
+        }
+
+    }
+
+    render() {
+
+        const {
             currentAlbum: {
                 name,
                 type,
                 artists,
                 album_type,
-                images
+                images,
+                id
             },
             albumTracks,
-            loadingAlbum
+            loadingAlbum,
+            tracklistId,
+            isPlaying
         } = this.props;
-        console.log(currentAlbum);
+
+        const isPlayingCurrentAlbum = tracklistId === id;
+
         return (
             <div className="main-content">
                 <div className="main-content-wrapper">
@@ -47,7 +79,10 @@ class Album extends Component {
                 image={ images[0].url }
                 topRightInformation={ album_type }
                 items={ [`Artist: ${artists[0].name}`] }
-                // playAction={  }
+                playAction={ isPlayingCurrentAlbum ? this.props.togglePlaying : this.onClickPlay }
+                isPlaying={ isPlayingCurrentAlbum && isPlaying }
+                pauseAction={ this.props.togglePlaying }
+
                 />
                 
                 <div className="main-content-bottom">
@@ -70,12 +105,16 @@ class Album extends Component {
 const mapStateToProps = (state) => ({
     currentAlbum: state.albums.currentAlbum,
     albumTracks: state.albums.albumTracks,
-    loadingAlbum: state.albums.loadingAlbum
+    loadingAlbum: state.albums.loadingAlbum,
+    tracklistId: state.music.tracklistId,
+    isPlaying: state.music.isPlaying
 });
 
 const mapDispatchToProps = (dispatch, props) => ({
     requestAlbumTracks: (album) => dispatch(requestAlbumTracks(props.match.params.id, album)),
-    selectTrack: (track, queue) => dispatch(selectTrack(0, track, queue, props.match.params.id))
+    selectTrack: (track, queue) => dispatch(selectTrack(0, track, queue, props.match.params.id)),
+    requestPlayAlbum: (id, album) => dispatch(requestPlayAlbum(id, album)),
+    togglePlaying: () => dispatch(togglePlaying())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Album);

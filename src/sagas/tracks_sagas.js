@@ -48,19 +48,18 @@ function* topTracksFetch({ id }) {
 }
 
 function* playArtistTopTracksHelper() {
-    const { id } = yield take(musicActions.REQUEST_PLAY_ARTIST_TOP_TRACKS);
-    const URL = `${spotifyUrls.baseURL}${spotifyUrls.version}` +
-        `${spotifyUrls.artists}/${id}${spotifyUrls.topTracks}?country=SE`;
-        console.log(URL);
-    try {
-        const data = yield call(axios.get, URL);
-        console.log('Fetching...');
-        console.log(data);
-        yield put(selectTrack(0, data.data.tracks[0], data.data.tracks, id));
-        yield put(artistTopTracksSuccess(data.data.tracks));
-    } catch (e) {
-        console.log(e);
-        yield put(artistTopTracksError(e));
+    while (true) {
+        const { id } = yield take(musicActions.REQUEST_PLAY_ARTIST_TOP_TRACKS);
+        const URL = `${spotifyUrls.baseURL}${spotifyUrls.version}` +
+            `${spotifyUrls.artists}/${id}${spotifyUrls.topTracks}?country=SE`;
+        try {
+            const data = yield call(axios.get, URL);
+            yield put(selectTrack(0, data.data.tracks[0], data.data.tracks, id));
+            yield put(artistTopTracksSuccess(data.data.tracks));
+        } catch (e) {
+            console.log(e);
+            yield put(artistTopTracksError(e));
+        }
     }
 }
 

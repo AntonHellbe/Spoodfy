@@ -49,9 +49,10 @@ export const requestPlayAlbum = (id, album) => ({
     album
 });
 
-export const playAlbumSuccess = (tracks) => ({
+export const playAlbumSuccess = (tracks, id) => ({
     type: musicActions.PLAY_ALBUM_SUCCESS,
     tracks,
+    id
 });
 
 export const playAlbumError = (error) => ({
