@@ -7,15 +7,30 @@ import {
 } from '../../actions/music_actions';
 import ArtistList from '../artistlist/artistlist';
 import AlbumList from '../albumlist/albumlist';
+import _ from 'lodash';
 
 
 class Search extends Component {
+
+
+
+    // this.scrollDebounce = _.debounce(this.onScroll, 500);
+
+    // state = {
+    //     isScrolling: false
+    // }
+    // onScroll = () => {
+    //     this.setState(() => ({ isScrolling: true }));
+    //     setTimeout(() => {
+    //         this.setState(() => ({ isScrolling: false }));
+    //     }, 500);
+    // }
     
     render() {
         const { searchResult: { tracks, albums, artists } } = this.props;
         const isPlaylist = false;
         return (
-            <div className="searchDiv">
+            <div className="searchDiv" onScroll={ this.scrollDebounce }>
 
                 <Searchbar />
                 <h3>Tracks</h3>
@@ -23,6 +38,7 @@ class Search extends Component {
                 <TrackTable 
                 tracks={ tracks } 
                 isPlaylist={ isPlaylist }
+                // isScrolling={ this.state.isScrolling }
                 />
 
                 { albums.length > 0 &&

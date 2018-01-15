@@ -1,3 +1,13 @@
+.searchDiv{
+    background: #181818;
+    grid-area: 2 / 2 / 5 / 3;
+    padding: 25px;
+    overflow: auto;
+    border-top: 0.5px solid rgba(125, 125, 135, 0.25);
+    box-sizing: border-box;
+}
+
+
 .tableHeader{
     color: #cfcfd1;
     border-bottom: 1px solid #7d7d87;
@@ -128,7 +138,7 @@ td > a:hover {
     color: #858585;
     z-index: 30;
     box-shadow: 0px 8px 4px 0px rgba(0,0,0,0.2);
-    padding: 3px 7px;
+    padding: 5px 0;
     text-align: center;
     box-sizing: border-box;
 }
@@ -139,6 +149,10 @@ td > a:hover {
 
 .dropdown-trackitem > li {
     margin-top: 8px;
+    height:25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .dropdown-trackitem > li > a{

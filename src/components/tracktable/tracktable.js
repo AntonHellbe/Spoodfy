@@ -16,6 +16,21 @@ import {
 
 
 class TrackTable extends Component {
+
+    state = {
+        activeDropdown: '',
+        clickTarget: null
+    }
+
+    // componentWillReceiveProps(nextProps) {
+    //     if (nextProps.isScrolling) {
+    //         this.setState(() => ({ activeDropdown: '' }));
+    //     }
+    // }
+    
+    onClickDropdown = (index) => {
+        this.setState(() => ({ activeDropdown: index }));
+    }
     
     onClickArtist = (artist) => {
         this.props.requestArtist(artist);
@@ -26,7 +41,6 @@ class TrackTable extends Component {
             activePlaylist: {
                 playlistId
              }, 
-            isArtist = false,
             currentArtist,
             tracks,
             type
@@ -35,7 +49,7 @@ class TrackTable extends Component {
         if (type === 'playlist') {
             const playlistTracks = tracks.map((item) => item.track);
             this.props.selectTrack(index, track, playlistTracks, playlistId);
-        } else if (isArtist) {
+        } else if (type === 'artist') {
             this.props.selectTrack(index, track, tracks, currentArtist.id);
         } else {
             this.props.selectTrack(index, track, tracks);
@@ -86,6 +100,9 @@ class TrackTable extends Component {
                                 currentTrack={ currentTrack }
                                 requestArtist={ this.onClickArtist }
                                 updateCurrentAlbum={ this.props.updateCurrentAlbum }
+                                dropdownChange={ this.onClickDropdown }
+                                dropdownStatus={ this.state.activeDropdown }
+                                clickTarget={ this.state.clickTarget }
                                 />
                             );
                         }
@@ -98,6 +115,9 @@ class TrackTable extends Component {
                                 currentTrack={ currentTrack }
                                 requestArtist={ this.onClickArtist }
                                 updateCurrentAlbum={ this.props.updateCurrentAlbum }
+                                dropdownChange={ this.onClickDropdown }
+                                dropdownStatus={ this.state.activeDropdown }
+                                clickTarget={ this.state.clickTarget }
                             />
                         );
                     })}

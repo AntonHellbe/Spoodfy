@@ -53,7 +53,7 @@ class Artist extends Component {
         const { 
             currentArtist, 
             artistTopTracks,
-            artistAlbums
+            artistAlbums,
         } = this.props;
 
         switch (id) {
@@ -89,7 +89,10 @@ class Artist extends Component {
             followedArtists,
             currentArtist,
             tracklistId,
-            isPlaying
+            isPlaying,
+            currentArtist: {
+                type
+            }
         } = this.props;
 
         const isPlayingCurrentArtist = currentArtist.id === tracklistId;
@@ -154,6 +157,7 @@ class Artist extends Component {
                             tracks={ artistTopTracks }
                             isLoading={ loadingTracks }
                             isArtist={ true } //eslint-disable-line
+                            type={ type }
                             />
                         </section>
                         <section id="content3">

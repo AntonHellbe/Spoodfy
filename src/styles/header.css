@@ -118,6 +118,25 @@
     display: inline-block;
 }
 
+.dropdown > button {
+    border: none;
+    display: inline-block;
+    background: transparent;
+    color: #fff;
+}
+
+.dropdown > button > i {
+    margin-left: 5px;
+}
+
+.dropdown > button:focus {
+    outline: none;
+}
+
+.dropdown > button:hover {
+    cursor: pointer;
+}
+
 .dropdown-content {
     display:none;
     position: absolute;
@@ -143,15 +162,6 @@
 
 .dropdown-content > ul > li > a {
     text-decoration: none;
-}
-
-
-.dropdown > span {
-    color: #fff;
-}
-
-.dropdown > span:hover{
-    cursor:pointer;
 }
 
 .fa-angle-down{

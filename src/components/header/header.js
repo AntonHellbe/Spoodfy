@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink, Link, withRouter } from 'react-router-dom';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 import { logoutRequest } from '../../actions/auth_actions';
@@ -11,20 +11,11 @@ class Header extends Component {
         isVisible: false
     }
 
-    
-    componentDidMount() {
-        document.addEventListener('click', this.handleWindowClick);
-    }
-    
-    componentWillUnmount() {
-        document.removeEventListener('click', this.handleWindowClick);
-    }
-
-    handleWindowClick = (e) => {
-        const targetElement = e.target;
-        if (this.state.isVisible && !this.dropdown.contains(targetElement)) {
-            this.setState(() => ({ isVisible: false }));
+    hide = (e) => {
+        if (e && e.relatedTarget) {
+            e.relatedTarget.click();
         }
+        this.setState(() => ({ isVisible: false }));
     }
 
     handleOnClick = () => {
@@ -42,10 +33,6 @@ class Header extends Component {
 
         } = this.props;
 
-        if (!isAuthenticated) {
-
-        }
-
         return (
 
             <div className="header">
@@ -57,9 +44,24 @@ class Header extends Component {
                 </div>
                 <div className="navLinks">
                     <div className="links">
-                        <Link to="/"><p>Search</p></Link>
-                        <Link to="/new-releases"><p>New Releases</p></Link>
-                        <Link to="/browse"><p>Browse</p></Link>
+                        <NavLink 
+                        exact to="/"
+                        activeClassName="active-link"
+                        >
+                            <p>Search</p>
+                        </NavLink>
+                        <NavLink 
+                        exact to="/new-releases"
+                        activeClassName="active-link"
+                        >
+                            <p>New Releases</p>
+                        </NavLink>
+                        <NavLink 
+                        exact to="/browse"
+                        activeClassName="active-link"
+                        >
+                            <p>Browse</p>
+                        </NavLink>
                     </div>
                 
                 </div>
@@ -67,28 +69,24 @@ class Header extends Component {
                     { isAuthenticated ?
                     (   
                         <React.Fragment>
-                            <div className="dropdown" key="dropdown">
-                                <span 
-                                onClick={ this.handleOnClick } 
-                                ref={ (dropdown) => { this.dropdown = dropdown; } }
-                                key="dropdown-click"
+                            <div className="dropdown">
+                                <button
+                                onClick={ this.handleOnClick }
+                                onBlur={ this.hide }
                                 >
                                     { !(_.isEmpty(user)) &&
                                         user.id
                                     }
-                                 </span>
-                                    <i 
-                                    className="fa fa-angle-down" 
-                                    aria-hidden="true"
-                                    key="angle-down"
-                                    onClick={ this.handleOnClick }
-                                    />
+                                <i 
+                                className="fa fa-angle-down" 
+                                aria-hidden="true"
+                                />
+                                </button>
                                  <div 
                                 className="dropdown-content"
                                 style={ this.state.isVisible ? 
                                     { display: 'block' } : 
                                     { display: 'none' } } 
-                                key="dropdown-content"
                                  >
                                   <ul>
                                         <li>
@@ -106,7 +104,6 @@ class Header extends Component {
                             <button 
                             className="logout" 
                             onClick={ this.OnLogoutHandler }
-                            key="logout"
                             >
                                 Logout
                             </button>
@@ -135,4 +132,4 @@ const mapDispatchToProps = (dispatch) => ({
     logoutRequest: () => dispatch(logoutRequest())
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Header));

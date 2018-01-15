@@ -5,14 +5,6 @@ import PropTypes from 'prop-types';
 
 class TrackItem extends Component {
 
-        state = {
-            isVisible: false
-        }
-
-        onToggleDropDown = () => {
-            this.setState((prevState) => ({ isVisible: !prevState.isVisible }));
-        }
-
         onAddToQueue = () => {
             this.setState(() => ({ isVisible: false }));
             this.props.AddToQueue(this.props.track);
@@ -22,6 +14,12 @@ class TrackItem extends Component {
             this.props.updateCurrentAlbum(this.props.track.album);
         }
 
+        hide = (e) => {
+            if (e && e.relatedTarget) {
+                e.relatedTarget.click();
+            }
+            this.props.dropdownChange('');
+        }
 
         render() {
         
@@ -32,6 +30,8 @@ class TrackItem extends Component {
             track: { name, artists, duration_ms, album, id },
             selectTrack,
             requestArtist,
+            dropdownStatus,
+            dropdownChange
             } = this.props;
 
         let currentId = null;
@@ -47,11 +47,18 @@ class TrackItem extends Component {
         const color = currentId === id ? '#ff6b42' : '#ffffff';
 
         return (
-            <tr className="track" style={ { color } }>
-                <td className="index-col" > 
+            <tr 
+            className="track" 
+            style={ { color } }
+            key={ id }
+            onDoubleClick={ () => { selectTrack(index, track); } }
+            >
+                <td 
+                className="index-col"
+                > 
                     { track.preview_url ? index : <i className="fa fa-times" aria-hidden="true" /> } 
                 </td>
-                <td onDoubleClick={ () => { selectTrack(index, track); } }>
+                <td>
                     { name }
                 </td>
                 <td>
@@ -63,20 +70,23 @@ class TrackItem extends Component {
                     { artists[0].name } 
                     </Link>
                 </td>
-                <td> 
+                <td
+                > 
                     { album.name } 
                 </td>
                 <td
                 className="dropdown-action-trackitem"
                 >
                     <button
-                    onClick={ this.onToggleDropDown }
+                    onClick={ () => dropdownChange(index) }
+                    onBlur={ this.hide }
                     >
                     ...
                     </button>
                     <ul 
                     className="dropdown-trackitem"
-                    style={ this.state.isVisible ? { display: 'block' } : { display: 'none' } }>
+                    style={ dropdownStatus === index ? { display: 'block' } : { display: 'none' } }
+                    >
                         <li onClick={ this.onAddToQueue } >Add To Queue</li>
                         <li>Testing2</li>
                         <li>
@@ -84,7 +94,7 @@ class TrackItem extends Component {
                             to={ `/artists/${artists[0].id}` }
                             onClick={ () => requestArtist(artists[0].id) }
                             >
-                            Go To artist
+                            Go to Artist
                             </Link>
                         </li>
                         <li>
@@ -92,7 +102,7 @@ class TrackItem extends Component {
                             to={ `/albums/${album.id}` }
                             onClick={ this.onUpdateAlbum }
                             >
-                            Go To album
+                            Go to Album
                             </Link>
                         </li>
                     </ul>
