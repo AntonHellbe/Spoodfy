@@ -28,14 +28,22 @@ function* requestToken() {
         const data = yield call(axios.get, URL);
         axios.defaults.headers.common['Authorization'] = `Bearer ${data.data}`; //eslint-disable-line
         axios.interceptors.response.use((response) => {
-            console.log('We are fired');
             return response;
         }, (error) => {
-            if (error.response.status === 401) {
-                console.log('Unauthorized');
-                store.dispatch(clearToken());
-                window.localStorage.removeItem('token');
-                history.push('/login');
+            let originalRequest = error.config;
+            if (error.response.status === 401 && !originalRequest._retry) {
+                originalRequest._retry = true;
+                return axios.get('http://localhost:5000/refreshtoken')
+                .then((newToken) => {
+
+                    store.dispatch(setToken(newToken.data));
+                    axios.defaults.headers.common['Authorization'] = `Bearer ${newToken.data}`;
+                    return axios(originalRequest);
+                }).catch(() => {
+                    store.dispatch(clearToken());
+                    window.localStorage.removeItem('token');
+                    history.push('/login');
+                });
             }
         });
         yield put(setToken(data.data));
@@ -45,23 +53,13 @@ function* requestToken() {
         yield put(errorToken(e));
         yield history.push('/login');
     }
-
 }
+
 
 function* initialAuth() {
     const token = window.localStorage.getItem('token');
     if (token != null) {
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`; //eslint-disable-line
-        axios.interceptors.response.use((response) => {
-            console.log('We are fired');
-            return response;
-        }, (error) => {
-            if (error.response.status === 401) {
-                store.dispatch(clearToken());
-                window.localStorage.removeItem('token');
-                history.push('/login');
-            }
-        });
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         yield put(initialAuthSuccess(token));
         yield history.push('/new-releases');
     }
@@ -74,6 +72,17 @@ function* logoutHandler() {
     yield history.push('/login');
 }
 
+// axios.defaults.headers.common['Authorization'] = `Bearer ${token}`; //eslint-disable-line
+// axios.interceptors.response.use((response) => {
+//     console.log('We are fired');
+//     return response;
+// }, (error) => {
+//     if (error.response.status === 401) {
+//         store.dispatch(clearToken());
+//         window.localStorage.removeItem('token');
+//         history.push('/login');
+//     }
+// });
 
 function* requestUserinformation() {
     while (true) {

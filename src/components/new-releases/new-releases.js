@@ -12,6 +12,7 @@ class NewReleases extends Component {
         if (this.props.newReleases.length === 0) {
             this.props.newReleasesRequest();
         }
+
     }
 
     handleClick = () => {

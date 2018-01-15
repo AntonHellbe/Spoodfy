@@ -26,6 +26,7 @@ SHOW_DIALOG_bool = True
 SHOW_DIALOG_str = str(SHOW_DIALOG_bool).lower()
 
 TOKEN = ''
+CURRENT_REFRESH_TOKEN = ''
 
 auth_query_parameters = {
     "response_type" : "code",
@@ -44,6 +45,7 @@ def index():
 @app.route("/callback")
 def callback():
     global TOKEN
+    global CURRENT_REFRESH_TOKEN
     auth_token = request.args['code']
     code_payload = {
         "grant_type": "authorization_code",
@@ -51,14 +53,14 @@ def callback():
         "redirect_uri": REDIRECT_URI
     }
     base64encoded = base64.standard_b64encode(b"6c94d2c6becc41c6a84429c86270179e:875b30af700543bc87f7260b61bb028d").decode('ascii')
-    print(base64encoded, file=sys.stderr)
+    # print(base64encoded, file=sys.stderr)
     headers = { "Authorization": "Basic " + str(base64encoded) }
-    print(headers, file=sys.stderr)
+    # print(headers, file=sys.stderr)
     post_request = requests.post(SPOTIFY_TOKEN_URL, data = code_payload, headers = headers)
     response_data = json.loads(post_request.text)
-    print(response_data, file=sys.stderr)
+    # print(response_data, file=sys.stderr)
     TOKEN = response_data["access_token"]
-    refresh_token = response_data["refresh_token"]
+    CURRENT_REFRESH_TOKEN = response_data["refresh_token"]
     token_type = response_data["token_type"]
     expires_in = response_data["expires_in"]
 
@@ -73,3 +75,20 @@ def tokenroute():
 @app.route('/test')
 def errorRoute():
     return jsonify({'BadRequest': 'BadRequest'}), 401;
+
+@app.route('/refreshtoken')
+def refreshToken():
+    global CURRENT_REFRESH_TOKEN
+    global TOKEN
+    print('REFRESH TOKEN CALLED', file=sys.stderr)
+    code_payload = {
+        "grant_type": "refresh_token",
+        "refresh_token": CURRENT_REFRESH_TOKEN
+    }
+    base64encoded = base64.standard_b64encode(b"6c94d2c6becc41c6a84429c86270179e:875b30af700543bc87f7260b61bb028d").decode('ascii')
+    headers = { "Authorization": "Basic " + str(base64encoded) }
+    post_request = requests.post(SPOTIFY_TOKEN_URL, data = code_payload, headers = headers)
+    response_data = json.loads(post_request.text)
+    print(response_data, file=sys.stderr)
+    TOKEN = response_data["access_token"]
+    return jsonify(TOKEN)
