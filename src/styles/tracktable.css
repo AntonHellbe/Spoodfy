@@ -2,7 +2,8 @@
     background: #181818;
     grid-area: 2 / 2 / 5 / 3;
     padding: 25px;
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
     border-top: 0.5px solid rgba(125, 125, 135, 0.25);
     box-sizing: border-box;
 }
@@ -32,8 +33,6 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    /* display: inline-block; */
-    /* border:2px solid green; */
 }
 
 td {

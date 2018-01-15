@@ -8,7 +8,7 @@ import initalStore, { sagaMiddleware } from './store/configure_store';
 import rootSaga from './sagas/rootsaga';
 import Routes from './approuter/approuter';
 
-const store = initalStore();
+export const store = initalStore();
 
 sagaMiddleware.run(rootSaga);
 

@@ -70,8 +70,7 @@ class TrackItem extends Component {
                     { artists[0].name } 
                     </Link>
                 </td>
-                <td
-                > 
+                <td> 
                     { album.name } 
                 </td>
                 <td
@@ -87,9 +86,21 @@ class TrackItem extends Component {
                     className="dropdown-trackitem"
                     style={ dropdownStatus === index ? { display: 'block' } : { display: 'none' } }
                     >
-                        <li onClick={ this.onAddToQueue } >Add To Queue</li>
-                        <li>Testing2</li>
-                        <li>
+                        { track.preview_url ? 
+                        (
+                            <li 
+                            onClick={ this.onAddToQueue } 
+                            >
+                            Add To Queue
+                            </li>
+                        ) :
+                        (
+                            <li>
+                                No Preview Url
+                            </li>
+                        )
+                        }
+                        { artists[0].id && <li>
                             <Link 
                             to={ `/artists/${artists[0].id}` }
                             onClick={ () => requestArtist(artists[0].id) }
@@ -97,6 +108,8 @@ class TrackItem extends Component {
                             Go to Artist
                             </Link>
                         </li>
+                        }
+                        { album.id && 
                         <li>
                             <Link
                             to={ `/albums/${album.id}` }
@@ -105,6 +118,7 @@ class TrackItem extends Component {
                             Go to Album
                             </Link>
                         </li>
+                        }
                     </ul>
                 </td>
                 <td> 

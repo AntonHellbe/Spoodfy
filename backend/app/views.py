@@ -69,3 +69,7 @@ def callback():
 def tokenroute():
     global TOKEN
     return jsonify(TOKEN)
+
+@app.route('/test')
+def errorRoute():
+    return jsonify({'BadRequest': 'BadRequest'}), 401;
