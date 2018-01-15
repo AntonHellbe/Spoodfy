@@ -62,9 +62,10 @@
     /* border:1px solid blue; */
 }
 
-.fa.fa-volume-up{
+.volumeControl > #volume {
     color: #cfcfd1;
     font-size: 20px; 
+    /* display: inline; */
 }
 
 .disco{

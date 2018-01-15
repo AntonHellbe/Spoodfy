@@ -26,7 +26,7 @@ function* userTopTracksFetch() {
     `${spotifyUrls.top}${spotifyUrls.tracks}`;
     try {
         const data = yield call(axios.get, URL);
-        console.log(data);
+        // console.log(data);
         yield put(userTopTracksSuccess(data.data.items));
     } catch (e) {
         yield put(userTopTracksError(e));

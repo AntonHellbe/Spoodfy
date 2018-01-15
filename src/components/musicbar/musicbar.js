@@ -9,7 +9,7 @@ import {
     toggleRepeat,
     updateVolume
 } from '../../actions/music_actions';
-import MusicPlayer from './musicplayer';
+import MusicControls from './musiccontrols';
 import Playing from './playing';
 
 let WIDTH = 0;
@@ -35,7 +35,6 @@ class MusicBar extends Component {
         this.audioElement.addEventListener('pause', this.OnPause);
         this.initializeVisualization();
         this.audioElement.volume = this.props.volume; //Why?
-        // document.addEventListener('keydown', this.handleKeyPress);
     }
 
 
@@ -71,7 +70,6 @@ class MusicBar extends Component {
         this.audioElement.removeEventListener('ended', this.props.OnEndedListener);
         this.audioElement.removeEventListener('loadeddata', this.onLoadedData);
         this.audioElement.removeEventListener('pause', this.OnPause);
-        // document.removeEventListener('keydown', this.handleKeyPress);
     }
 
     onMouseDown = () => {
@@ -193,8 +191,6 @@ class MusicBar extends Component {
         const {  
             currentTrack,
             playingIndex,
-            queue,
-            currentAlbum
          } = this.props;
         const id = e.target.id;
         switch (id) {
@@ -204,10 +200,10 @@ class MusicBar extends Component {
                 break;
 
             case 'play':
-                // if (!_.isEmpty(currentTrack)) {
+                if (!_.isEmpty(currentTrack)) {
                     this.playAudio();
                     this.props.togglePlaying();
-                // }
+                }
                 break;
 
             case 'shuffle':
@@ -256,7 +252,7 @@ class MusicBar extends Component {
         return (
             <React.Fragment>
                 <div className="musicDisplay" key="musicDisplay">
-                    <MusicPlayer 
+                    <MusicControls 
                     handleMusicControls={ this.handleMusicControls }
                     repeat={ repeat }
                     currentTrack={ currentTrack }
@@ -289,7 +285,8 @@ class MusicBar extends Component {
 
                 <div className="volumeControl" key="volume">
                         <i 
-                        className="fa fa-volume-up" 
+                        className="fa fa-volume-up"
+                        id="volume"
                         aria-hidden="true"
                         onClick={ this.onVolumeClick }  
                         />

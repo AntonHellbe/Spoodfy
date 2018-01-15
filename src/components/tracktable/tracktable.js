@@ -10,6 +10,9 @@ import {
 import {
     requestArtist
 } from '../../actions/artist_actions';
+import { 
+    updateCurrentAlbum 
+} from '../../actions/album_actions';
 
 
 class TrackTable extends Component {
@@ -66,10 +69,10 @@ class TrackTable extends Component {
                         <th className="table-col-title"> Title </th>
                         <th className="table-col-album"> Artist </th>
                         <th className="table-col-album"> Album </th>
+                        <th className="table-col-actions" />
                         <th className="table-col-time"> 
                             <i className="fa fa-clock-o" aria-hidden="true" /> 
                         </th>
-                        <th className="table-col-actions" />
                     </tr>
                     {tracks.map((item, index) => {
                         if (type === 'playlist') {
@@ -82,6 +85,7 @@ class TrackTable extends Component {
                                 index={ index }
                                 currentTrack={ currentTrack }
                                 requestArtist={ this.onClickArtist }
+                                updateCurrentAlbum={ this.props.updateCurrentAlbum }
                                 />
                             );
                         }
@@ -93,6 +97,7 @@ class TrackTable extends Component {
                                 index={ index }
                                 currentTrack={ currentTrack }
                                 requestArtist={ this.onClickArtist }
+                                updateCurrentAlbum={ this.props.updateCurrentAlbum }
                             />
                         );
                     })}
@@ -112,7 +117,8 @@ const mapDispatchToProps = (dispatch) => ({
     AddToQueue: (track) => dispatch(AddToQueue(track)),
     selectTrack: (index, track, queue, tracklistId) => 
         dispatch(selectTrack(index, track, queue, tracklistId)),
-    requestArtist: (id) => dispatch(requestArtist(id))
+    requestArtist: (id) => dispatch(requestArtist(id)),
+    updateCurrentAlbum: (album) => dispatch(updateCurrentAlbum(album))
     
 });
 

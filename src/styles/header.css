@@ -107,6 +107,10 @@
     text-decoration: none;
 }
 
+.usersection > a:focus {
+    outline: none;
+}
+
 .dropdown {
     /* border: 1px solid red; */
     margin: auto 0px;

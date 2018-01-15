@@ -33,7 +33,8 @@ class Playlist extends Component {
             activePlaylist,
             spotifyId
         } = this.props;
-        this.props.requestFollowPlaylist(activePlaylist, action, spotifyId);
+        console.log(activePlaylist, action, spotifyId);
+        this.props.requestFollowPlaylist(activePlaylist.playlist, action, spotifyId);
     }
 
 
@@ -64,7 +65,7 @@ class Playlist extends Component {
         } = this.props;
 
         let playingCurrentPlaylist = false;
-        console.log(type);
+        // console.log(type);
         if (tracklistId !== '') {
             playingCurrentPlaylist = tracklistId === playlistId;
         }

@@ -1,17 +1,17 @@
 import { playlistActions } from '../constants/actions';
 
 export const getUserPlaylists = () => ({
-    type: playlistActions.MY_PLAYLISTS
+    type: playlistActions.REQUEST_USER_PLAYLISTS
 });
 
 export const playlistsFetched = (data) => ({
-    type: playlistActions.PLAYLISTS_SUCCESS,
+    type: playlistActions.USER_PLAYLISTS_SUCCESS,
     playlists: data
 });
 
 
 export const playlistError = (error) => ({
-    type: playlistActions.PLAYLISTS_ERROR,
+    type: playlistActions.USER_PLAYLISTS_ERROR,
     error
 });
 

@@ -21,6 +21,9 @@
 }
 
 .displayTrackInfo > li {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
     animation-name:slide-left;
     animation-duration: 4s;
 }

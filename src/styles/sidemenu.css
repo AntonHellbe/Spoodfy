@@ -96,9 +96,9 @@
     border-radius: 5px;
 }
 
-.fa.fa-volume-up {
+.playlists > li > a > i {
     position: absolute;
     left: 90%;
-    font-size:12px;
+    font-size:14px;
     display: none;
 }

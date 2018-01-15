@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 
-class MusicPlayer extends Component {
+class MusicControls extends Component {
 
 
     render() {
@@ -60,7 +60,7 @@ class MusicPlayer extends Component {
     }
 }
 
-MusicPlayer.PropTypes = {
+MusicControls.PropTypes = {
     shuffle: PropTypes.bool.isRequired,
     isPlaying: PropTypes.bool.isRequired,
     repeat: PropTypes.bool.isRequired,
@@ -69,5 +69,5 @@ MusicPlayer.PropTypes = {
 };
 
 
-export default MusicPlayer;
+export default MusicControls;
 

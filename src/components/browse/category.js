@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Loader from '../loader/loader';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {
@@ -19,9 +20,8 @@ class Category extends Component {
         this.props.requestCategoryPlaylists();
     }
 
-    onClickPlaylist = (playlist, spotifyId) => {
-        console.log('Dispatching action');
-        this.props.updateActivePlaylist(playlist, spotifyId);
+    onClickPlaylist = (playlist) => {
+        this.props.updateActivePlaylist(playlist, this.props.spotifyId);
     }
 
     onClickPlay = (playlist) => {
@@ -31,7 +31,8 @@ class Category extends Component {
     render() {
         // console.log(this.props);
         const {
-            categoryPlaylists
+            categoryPlaylists,
+            loadingBrowse
         } = this.props;
         return (
             <div className="main-content">
@@ -46,7 +47,12 @@ class Category extends Component {
             
                     <div className="main-content-bottom">
                         <div className="playlist-wrapper">
-                        { categoryPlaylists.map((playlist) => {
+                        { loadingBrowse ? 
+                        (
+                            <Loader />
+                        ) :
+                        (
+                            categoryPlaylists.map((playlist) => {
                             const {
                                 id,
                                 images,
@@ -59,7 +65,7 @@ class Category extends Component {
                                     <div className="playlist-image-wrapper">
                                         <Link 
                                         to={ `/playlists/${playlist.id}` }
-                                        onClick={ () => this.onClickPlaylist(playlist, owner.id) }
+                                        onClick={ () => this.onClickPlaylist(playlist) }
                                         >
                                         <img
                                         src={ images[0].url }
@@ -78,11 +84,12 @@ class Category extends Component {
                                         <ul>
                                             <li>{ name }</li>
                                         </ul>
-                                    
-                                
                                 </div>
                             );
-                        }) }
+                        }) 
+                            
+                        )
+                        }
                         </div>
                     </div>
                 </div>
@@ -92,7 +99,9 @@ class Category extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    categoryPlaylists: state.browse.categoryPlaylists
+    categoryPlaylists: state.browse.categoryPlaylists,
+    loadingBrowse: state.browse.loadingBrowse,
+    spotifyId: state.user.spotifyId
 });
 
 const mapDispatchToProps = (dispatch, props) => ({

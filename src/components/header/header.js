@@ -42,6 +42,10 @@ class Header extends Component {
 
         } = this.props;
 
+        if (!isAuthenticated) {
+
+        }
+
         return (
 
             <div className="header">
@@ -63,10 +67,11 @@ class Header extends Component {
                     { isAuthenticated ?
                     (   
                         <React.Fragment>
-                            <div className="dropdown">
+                            <div className="dropdown" key="dropdown">
                                 <span 
                                 onClick={ this.handleOnClick } 
                                 ref={ (dropdown) => { this.dropdown = dropdown; } }
+                                key="dropdown-click"
                                 >
                                     { !(_.isEmpty(user)) &&
                                         user.id
@@ -75,13 +80,15 @@ class Header extends Component {
                                     <i 
                                     className="fa fa-angle-down" 
                                     aria-hidden="true"
-                                    onClick={ this.handleOnClick } 
+                                    key="angle-down"
+                                    onClick={ this.handleOnClick }
                                     />
                                  <div 
-                                 className="dropdown-content"
-                                 style={ this.state.isVisible ? 
+                                className="dropdown-content"
+                                style={ this.state.isVisible ? 
                                     { display: 'block' } : 
                                     { display: 'none' } } 
+                                key="dropdown-content"
                                  >
                                   <ul>
                                         <li>
@@ -99,6 +106,7 @@ class Header extends Component {
                             <button 
                             className="logout" 
                             onClick={ this.OnLogoutHandler }
+                            key="logout"
                             >
                                 Logout
                             </button>

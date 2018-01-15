@@ -18,7 +18,7 @@ import {
 import { selectTrack } from '../actions/music_actions';
 
 
-function* myPlaylists() {
+function* userPlaylistsFetch() {
     const URL = `${spotifyUrls.baseURL}${spotifyUrls.version}${spotifyUrls.myPlaylists}`;
     try {
         const data = yield call(axios.get, URL);
@@ -58,7 +58,7 @@ function* followedPlaylistsFetch() {
         // console.log(URL);
         try {
             const data = yield call(axios.get, URL);
-            // console.log(data.data);
+            // console.log(data.data[0]);
             yield put(isFollowingPlaylistSuccess(data.data[0]));
         } catch (e) {
             console.log(e);
@@ -69,18 +69,28 @@ function* followedPlaylistsFetch() {
 
 function* followPlaylistRequest() {
     while (true) {
-        const { playlist: { id, owner }, action, playlist, spotifyId } = yield take(playlistActions.REQUEST_FOLLOW_PLAYLIST);
-        const URL = `${spotifyUrls.baseURL}${spotifyUrls.version}${spotifyUrls.users}` +
-        `/${owner.id}${spotifyUrls.playlists}/${id}${spotifyUrls.followers}`;
-        // console.log(URL);
+        const { 
+            action, 
+            playlist: {
+                owner,
+                id
+            }, 
+            spotifyId,
+            playlist
+        } = yield take(playlistActions.REQUEST_FOLLOW_PLAYLIST);
+        console.log(playlist);
+        
         try {
+            const URL = `${spotifyUrls.baseURL}${spotifyUrls.version}${spotifyUrls.users}` +
+            `/${owner.id}${spotifyUrls.playlists}/${id}${spotifyUrls.followers}`;
+            console.log(URL);
             const data = action === 'follow' ? 
                 yield call(axios.put, URL) :
                 yield call(axios.delete, URL);
             if (data.status === 200) {
                 yield put(followPlaylistSuccess(playlist, spotifyId));
             } else {
-                // Handle Error
+                //Empty
             }
 
             
@@ -99,7 +109,7 @@ function* playPlaylistHelper({ playlistUrl, playlist }) {
         const tracks = data.data.items.map((item) => item.track);
         yield put(playPlaylistSuccess(playlist, data.data.items));
         yield put(selectTrack(0, data.data.items[0].track, tracks, playlist.id));
-        console.log(data);
+        
     } catch (e) {
         console.log(e);
     }
@@ -111,7 +121,8 @@ const playlistSagas = [
     fork(followedPlaylistsFetch),
     fork(followPlaylistRequest),
     takeLatest(musicActions.REQUEST_PLAY_PLAYLIST, playPlaylistHelper),
-    takeLatest(playlistActions.MY_PLAYLISTS, myPlaylists),
+    takeLatest([playlistActions.REQUEST_USER_PLAYLISTS, 
+        playlistActions.IS_FOLLOWING_SUCCESS], userPlaylistsFetch),
 ];
 
 export default playlistSagas;

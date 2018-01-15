@@ -7,8 +7,8 @@ const Playing = (props) => {
             <ul className="displayTrackInfo">
                 { props.currentTrack.name &&
                     <React.Fragment>
-                        <li> { `Track: ${props.currentTrack.name}` } </li>
-                        <li> { `Artist: ${props.currentTrack.artists[0].name}` }</li>
+                        <li> { `${props.currentTrack.name}` } </li>
+                        <li> { `${props.currentTrack.artists[0].name}` }</li>
                     </React.Fragment>
                 }
             </ul>

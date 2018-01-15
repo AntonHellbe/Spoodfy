@@ -1,18 +1,3 @@
-.searchDiv{
-    background: #181818;
-    grid-area: 2 / 2 / 5 / 3;
-    padding: 25px;
-    overflow: auto;
-    border-top: 0.5px solid rgba(125, 125, 135, 0.25);
-    box-sizing: border-box;
-}
-
-.searchDiv > h3 {
-    font-weight: normal;
-    color: #cfcfd1;
-    border-bottom: 1px solid #fff;
-}
-
 .tableHeader{
     color: #cfcfd1;
     border-bottom: 1px solid #7d7d87;
@@ -37,13 +22,15 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    /* display: inline-block; */
     /* border:2px solid green; */
 }
 
 td {
     padding: 10px 0px;
     /* color: #ffffff; */
-    overflow: hidden;
+    /* overflow: hidden; */
+    overflow-y: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
     font-size: 14px;
@@ -77,15 +64,17 @@ td > a:hover {
 
 .table-col-artist{
     width:30%;
+
 }
 
 .table-col-album{
-    width:30%;
+    width:20%;
+
 }
 
 .table-col-actions{
-    width:3.3%;
-    min-width: 3.3%;
+    width:13.3%;
+    min-width: 13.3%;
 }
 
 .table-col-time{
@@ -97,16 +86,12 @@ td > a:hover {
     display:flex;
     flex-flow: row wrap;
     justify-content: flex-start;
-    /* border:1px solid green; */
-    /* height: 100%; */
-    /* width: 100%; */
 }
 
 .artists{
     display:flex;
     flex-flow: row wrap;
     justify-content: flex-start;
-    
 }
 
 .index-col{
@@ -116,3 +101,58 @@ td > a:hover {
 .fa.fa-clock-o{
     font-size: 24px;
 }
+
+
+.dropdown-action-trackitem > button {
+    border: none;
+    background: transparent;
+    margin: 0;
+    padding: 0;
+    color: #fff;
+}
+
+.dropdown-action-trackitem > button:focus {
+    outline: none;
+}
+
+.dropdown-trackitem {
+    display: none;
+    height:150px;
+    width: 150px;
+    position: absolute;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+    background:#282828;
+    color: #858585;
+    z-index: 30;
+    box-shadow: 0px 8px 4px 0px rgba(0,0,0,0.2);
+    padding: 3px 7px;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.dropdown-trackitem > li:nth-child(2) {
+    border-bottom: 1px solid rgba(125, 125, 135, 0.25);
+}
+
+.dropdown-trackitem > li {
+    margin-top: 8px;
+}
+
+.dropdown-trackitem > li > a{
+    text-decoration: none;
+    font-size: inherit;
+    color: inherit;
+}
+
+.dropdown-trackitem > li > a:focus {
+    outline: none;
+}
+
+.dropdown-trackitem > li:hover {
+    background: #858585;
+    color: #fff;
+}
+

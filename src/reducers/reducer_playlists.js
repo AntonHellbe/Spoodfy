@@ -25,7 +25,7 @@ const playlistReducer = (state = INITIAL_STATE, action) => {
         case playlistActions.PLAYLIST_TRACKS_SUCCESS:
             return { ...state, playlistSongs: action.tracks, loadingPlaylist: false };
         
-        case playlistActions.PLAYLISTS_SUCCESS:
+        case playlistActions.USER_PLAYLISTS_SUCCESS:
             return { ...state, myPlaylists: action.playlists };
 
         case playlistActions.IS_FOLLOWING_SUCCESS:

@@ -14,6 +14,7 @@
     display: grid;
     grid-template-rows: 240px 1fr;
     overflow-y: scroll;
+    overflow-x: hidden;
     padding: 25px;
     box-sizing: border-box;
 }
