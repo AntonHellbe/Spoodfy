@@ -8,7 +8,7 @@ First Preview - Documentation of code and instructions how to run are delay due 
 
 <img src="https://media.giphy.com/media/l0HUncly0ebHQEkKI/giphy.gif">
 <img src="https://media.giphy.com/media/l0HU72JX9qJ29KDOE/giphy.gif">
-
+<img src="https://media.giphy.com/media/26CaLqJjJLX1EiKdi/giphy.gif">
 
 ## Getting Started
 
