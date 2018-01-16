@@ -1,21 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { initialAuthRequest } from '../actions/auth_actions';
-import Modal from './modal/modal';
-import PlaylistModal from './modal/playlistmodal';
 
 class Login extends Component {
 
     componentWillMount() {
         this.props.initialAuthRequest();
     }
-
-    // componentDidMount() {
-    //     window.onbeforeunload = () => {
-    //         localStorage.removeItem('token');
-    //         return '';
-    //     };
-    // }
 
     render() {
         return (

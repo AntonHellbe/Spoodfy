@@ -5,7 +5,6 @@ import {
     updateActivePlaylist,
     requestFollowPlaylist,
     clearActivePlaylistId,
-    requestPlaylist,
 } from '../../actions/playlist_actions';
 import {
     togglePlaying,
@@ -33,7 +32,7 @@ class Playlist extends Component {
             activePlaylist,
             spotifyId
         } = this.props;
-        console.log(activePlaylist, action, spotifyId);
+        // console.log(activePlaylist, action, spotifyId);
         this.props.requestFollowPlaylist(activePlaylist.playlist, action, spotifyId);
     }
 
@@ -61,7 +60,8 @@ class Playlist extends Component {
             spotifyId,
             isFollowingActivePlaylist,
             isPlaying,
-            tracklistId
+            tracklistId,
+            myPlaylists
         } = this.props;
 
         let playingCurrentPlaylist = false;

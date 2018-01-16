@@ -4,20 +4,39 @@ import PropTypes from 'prop-types';
 
 
 class TrackItem extends Component {
-
-        onAddToQueue = () => {
-            this.setState(() => ({ isVisible: false }));
-            this.props.AddToQueue(this.props.track);
-        }
         
+
         onUpdateAlbum = () => {
             this.props.updateCurrentAlbum(this.props.track.album);
         }
 
+        onAddToQueue = () => {
+            this.props.AddToQueue(this.props.track);
+        }    
+        
+        onSelectTrack = () => {
+            const {
+                index,
+                track,
+                selectTrack
+            } = this.props;
+            
+            selectTrack(index, track);
+        }
+
+        dropdownIndexChange = () => {
+            this.props.dropdownChange(this.props.index);
+        }
+        
+        toggleModal = () => {
+            this.props.togglePlaylistModal(this.props.index);
+        }
+        //Hides dropdown
         hide = (e) => {
             if (e && e.relatedTarget) {
                 e.relatedTarget.click();
             }
+
             this.props.dropdownChange('');
         }
 
@@ -28,10 +47,8 @@ class TrackItem extends Component {
             track, 
             index, 
             track: { name, artists, duration_ms, album, id },
-            selectTrack,
             requestArtist,
             dropdownStatus,
-            dropdownChange
             } = this.props;
 
         let currentId = null;
@@ -45,18 +62,20 @@ class TrackItem extends Component {
             seconds = `0${seconds}`;
         }
         const color = currentId === id ? '#ff6b42' : '#ffffff';
-
         return (
             <tr 
             className="track" 
             style={ { color } }
             key={ id }
-            onDoubleClick={ () => { selectTrack(index, track); } }
+            onDoubleClick={ this.onSelectTrack }
             >
                 <td 
                 className="index-col"
                 > 
-                    { track.preview_url ? index : <i className="fa fa-times" aria-hidden="true" /> } 
+                    { track.preview_url ? 
+                        index : 
+                        <i className="fa fa-times" aria-hidden="true" /> 
+                    } 
                 </td>
                 <td>
                     { name }
@@ -77,7 +96,7 @@ class TrackItem extends Component {
                 className="dropdown-action-trackitem"
                 >
                     <button
-                    onClick={ () => dropdownChange(index) }
+                    onClick={ this.dropdownIndexChange }
                     onBlur={ this.hide }
                     >
                     ...
@@ -88,10 +107,12 @@ class TrackItem extends Component {
                     >
                         { track.preview_url ? 
                         (
-                            <li 
-                            onClick={ this.onAddToQueue } 
+                            <li>
+                            <button
+                            onClick={ this.onAddToQueue }
                             >
-                            Add To Queue
+                            Add to Queue
+                            </button>
                             </li>
                         ) :
                         (
@@ -117,6 +138,15 @@ class TrackItem extends Component {
                             >
                             Go to Album
                             </Link>
+                        </li>
+                        }
+                        { track.preview_url && 
+                        <li 
+                        onClick={ this.toggleModal } 
+                        >
+                        <button>
+                            Add to Playlist
+                        </button>
                         </li>
                         }
                     </ul>

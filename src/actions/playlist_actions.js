@@ -73,7 +73,11 @@ export const playPlaylistSuccess = (playlist, tracks) => ({
     tracks
 });
 
-export const addTrackToPlaylist = (track) => ({
+//Add a successhandler for this - In order to dispatch a notification that the track has been
+//Added successfully
+export const addTrackToPlaylist = (spotifyId, playlistId, trackUri) => ({
     type: playlistActions.REQUEST_ADD_TRACK_PLAYLIST,
-    track
+    spotifyId,
+    playlistId,
+    trackUri
 });

@@ -16,3 +16,66 @@
     justify-content: center;
     border: 1px solid green;
 }
+
+.select-playlist {
+    height: 400px;
+    width: 300px;
+    background: #181818;
+    position: absolute;
+    z-index: 1000;
+    margin: auto;
+    top:0; bottom:0; left: 0; right: 0;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 20px;
+    color: #858585;
+    border-radius: 10px;
+}
+
+.select-playlist > h3 {
+    font-weight: normal;
+    font-size: 16px;
+    margin: 0;
+    padding: 0;
+    color: #fff;
+    border-bottom: 1px solid #fff;
+}
+
+.select-playlist > ul {
+    list-style: none;
+    font-size: 12px;
+    margin: 0;
+    padding: 0;
+    margin-bottom: 10px;
+    border-bottom: 1px solid rgba(125, 125, 135, 0.25);
+}
+
+.select-playlist > ul > li {
+    /* border: 1px solid green; */
+    margin: 7px 0;
+    display: flex;
+    align-items: center;
+}
+
+.select-playlist > ul > li > input[type=radio] {
+    margin-right: 5px;
+    border-radius: 0;
+}
+
+.select-playlist > ul > li > input[type=radio]:focus {
+    outline: none;
+}
+
+.select-playlist > button {
+    display: inline;
+    background: transparent;
+    border: 1px solid white;
+    color: #fff;
+    margin-right: 10px;
+    border-radius: 34px;
+    font-size: 12px;
+    height: 20px;
+    width: 70px;
+    
+}

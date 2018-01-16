@@ -115,6 +115,18 @@ function* playPlaylistHelper({ playlistUrl, playlist }) {
     }
 }
 
+function* addTrackToPlaylist({ spotifyId, playlistId, trackUri }) {
+    const URL = `${spotifyUrls.baseURL}${spotifyUrls.version}${spotifyUrls.users}/` +
+        `${spotifyId}${spotifyUrls.playlists}/${playlistId}${spotifyUrls.tracks}?uris=${trackUri}`;
+    console.log(URL);
+    try {
+        const data = yield call(axios.post, URL);
+        console.log(data);
+    } catch (e) {
+        console.log(e);
+    }
+}
+
 
 const playlistSagas = [
     fork(playlistTracks),
@@ -123,6 +135,7 @@ const playlistSagas = [
     takeLatest(musicActions.REQUEST_PLAY_PLAYLIST, playPlaylistHelper),
     takeLatest([playlistActions.REQUEST_USER_PLAYLISTS, 
         playlistActions.IS_FOLLOWING_SUCCESS], userPlaylistsFetch),
+    takeLatest(playlistActions.REQUEST_ADD_TRACK_PLAYLIST, addTrackToPlaylist)
 ];
 
 export default playlistSagas;

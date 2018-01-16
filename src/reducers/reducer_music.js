@@ -29,14 +29,13 @@ const musicReducer = (state = INITIAL_STATE, action) => {
             return { ...state,
                     currentTrack: action.track,
                     playingIndex: 0,
-                    queue: [],
-                    playingPlaylist: null };
+                    queue: [] };
 
         case musicActions.NEXT_TRACK:
             return { 
                 ...state, 
-                currentTrack: state.queue[state.playingIndex + 1],
-                playingIndex: state.playingIndex + 1 };
+                currentTrack: state.queue[action.index],
+                playingIndex: action.index };
         
         case musicActions.PREVIOUS_TRACK:
             return { 

@@ -48,7 +48,7 @@ class MusicBar extends Component {
         }
          if (nextProps.currentTrack.preview_url === null) {
             if (nextProps.playingIndex < nextProps.queue.length - 1) {
-                this.props.loadNextTrack();
+                this.props.loadNextTrack(nextProps.playingIndex + 1);
             }
          }
 
@@ -157,21 +157,20 @@ class MusicBar extends Component {
 
 
     OnEndedListener = () => {
-        const { queue, repeat, playingIndex } = this.props;
+        const { queue, repeat, playingIndex, shuffle } = this.props;
         if (repeat) {
             this.audioElement.load();
             this.audioElement.play();
+        } else if (shuffle) {
+            this.props.loadNextTrack(Math.floor(Math.random() * (queue.length - 1)));
         } else if (playingIndex < queue.length - 1) {
-            this.setState(() => ({ value: 0 }));
-            this.props.loadNextTrack(queue[playingIndex + 1].album);
-            
-            
+            this.props.loadNextTrack(playingIndex + 1);            
         } else {
-            console.log('We are here');
-            clearInterval(this.currentTimeInterval); 
-            this.setState(() => ({ value: 0 }));
             this.props.togglePlaying();
         }
+
+        clearInterval(this.currentTimeInterval);
+        this.setState(() => ({ value: 0 }));
 
     }
 
@@ -213,7 +212,7 @@ class MusicBar extends Component {
                 this.props.toggleRepeat();
                 break;
             case 'next':
-                    this.props.loadNextTrack();
+                this.props.loadNextTrack(playingIndex + 1);
                 break;
             case 'prev':
                 if (playingIndex > 0) {
@@ -342,7 +341,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => {
     return {
         togglePlaying: () => dispatch(togglePlaying()),
-        loadNextTrack: () => dispatch(loadNextTrack()),
+        loadNextTrack: (index) => dispatch(loadNextTrack(index)),
         toggleShuffle: () => dispatch(toggleShuffle()),
         toggleRepeat: () => dispatch(toggleRepeat()),
         updateVolume: (volume) => dispatch(updateVolume(volume)),

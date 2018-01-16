@@ -54,12 +54,20 @@ td > a:hover {
     text-decoration: underline;
 }
 
+td > button:hover {
+    cursor: pointer;
+}
+
 .track{
     border-bottom: 1px solid rgba(125, 125, 135, 0.25);
 }   
 
 .track:hover{
     background:#282828;
+}
+
+.track:hover > td > button {
+    opacity: 1;
 }
 
 .table-col-index{
@@ -118,6 +126,8 @@ td > a:hover {
     margin: 0;
     padding: 0;
     color: #fff;
+    opacity: 0;
+    margin-left: 10px;
 }
 
 .dropdown-action-trackitem > button:focus {
@@ -167,5 +177,21 @@ td > a:hover {
 .dropdown-trackitem > li:hover {
     background: #858585;
     color: #fff;
+    cursor: pointer;
 }
+
+.dropdown-trackitem > li > button {
+    border: none;
+    background: transparent;
+    font-weight: inherit;
+    font-family: inherit;
+    color: #858585;
+}
+
+.dropdown-trackitem > li > button:hover {
+    background: #858585;
+    color: #fff;
+    cursor: pointer;
+}
+
 

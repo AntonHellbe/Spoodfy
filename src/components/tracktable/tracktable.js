@@ -13,20 +13,40 @@ import {
 import { 
     updateCurrentAlbum 
 } from '../../actions/album_actions';
+import {
+    addTrackToPlaylist
+} from '../../actions/playlist_actions';
+import Modal from '../modal/modal';
+import PlaylistModal from '../modal/playlistmodal';
 
 
 class TrackTable extends Component {
 
     state = {
         activeDropdown: '',
-        clickTarget: null
+        displayPlaylistModal: false,
+        selectedPlaylist: '',
+        trackIndex: ''
     }
 
-    // componentWillReceiveProps(nextProps) {
-    //     if (nextProps.isScrolling) {
-    //         this.setState(() => ({ activeDropdown: '' }));
-    //     }
-    // }
+    onSubmit = () => {
+        const {
+            trackIndex,
+            selectedPlaylist
+        } = this.state;
+        const { 
+            tracks,
+            type,
+            spotifyId
+        } = this.props;
+
+        const track = type === 'playlist' ? 
+            tracks[trackIndex].track : 
+            tracks[trackIndex];
+        
+        this.props.addTrackToPlaylist(spotifyId, selectedPlaylist.id, track.uri);
+        this.setState(() => ({ displayPlaylistModal: false }));
+    }
     
     onClickDropdown = (index) => {
         this.setState(() => ({ activeDropdown: index }));
@@ -34,6 +54,19 @@ class TrackTable extends Component {
     
     onClickArtist = (artist) => {
         this.props.requestArtist(artist);
+    }
+
+    togglePlaylistModal = (index = '') => {
+        if (this.selectPlaylist !== '') {
+            this.setState(() => ({ selectedPlaylist: '' }));
+            //Removes the selectedPlaylist if the modal is toggled without pressing submit
+        }
+        this.setState((prevState) => 
+            ({ displayPlaylistModal: !prevState.displayPlaylistModal, trackIndex: index }));
+    }
+
+    selectPlaylist = (playlist) => {
+        this.setState(() => ({ selectedPlaylist: playlist }));
     }
     
     selectTrackHandler = (index, track) => {
@@ -56,18 +89,14 @@ class TrackTable extends Component {
         }
     }
 
-    addToQueueHandler = (track) => {
-        this.props.AddToQueue(track);
-    }
-
-
     render() {
 
     const { 
-        tracks, 
-        type, 
+        tracks,
         currentTrack, 
-        isLoading = null 
+        isLoading = null,
+        myPlaylists,
+        spotifyId
     } = this.props;
     
     if (isLoading) {
@@ -75,7 +104,9 @@ class TrackTable extends Component {
             <Loader />
         );
     }
+    
     return (
+        <React.Fragment>
             <table className="table">
                 <tbody>
                     <tr className="tableHeader">
@@ -89,40 +120,38 @@ class TrackTable extends Component {
                         </th>
                     </tr>
                     {tracks.map((item, index) => {
-                        if (type === 'playlist') {
-                            const { track } = item;
+
+                        //If it is a playlist, the track is located under item.track
+                        const track = item.track ? item.track : item;
                             return (
                                 <TrackItem
                                 track={ track }
                                 selectTrack={ this.selectTrackHandler }
-                                AddToQueue={ this.addToQueueHandler }
+                                AddToQueue={ this.props.AddToQueue }
                                 index={ index }
                                 currentTrack={ currentTrack }
                                 requestArtist={ this.onClickArtist }
                                 updateCurrentAlbum={ this.props.updateCurrentAlbum }
                                 dropdownChange={ this.onClickDropdown }
                                 dropdownStatus={ this.state.activeDropdown }
-                                clickTarget={ this.state.clickTarget }
+                                togglePlaylistModal={ this.togglePlaylistModal }
                                 />
                             );
                         }
-                        return (
-                            <TrackItem
-                                track={ item }
-                                selectTrack={ this.selectTrackHandler }
-                                AddToQueue={ this.addToQueueHandler }
-                                index={ index }
-                                currentTrack={ currentTrack }
-                                requestArtist={ this.onClickArtist }
-                                updateCurrentAlbum={ this.props.updateCurrentAlbum }
-                                dropdownChange={ this.onClickDropdown }
-                                dropdownStatus={ this.state.activeDropdown }
-                                clickTarget={ this.state.clickTarget }
-                            />
-                        );
-                    })}
+                    )}
                 </tbody>
             </table>
+            <Modal>
+                <PlaylistModal 
+                playlists={ myPlaylists }
+                isVisible={ this.state.displayPlaylistModal }
+                togglePlaylistModal={ this.togglePlaylistModal }
+                selectPlaylist={ this.selectPlaylist }
+                onSubmit={ this.onSubmit }
+                spotifyId={ spotifyId }
+                />
+            </Modal>
+        </React.Fragment>
         );
     }
 }
@@ -130,7 +159,9 @@ class TrackTable extends Component {
 const mapStateToProps = (state) => ({
     currentTrack: state.music.currentTrack,
     activePlaylist: state.playlists.activePlaylist,
-    currentArtist: state.artists.currentArtist
+    currentArtist: state.artists.currentArtist,
+    myPlaylists: state.playlists.myPlaylists,
+    spotifyId: state.user.spotifyId
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -138,7 +169,9 @@ const mapDispatchToProps = (dispatch) => ({
     selectTrack: (index, track, queue, tracklistId) => 
         dispatch(selectTrack(index, track, queue, tracklistId)),
     requestArtist: (id) => dispatch(requestArtist(id)),
-    updateCurrentAlbum: (album) => dispatch(updateCurrentAlbum(album))
+    updateCurrentAlbum: (album) => dispatch(updateCurrentAlbum(album)),
+    addTrackToPlaylist: (spotifyId, playlistId, trackUri) => 
+        dispatch(addTrackToPlaylist(spotifyId, playlistId, trackUri))
     
 });
 
