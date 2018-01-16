@@ -51,13 +51,13 @@ class Header extends Component {
                             <p>Search</p>
                         </NavLink>
                         <NavLink 
-                        exact to="/new-releases"
+                        to="/new-releases"
                         activeClassName="active-link"
                         >
                             <p>New Releases</p>
                         </NavLink>
                         <NavLink 
-                        exact to="/browse"
+                        to="/browse"
                         activeClassName="active-link"
                         >
                             <p>Browse</p>
