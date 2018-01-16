@@ -100,7 +100,7 @@ class Playlist extends Component {
                 </div>
                 </div>
             </div>
-                
+
         );
     }
 }

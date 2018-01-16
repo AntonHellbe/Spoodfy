@@ -39,3 +39,4 @@ export const errorRecentlyPlayed = (error) => ({
     type: trackActions.ERROR_RECENTLY_PLAYED,
     error
 });
+

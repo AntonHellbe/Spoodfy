@@ -26,28 +26,28 @@ function* requestToken() {
     const URL = 'http://localhost:5000/token';
     try {
         const data = yield call(axios.get, URL);
-        axios.defaults.headers.common['Authorization'] = `Bearer ${data.data}`; //eslint-disable-line
+        axios.defaults.headers.common.Authorization = `Bearer ${data.data}`; //eslint-disable-line
         axios.interceptors.response.use((response) => {
             return response;
         }, (error) => {
-            let originalRequest = error.config;
+            let originalRequest = error.config; //eslint-disable-line
             if (error.response.status === 401 && !originalRequest._retry) {
                 originalRequest._retry = true;
                 return axios.get('http://localhost:5000/refreshtoken')
                 .then((newToken) => {
 
                     store.dispatch(setToken(newToken.data));
-                    axios.defaults.headers.common['Authorization'] = `Bearer ${newToken.data}`;
+                    axios.defaults.headers.common.Authorization = `Bearer ${newToken.data}`;
                     return axios(originalRequest);
                 }).catch(() => {
                     store.dispatch(clearToken());
-                    window.localStorage.removeItem('token');
+                    window.sessionStorage.removeItem('token');
                     history.push('/login');
                 });
             }
         });
         yield put(setToken(data.data));
-        window.localStorage.setItem('token', data.data);
+        window.sessionStorage.setItem('token', data.data);
         yield history.push('/new-releases');
     } catch (e) {
         yield put(errorToken(e));
@@ -57,32 +57,20 @@ function* requestToken() {
 
 
 function* initialAuth() {
-    const token = window.localStorage.getItem('token');
+    const token = window.sessionStorage.getItem('token');
     if (token != null) {
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        axios.defaults.headers.common.Authorization = `Bearer ${token}`;
         yield put(initialAuthSuccess(token));
         yield history.push('/new-releases');
     }
 }
 
 function* logoutHandler() {
-    window.localStorage.removeItem('token');
-    axios.defaults.headers.common['Authorization'] = ''; //eslint-disable-line
+    window.sessionStorage.removeItem('token');
+    axios.defaults.headers.common.Authorization = ''; //eslint-disable-line
     yield put(clearToken());
     yield history.push('/login');
 }
-
-// axios.defaults.headers.common['Authorization'] = `Bearer ${token}`; //eslint-disable-line
-// axios.interceptors.response.use((response) => {
-//     console.log('We are fired');
-//     return response;
-// }, (error) => {
-//     if (error.response.status === 401) {
-//         store.dispatch(clearToken());
-//         window.localStorage.removeItem('token');
-//         history.push('/login');
-//     }
-// });
 
 function* requestUserinformation() {
     while (true) {
@@ -93,7 +81,7 @@ function* requestUserinformation() {
             yield put(userInformationSuccess(data.data));
         } catch (e) {
             yield put(userInformationError(e));
-            window.localStorage.removeItem('token');
+            window.sessionStorage.removeItem('token');
             yield history.push('/login'); // Error with fetching userdata - Redirect back to login
         }
     }

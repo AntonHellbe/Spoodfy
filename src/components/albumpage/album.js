@@ -37,6 +37,7 @@ class Album extends Component {
     //         this.props.requestAlbumTracks(nextProps.currentAlbum);
     //     }
     // }
+    // Not needed at the moment, as its impossible to navigate from album to album...
 
     onClickPlay = () => {
         const {
@@ -75,7 +76,6 @@ class Album extends Component {
         } = this.props;
 
         const isPlayingCurrentAlbum = tracklistId === id;
-        console.log(this.props.currentAlbum);
         return (
             <div className="main-content">
                 <div className="main-content-wrapper">

@@ -72,3 +72,8 @@ export const playPlaylistSuccess = (playlist, tracks) => ({
     playlist,
     tracks
 });
+
+export const addTrackToPlaylist = (track) => ({
+    type: playlistActions.REQUEST_ADD_TRACK_PLAYLIST,
+    track
+});

@@ -12,6 +12,8 @@ export const store = initalStore();
 
 sagaMiddleware.run(rootSaga);
 
+export const portalContainer = document.getElementById('modal-root');
+
 ReactDOM.render(
     <Provider store={ store }>
         <Routes />
