@@ -8,7 +8,8 @@ class PlaylistMenu extends Component {
             playlists,
             activePlaylist,
             tracklistId,
-            updateActivePlaylist
+            updateActivePlaylist,
+            isPlaying
         } = this.props;
 
 
@@ -20,6 +21,7 @@ class PlaylistMenu extends Component {
                     activePlaylist={ activePlaylist }
                     tracklistId={ tracklistId }
                     updateActivePlaylist={ updateActivePlaylist }
+                    isPlaying={ isPlaying }
                     />
                     
                 ))}

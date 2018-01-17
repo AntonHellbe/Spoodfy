@@ -6,6 +6,7 @@
     overflow-x: hidden;
     border-top: 0.5px solid rgba(125, 125, 135, 0.25);
     box-sizing: border-box;
+    position: relative;
 }
 
 
@@ -136,8 +137,8 @@ td > button:hover {
 
 .dropdown-trackitem {
     display: none;
-    height:150px;
-    width: 150px;
+    height:200px;
+    width: 175px;
     position: absolute;
     list-style: none;
     margin: 0;

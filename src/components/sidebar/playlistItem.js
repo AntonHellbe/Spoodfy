@@ -15,7 +15,8 @@ const PlaylistItem = (props) => {
             playlistId
         },
         tracklistId,
-        updateActivePlaylist
+        updateActivePlaylist,
+        isPlaying
     } = props;
     let color = '#7b7b7b';
     let border = 'none';
@@ -25,7 +26,7 @@ const PlaylistItem = (props) => {
         color = '#ff6b42';
         border = '3px solid #ff6b42';
     }
-    if (playlistId !== '' && tracklistId === id) {
+    if (isPlaying && tracklistId === id) {
         display = 'inline';
     }
     return (

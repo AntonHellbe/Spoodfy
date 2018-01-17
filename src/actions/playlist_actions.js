@@ -37,7 +37,7 @@ export const updateActivePlaylist = (playlist, spotifyId) => ({
 
 export const isFollowingPlaylistSuccess = (bool) => ({
     type: playlistActions.IS_FOLLOWING_SUCCESS,
-    bool
+    bool,
 });
 
 export const isFollowingPlaylistError = (error) => ({
@@ -80,4 +80,17 @@ export const addTrackToPlaylist = (spotifyId, playlistId, trackUri) => ({
     spotifyId,
     playlistId,
     trackUri
+});
+
+
+export const removeTrackFromPlaylist = (spotifyId, playlist, trackUri) => ({
+    type: playlistActions.REQUEST_REMOVE_TRACK_PLAYLIST,
+    spotifyId,
+    playlist,
+    trackUri
+});
+
+export const removeTrackSuccess = (playlist) => ({
+    type: playlistActions.REMOVE_TRACK_SUCCESS,
+    playlist
 });

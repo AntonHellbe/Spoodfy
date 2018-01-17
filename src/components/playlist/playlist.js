@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
     requestPlaylistSongs,
-    updateActivePlaylist,
     requestFollowPlaylist,
     clearActivePlaylistId,
 } from '../../actions/playlist_actions';
@@ -61,11 +60,9 @@ class Playlist extends Component {
             isFollowingActivePlaylist,
             isPlaying,
             tracklistId,
-            myPlaylists
         } = this.props;
 
         let playingCurrentPlaylist = false;
-        // console.log(type);
         if (tracklistId !== '') {
             playingCurrentPlaylist = tracklistId === playlistId;
         }

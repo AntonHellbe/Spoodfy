@@ -10,7 +10,7 @@ const PlaylistModal = (props) => {
         selectPlaylist,
         spotifyId
     } = props;
-    // console.log(props.isVisible);
+
     return (
         <div 
         className="modal-background" 
@@ -20,20 +20,20 @@ const PlaylistModal = (props) => {
                 <h3> Select Playlist </h3>
                 <ul>
                     { playlists.map((playlist) => {
-                        if (playlist.owner.id !== spotifyId && !playlist.collaborative) {
-                            return null;
+                        if (playlist.owner.id === spotifyId || playlist.collaborative) {
+                            return (
+                                <li>
+                                <input 
+                                type="radio" 
+                                id={ playlist.id } 
+                                name="playlist-group"
+                                onClick={ () => selectPlaylist(playlist) }
+                                />
+                                { playlist.name }
+                            </li>
+                            );
                         }
-                        return (
-                        <li>
-                            <input 
-                            type="radio" 
-                            id={ playlist.id } 
-                            name="playlist-group"
-                            onClick={ () => selectPlaylist(playlist) }
-                            />
-                            { playlist.name }
-                        </li>
-                        );
+                        return null;
                     }) }
                 </ul>
                 <button

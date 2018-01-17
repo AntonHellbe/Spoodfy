@@ -1,7 +1,6 @@
 .main-content{
     background: #181818;
     grid-area: 2 / 2 / 5 / 3;
-    /* border: 1px solid green; */
     max-height: 100%;
     max-width: 100%;
     border-top: 0.5px solid rgba(125, 125, 135, 0.25);
@@ -10,7 +9,6 @@
 .main-content-wrapper {
     height: 100%;
     width: 100%;
-    /* border: 1px solid blue; */
     display: grid;
     grid-template-rows: 240px 1fr;
     overflow-y: scroll;
@@ -23,9 +21,9 @@
 .main-content-bottom {
     margin-top: 15px;
     grid-row: 2 / 3;
-    /* border:1px solid green; */
     height: 100%;
     width: 100%;
+    position: relative;
 }
 
 .recent-track-wrapper {

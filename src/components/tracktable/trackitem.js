@@ -49,6 +49,9 @@ class TrackItem extends Component {
             track: { name, artists, duration_ms, album, id },
             requestArtist,
             dropdownStatus,
+            type,
+            canRemove,
+            removeTrack
             } = this.props;
 
         let currentId = null;
@@ -142,12 +145,22 @@ class TrackItem extends Component {
                         }
                         { track.preview_url && 
                         <li 
-                        onClick={ this.toggleModal } 
+                        onClick={ this.toggleModal }
                         >
                         <button>
+                            
                             Add to Playlist
                         </button>
                         </li>
+                        }
+                        { type === 'playlist' && canRemove &&
+                            <li>
+                                <button
+                                onClick={ () => removeTrack(index) }
+                                >
+                                    Remove from playlist
+                                </button>
+                            </li>
                         }
                     </ul>
                 </td>

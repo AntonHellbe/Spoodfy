@@ -14,7 +14,7 @@ import {
     updateCurrentAlbum 
 } from '../../actions/album_actions';
 import {
-    addTrackToPlaylist
+    addTrackToPlaylist, removeTrackFromPlaylist
 } from '../../actions/playlist_actions';
 import Modal from '../modal/modal';
 import PlaylistModal from '../modal/playlistmodal';
@@ -47,6 +47,19 @@ class TrackTable extends Component {
         this.props.addTrackToPlaylist(spotifyId, selectedPlaylist.id, track.uri);
         this.setState(() => ({ displayPlaylistModal: false }));
     }
+
+    onRemove = (index) => {
+
+        const {
+            activePlaylist: {
+                playlist
+            },
+            spotifyId,
+            tracks
+        } = this.props;
+
+        this.props.removeTrackFromPlaylist(spotifyId, playlist, tracks[index].track.uri);
+    }
     
     onClickDropdown = (index) => {
         this.setState(() => ({ activeDropdown: index }));
@@ -72,7 +85,7 @@ class TrackTable extends Component {
     selectTrackHandler = (index, track) => {
         const { 
             activePlaylist: {
-                playlistId
+                playlistId,
              }, 
             currentArtist,
             tracks,
@@ -96,7 +109,9 @@ class TrackTable extends Component {
         currentTrack, 
         isLoading = null,
         myPlaylists,
-        spotifyId
+        spotifyId,
+        activePlaylist,
+        type
     } = this.props;
     
     if (isLoading) {
@@ -104,7 +119,10 @@ class TrackTable extends Component {
             <Loader />
         );
     }
-    
+    // console.log(activePlaylist);
+    const canRemove = activePlaylist.playlist.owner.id === spotifyId ||
+        spotifyId !== activePlaylist.playlist.owner.id && activePlaylist.playlist.collaborative;
+
     return (
         <React.Fragment>
             <table className="table">
@@ -135,6 +153,9 @@ class TrackTable extends Component {
                                 dropdownChange={ this.onClickDropdown }
                                 dropdownStatus={ this.state.activeDropdown }
                                 togglePlaylistModal={ this.togglePlaylistModal }
+                                type={ type }
+                                canRemove={ canRemove }
+                                removeTrack={ this.onRemove }
                                 />
                             );
                         }
@@ -171,7 +192,9 @@ const mapDispatchToProps = (dispatch) => ({
     requestArtist: (id) => dispatch(requestArtist(id)),
     updateCurrentAlbum: (album) => dispatch(updateCurrentAlbum(album)),
     addTrackToPlaylist: (spotifyId, playlistId, trackUri) => 
-        dispatch(addTrackToPlaylist(spotifyId, playlistId, trackUri))
+        dispatch(addTrackToPlaylist(spotifyId, playlistId, trackUri)),
+    removeTrackFromPlaylist: (spotifyId, playlist, trackUri) => 
+        dispatch(removeTrackFromPlaylist(spotifyId, playlist, trackUri))
     
 });
 

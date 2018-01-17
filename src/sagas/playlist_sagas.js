@@ -1,9 +1,10 @@
-import { put, call, takeLatest, take, fork } from 'redux-saga/effects';
+import { put, call, takeLatest, take, fork, takeEvery } from 'redux-saga/effects';
 import axios from 'axios';
 import { spotifyUrls } from '../constants/spotify';
 import { 
     playlistActions,
-    musicActions
+    musicActions,
+    authActions
 } from '../constants/actions';
 import { 
     playlistsFetched, 
@@ -13,30 +14,35 @@ import {
     isFollowingPlaylistSuccess,
     isFollowingPlaylistError,
     followPlaylistSuccess,
-    playPlaylistSuccess
+    playPlaylistSuccess,
+    removeTrackSuccess
 } from '../actions/playlist_actions';
 import { selectTrack } from '../actions/music_actions';
 
 
 function* userPlaylistsFetch() {
-    const URL = `${spotifyUrls.baseURL}${spotifyUrls.version}${spotifyUrls.myPlaylists}`;
-    try {
-        const data = yield call(axios.get, URL);
-        yield put(playlistsFetched(data.data.items));
-    } catch (e) {
-        console.log('ERROR OCCURED');
-        console.log(e);
-        yield put(playlistError(e));
+    while (true) {
+        yield take([authActions.USER_INFO_SUCCESS,
+            playlistActions.IS_FOLLOWING_SUCCESS]);
+        const URL = `${spotifyUrls.baseURL}${spotifyUrls.version}${spotifyUrls.myPlaylists}`;
+        try {
+            const data = yield call(axios.get, URL);
+            yield put(playlistsFetched(data.data.items));
+        } catch (e) {
+            console.log('ERROR OCCURED');
+            console.log(e);
+            yield put(playlistError(e));
+        }
     }
 }
 
 function* playlistTracks() {
     while (true) {
-        const { playlist } = yield take(playlistActions.UPDATE_PLAYLIST_ID);
+        const { playlist } = yield take([playlistActions.UPDATE_PLAYLIST_ID, 
+            playlistActions.REMOVE_TRACK_SUCCESS]);
         const URL = `${playlist.href}${spotifyUrls.tracks}?=limit50`;
         try {
             const data = yield call(axios.get, URL);
-            // console.log(data);
             yield put(playlistTracksSuccess(data.data.items));
         } catch (e) {
             console.log('ERROR OCCURED - PLAYLISTTRACKS');
@@ -47,7 +53,8 @@ function* playlistTracks() {
 
 function* followedPlaylistsFetch() {
     while (true) {
-        const { playlist, spotifyId } = yield take([playlistActions.UPDATE_PLAYLIST_ID, playlistActions.FOLLOW_PLAYLIST_SUCCESS]);
+        const { playlist, spotifyId } = yield take([playlistActions.UPDATE_PLAYLIST_ID, 
+            playlistActions.FOLLOW_PLAYLIST_SUCCESS]);
         const {
             id,
             owner
@@ -58,7 +65,6 @@ function* followedPlaylistsFetch() {
         // console.log(URL);
         try {
             const data = yield call(axios.get, URL);
-            // console.log(data.data[0]);
             yield put(isFollowingPlaylistSuccess(data.data[0]));
         } catch (e) {
             console.log(e);
@@ -78,12 +84,10 @@ function* followPlaylistRequest() {
             spotifyId,
             playlist
         } = yield take(playlistActions.REQUEST_FOLLOW_PLAYLIST);
-        console.log(playlist);
         
         try {
             const URL = `${spotifyUrls.baseURL}${spotifyUrls.version}${spotifyUrls.users}` +
             `/${owner.id}${spotifyUrls.playlists}/${id}${spotifyUrls.followers}`;
-            console.log(URL);
             const data = action === 'follow' ? 
                 yield call(axios.put, URL) :
                 yield call(axios.delete, URL);
@@ -118,10 +122,32 @@ function* playPlaylistHelper({ playlistUrl, playlist }) {
 function* addTrackToPlaylist({ spotifyId, playlistId, trackUri }) {
     const URL = `${spotifyUrls.baseURL}${spotifyUrls.version}${spotifyUrls.users}/` +
         `${spotifyId}${spotifyUrls.playlists}/${playlistId}${spotifyUrls.tracks}?uris=${trackUri}`;
-    console.log(URL);
+    // console.log(URL);
     try {
         const data = yield call(axios.post, URL);
         console.log(data);
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+function* removeTrackFromPlaylistHelper({ spotifyId, playlist, trackUri }) {
+    // console.log(spotifyId, trackUri);
+    const URL = `${spotifyUrls.baseURL}${spotifyUrls.version}${spotifyUrls.users}/` +
+    `${spotifyId}${spotifyUrls.playlists}/${playlist.id}${spotifyUrls.tracks}`;
+    // console.log(URL);
+    try {
+        const data = yield call(axios.delete, URL, {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            data: {
+                tracks: [{ uri: trackUri }]
+            }
+        });
+        if (data.status === 200) {
+            yield put(removeTrackSuccess(playlist));
+        }
     } catch (e) {
         console.log(e);
     }
@@ -132,10 +158,10 @@ const playlistSagas = [
     fork(playlistTracks),
     fork(followedPlaylistsFetch),
     fork(followPlaylistRequest),
+    fork(userPlaylistsFetch),
     takeLatest(musicActions.REQUEST_PLAY_PLAYLIST, playPlaylistHelper),
-    takeLatest([playlistActions.REQUEST_USER_PLAYLISTS, 
-        playlistActions.IS_FOLLOWING_SUCCESS], userPlaylistsFetch),
-    takeLatest(playlistActions.REQUEST_ADD_TRACK_PLAYLIST, addTrackToPlaylist)
+    takeLatest(playlistActions.REQUEST_ADD_TRACK_PLAYLIST, addTrackToPlaylist),
+    takeEvery(playlistActions.REQUEST_REMOVE_TRACK_PLAYLIST, removeTrackFromPlaylistHelper)
 ];
 
 export default playlistSagas;

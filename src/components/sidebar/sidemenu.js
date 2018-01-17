@@ -59,6 +59,7 @@ class SideMenu extends Component {
                         activePlaylist={ this.props.activePlaylist }
                         tracklistId={ this.props.tracklistId }
                         updateActivePlaylist={ this.onUpdateActivePlaylist }
+                        isPlaying={ this.props.isPlaying }
                         />
                     ) 
                 }
@@ -78,7 +79,8 @@ const mapStateToProps = (state) => {
         playlists: state.playlists.myPlaylists,
         activePlaylist: state.playlists.activePlaylist,
         currentTrack: state.music.currentTrack,
-        tracklistId: state.music.tracklistId
+        tracklistId: state.music.tracklistId,
+        isPlaying: state.music.isPlaying
     };
 };
 
