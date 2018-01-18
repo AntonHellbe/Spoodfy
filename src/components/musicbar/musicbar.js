@@ -7,7 +7,8 @@ import {
     previousTrack,
     toggleShuffle,
     toggleRepeat,
-    updateVolume
+    updateVolume,
+    loadNextQueueTrack
 } from '../../actions/music_actions';
 import MusicControls from './musiccontrols';
 import Playing from './playing';
@@ -39,6 +40,7 @@ class MusicBar extends Component {
 
 
     componentWillReceiveProps(nextProps) {
+        console.log(nextProps.playingIndex);
         if (nextProps.currentTrack.preview_url !== null && 
             this.props.currentTrack.id !== nextProps.currentTrack.id) {
             this.setState(() => ({ value: 0 }));
@@ -46,11 +48,11 @@ class MusicBar extends Component {
             //Clear interval if it isn't the same track we are receiving, 
             //i.e slider needs to back to zero and then preview url on the incoming track is not null
         }
-         if (nextProps.currentTrack.preview_url === null) {
-            if (nextProps.playingIndex < nextProps.queue.length - 1) {
-                this.props.loadNextTrack(nextProps.playingIndex + 1);
-            }
-         }
+        //  if (nextProps.currentTrack.preview_url === null) {
+        //     if (nextProps.playingIndex < nextProps.tracklist.length - 1) {
+        //         this.props.loadNextTrack(nextProps.playingIndex + 1);
+        //     }
+        //  }
 
         if (!nextProps.isPlaying && this.props.isPlaying) {
              clearInterval(this.currentTimeInterval);
@@ -157,13 +159,22 @@ class MusicBar extends Component {
 
 
     OnEndedListener = () => {
-        const { queue, repeat, playingIndex, shuffle } = this.props;
+        const { 
+            tracklist, 
+            repeat, 
+            playingIndex, 
+            shuffle, 
+            queue 
+        } = this.props;
+
         if (repeat) {
             this.audioElement.load();
             this.audioElement.play();
         } else if (shuffle) {
-            this.props.loadNextTrack(Math.floor(Math.random() * (queue.length - 1)));
-        } else if (playingIndex < queue.length - 1) {
+            this.props.loadNextTrack(Math.floor(Math.random() * (tracklist.length - 1)));
+        } else if (queue.length > 0) {
+            this.props.loadNextQueueTrack();
+        } else if (playingIndex < tracklist.length - 1) {
             this.props.loadNextTrack(playingIndex + 1);            
         } else {
             this.props.togglePlaying();
@@ -190,7 +201,9 @@ class MusicBar extends Component {
         const {  
             currentTrack,
             playingIndex,
-         } = this.props;
+            queue
+        } = this.props;
+        console.log(playingIndex);
         const id = e.target.id;
         switch (id) {
             case 'pause':
@@ -212,11 +225,16 @@ class MusicBar extends Component {
                 this.props.toggleRepeat();
                 break;
             case 'next':
-                this.props.loadNextTrack(playingIndex + 1);
+                if (queue.length > 0) {
+                    this.props.loadNextQueueTrack();
+                } else {
+                    this.props.loadNextTrack(playingIndex + 1);
+                }
                 break;
             case 'prev':
                 if (playingIndex > 0) {
-                    this.props.previousTrack();
+                    console.log('Dispatching prev track');
+                    this.props.previousTrack(playingIndex - 1);
                 }
                 break;
 
@@ -247,7 +265,12 @@ class MusicBar extends Component {
             volume
             
          } = this.props;
-        const preview_url = _.isEmpty(currentTrack) ? null : currentTrack.track ? currentTrack.track.preview_url : currentTrack.preview_url; //eslint-disable-line
+
+        let preview_url = null;
+        if (!_.isEmpty(currentTrack)) {
+            preview_url = currentTrack.track ? 
+                currentTrack.track.preview_url : currentTrack.preview_url; //eslint-disable-line
+        } 
         return (
             <React.Fragment>
                 <div className="musicDisplay" key="musicDisplay">
@@ -329,13 +352,14 @@ class MusicBar extends Component {
 const mapStateToProps = (state) => ({
     repeat: state.music.repeat,
     isPlaying: state.music.isPlaying,
-    queue: state.music.queue,
+    tracklist: state.music.tracklist,
     currentTrack: state.music.currentTrack,
     shuffle: state.music.shuffle,
     volume: state.music.volume,
     isAuthenticated: state.user.isAuthenticated,
     playingIndex: state.music.playingIndex,
-    currentAlbum: state.music.currentAlbum
+    currentAlbum: state.music.currentAlbum,
+    queue: state.music.queue
 });
 
 const mapDispatchToProps = (dispatch) => {
@@ -345,7 +369,8 @@ const mapDispatchToProps = (dispatch) => {
         toggleShuffle: () => dispatch(toggleShuffle()),
         toggleRepeat: () => dispatch(toggleRepeat()),
         updateVolume: (volume) => dispatch(updateVolume(volume)),
-        previousTrack: () => dispatch(previousTrack()),
+        previousTrack: (index) => dispatch(previousTrack(index)),
+        loadNextQueueTrack: () => dispatch(loadNextQueueTrack())
     };
 };
 

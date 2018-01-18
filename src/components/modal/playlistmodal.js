@@ -1,54 +1,68 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 
-const PlaylistModal = (props) => {
+class PlaylistModal extends Component {
+    
+    state = {
+        selectedPlaylist: ''
+    }
+    
+    componentWillReceiveProps(nextProps) {
+        if (!nextProps.isVisible && this.props.isVisible) {
+            this.setState(() => ({ selectedPlaylist: '' }));
+        }
+    }
+
+    onSelect = (e) => {
+        const playlist = e.target.id;
+        this.setState(() => ({ selectedPlaylist: playlist }));
+    }
+
+    render() {
+
     const {
-        onSubmit,
+    onSubmit,
         togglePlaylistModal,
         isVisible,
         playlists,
-        selectPlaylist,
-        spotifyId
-    } = props;
 
+    } = this.props;
     return (
-        <div 
-        className="modal-background" 
-        style={ isVisible ? { display: 'block' } : { display: 'none' } }
-        >
-            <div className="select-playlist">
-                <h3> Select Playlist </h3>
-                <ul>
-                    { playlists.map((playlist) => {
-                        if (playlist.owner.id === spotifyId || playlist.collaborative) {
+            <div 
+            className="modal-background" 
+            style={ isVisible ? { display: 'block' } : { display: 'none' } }
+            >
+                <div className="select-playlist">
+                    <h3> Select Playlist </h3>
+                    <ul>
+                        { playlists.map((playlist) => {
                             return (
                                 <li>
                                 <input 
                                 type="radio" 
                                 id={ playlist.id } 
                                 name="playlist-group"
-                                onClick={ () => selectPlaylist(playlist) }
+                                onClick={ this.onSelect }
                                 />
                                 { playlist.name }
                             </li>
                             );
-                        }
-                        return null;
-                    }) }
-                </ul>
-                <button
-                onClick={ onSubmit }
-                >
-                    Add
-                </button>
-                <button
-                onClick={ togglePlaylistModal }
-                >
-                    Cancel
-                </button>
+                        }) }
+                    </ul>
+                    <button
+                    onClick={ () => onSubmit(this.state.selectedPlaylist) }
+                    >
+                        Add
+                    </button>
+                    <button
+                    onClick={ togglePlaylistModal }
+                    >
+                        Cancel
+                    </button>
+                </div>
             </div>
-        </div>
-    );
-};
+        );
+    }
+}
 
 export default PlaylistModal;

@@ -35,7 +35,6 @@ function* requestToken() {
                 originalRequest._retry = true;
                 return axios.get('http://localhost:5000/refreshtoken')
                 .then((newToken) => {
-
                     store.dispatch(setToken(newToken.data));
                     axios.defaults.headers.common.Authorization = `Bearer ${newToken.data}`;
                     return axios(originalRequest);

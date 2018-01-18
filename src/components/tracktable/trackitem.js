@@ -1,6 +1,19 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import {
+    AddToQueue
+} from '../../actions/music_actions';
+import {
+    updateCurrentAlbum
+} from '../../actions/album_actions';
+
+import {
+    requestArtist
+} from '../../actions/artist_actions';
+import {
+    removeTrackFromPlaylist
+} from '../../actions/playlist_actions';
 
 
 class TrackItem extends Component {
@@ -12,16 +25,26 @@ class TrackItem extends Component {
 
         onAddToQueue = () => {
             this.props.AddToQueue(this.props.track);
-        }    
+        }
         
-        onSelectTrack = () => {
+        onRequestArtist = () => {
             const {
-                index,
-                track,
-                selectTrack
+                track: {
+                    artists
+                }
             } = this.props;
-            
-            selectTrack(index, track);
+            this.props.requestArtist(artists[0].id);
+        }
+
+        onRemoveTrack = () => {
+            const {
+                activePlaylist: {
+                    playlist
+                },
+                spotifyId,
+                track
+            } = this.props;
+            this.props.removeTrackFromPlaylist(spotifyId, playlist, track.uri);
         }
 
         dropdownIndexChange = () => {
@@ -31,7 +54,8 @@ class TrackItem extends Component {
         toggleModal = () => {
             this.props.togglePlaylistModal(this.props.index);
         }
-        //Hides dropdown
+
+        //Hide dropdown
         hide = (e) => {
             if (e && e.relatedTarget) {
                 e.relatedTarget.click();
@@ -47,17 +71,24 @@ class TrackItem extends Component {
             track, 
             index, 
             track: { name, artists, duration_ms, album, id },
-            requestArtist,
             dropdownStatus,
             type,
-            canRemove,
-            removeTrack
+            activePlaylist,
+            spotifyId,
+            selectTrack
             } = this.props;
 
         let currentId = null;
         if (currentTrack) {
             currentId = currentTrack.track ? currentTrack.track.id : currentTrack.id;
         }
+
+        let canRemove = null;
+        if (type === 'playlist') {
+            canRemove = activePlaylist.playlist.owner.id === spotifyId || 
+                activePlaylist.playlist.collaborative;
+        }
+
         const minutes = Math.floor((Number(duration_ms) / 1000 / 60));
         let seconds = Math.floor((Number(duration_ms) / 1000 % 60));
 
@@ -70,7 +101,7 @@ class TrackItem extends Component {
             className="track" 
             style={ { color } }
             key={ id }
-            onDoubleClick={ this.onSelectTrack }
+            onDoubleClick={ () => selectTrack(index, track) }
             >
                 <td 
                 className="index-col"
@@ -86,7 +117,7 @@ class TrackItem extends Component {
                 <td>
                     <Link 
                     to={ `/artists/${artists[0].id}` }
-                    onClick={ () => requestArtist(artists[0].id) }
+                    onClick={ this.onRequestArtist }
                     style={ { color } }
                     >
                     { artists[0].name } 
@@ -127,7 +158,7 @@ class TrackItem extends Component {
                         { artists[0].id && <li>
                             <Link 
                             to={ `/artists/${artists[0].id}` }
-                            onClick={ () => requestArtist(artists[0].id) }
+                            onClick={ this.onRequestArtist }
                             >
                             Go to Artist
                             </Link>
@@ -153,10 +184,10 @@ class TrackItem extends Component {
                         </button>
                         </li>
                         }
-                        { type === 'playlist' && canRemove &&
+                        { canRemove &&
                             <li>
                                 <button
-                                onClick={ () => removeTrack(index) }
+                                onClick={ this.onRemoveTrack }
                                 >
                                     Remove from playlist
                                 </button>
@@ -172,12 +203,21 @@ class TrackItem extends Component {
     }
 }
 
+const mapStateToProps = (state) => ({
+    currentArtist: state.artists.currentArtist,
+    spotifyId: state.user.spotifyId,
+    activePlaylist: state.playlists.activePlaylist,
+    currentTrack: state.music.currentTrack
 
-TrackItem.PropTypes = {
-    track: PropTypes.object.isRequired,
-    selectTrack: PropTypes.func.isRequired,
-    addToQueHandler: PropTypes.func.isRequired
-};
+});
+
+const mapDispatchToProps = (dispatch) => ({
+    AddToQueue: (track) => dispatch(AddToQueue(track)),
+    updateCurrentAlbum: (album) => dispatch(updateCurrentAlbum(album)),
+    requestArtist: (id) => dispatch(requestArtist(id)),
+    removeTrackFromPlaylist: (spotifyId, playlist, trackUri) =>
+        dispatch(removeTrackFromPlaylist(spotifyId, playlist, trackUri)),
+});
 
 
-export default TrackItem;
+export default connect(mapStateToProps, mapDispatchToProps)(TrackItem);

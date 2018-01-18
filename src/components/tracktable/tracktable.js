@@ -5,16 +5,9 @@ import TrackItem from './trackitem';
 import Loader from '../loader/loader';
 import {
     selectTrack,
-    AddToQueue,
 } from '../../actions/music_actions';
 import {
-    requestArtist
-} from '../../actions/artist_actions';
-import { 
-    updateCurrentAlbum 
-} from '../../actions/album_actions';
-import {
-    addTrackToPlaylist, removeTrackFromPlaylist
+    addTrackToPlaylist
 } from '../../actions/playlist_actions';
 import Modal from '../modal/modal';
 import PlaylistModal from '../modal/playlistmodal';
@@ -25,14 +18,12 @@ class TrackTable extends Component {
     state = {
         activeDropdown: '',
         displayPlaylistModal: false,
-        selectedPlaylist: '',
         trackIndex: ''
     }
 
-    onSubmit = () => {
+    onSubmit = (playlistId) => {
         const {
             trackIndex,
-            selectedPlaylist
         } = this.state;
         const { 
             tracks,
@@ -44,12 +35,11 @@ class TrackTable extends Component {
             tracks[trackIndex].track : 
             tracks[trackIndex];
         
-        this.props.addTrackToPlaylist(spotifyId, selectedPlaylist.id, track.uri);
-        this.setState(() => ({ displayPlaylistModal: false }));
+        this.props.addTrackToPlaylist(spotifyId, playlistId, track.uri);
+        this.togglePlaylistModal();
     }
 
     onRemove = (index) => {
-
         const {
             activePlaylist: {
                 playlist
@@ -64,53 +54,48 @@ class TrackTable extends Component {
     onClickDropdown = (index) => {
         this.setState(() => ({ activeDropdown: index }));
     }
-    
-    onClickArtist = (artist) => {
-        this.props.requestArtist(artist);
-    }
 
     togglePlaylistModal = (index = '') => {
-        if (this.selectPlaylist !== '') {
-            this.setState(() => ({ selectedPlaylist: '' }));
-            //Removes the selectedPlaylist if the modal is toggled without pressing submit
-        }
         this.setState((prevState) => 
             ({ displayPlaylistModal: !prevState.displayPlaylistModal, trackIndex: index }));
     }
 
-    selectPlaylist = (playlist) => {
-        this.setState(() => ({ selectedPlaylist: playlist }));
-    }
-    
     selectTrackHandler = (index, track) => {
-        const { 
+        const {
             activePlaylist: {
                 playlistId,
-             }, 
+            },
             currentArtist,
             tracks,
-            type
+            type 
         } = this.props;
 
+        const tracklist = type === 'playlist' ? 
+            tracks.map((item) => { 
+                if (item.track.preview_url !== null) { 
+                    return item.track; 
+                } 
+                return null; 
+            }) :
+            tracks.filter((item) => item.preview_url !== null);
+
         if (type === 'playlist') {
-            const playlistTracks = tracks.map((item) => item.track);
-            this.props.selectTrack(index, track, playlistTracks, playlistId);
+            this.props.selectTrack(index, track, tracklist, playlistId);
         } else if (type === 'artist') {
-            this.props.selectTrack(index, track, tracks, currentArtist.id);
+            this.props.selectTrack(index, track, tracklist, currentArtist.id);
         } else {
-            this.props.selectTrack(index, track, tracks);
+            this.props.selectTrack(index, track, tracklist);
         }
     }
+    
 
     render() {
 
     const { 
         tracks,
-        currentTrack, 
         isLoading = null,
         myPlaylists,
         spotifyId,
-        activePlaylist,
         type
     } = this.props;
     
@@ -119,9 +104,6 @@ class TrackTable extends Component {
             <Loader />
         );
     }
-    // console.log(activePlaylist);
-    const canRemove = activePlaylist.playlist.owner.id === spotifyId ||
-        spotifyId !== activePlaylist.playlist.owner.id && activePlaylist.playlist.collaborative;
 
     return (
         <React.Fragment>
@@ -145,17 +127,11 @@ class TrackTable extends Component {
                                 <TrackItem
                                 track={ track }
                                 selectTrack={ this.selectTrackHandler }
-                                AddToQueue={ this.props.AddToQueue }
                                 index={ index }
-                                currentTrack={ currentTrack }
-                                requestArtist={ this.onClickArtist }
-                                updateCurrentAlbum={ this.props.updateCurrentAlbum }
                                 dropdownChange={ this.onClickDropdown }
                                 dropdownStatus={ this.state.activeDropdown }
                                 togglePlaylistModal={ this.togglePlaylistModal }
                                 type={ type }
-                                canRemove={ canRemove }
-                                removeTrack={ this.onRemove }
                                 />
                             );
                         }
@@ -164,12 +140,11 @@ class TrackTable extends Component {
             </table>
             <Modal>
                 <PlaylistModal 
-                playlists={ myPlaylists }
+                playlists={ myPlaylists.filter((playlist) => 
+                    (playlist.owner.id === spotifyId || playlist.collaborative)) }
                 isVisible={ this.state.displayPlaylistModal }
                 togglePlaylistModal={ this.togglePlaylistModal }
-                selectPlaylist={ this.selectPlaylist }
                 onSubmit={ this.onSubmit }
-                spotifyId={ spotifyId }
                 />
             </Modal>
         </React.Fragment>
@@ -178,7 +153,6 @@ class TrackTable extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    currentTrack: state.music.currentTrack,
     activePlaylist: state.playlists.activePlaylist,
     currentArtist: state.artists.currentArtist,
     myPlaylists: state.playlists.myPlaylists,
@@ -186,16 +160,10 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    AddToQueue: (track) => dispatch(AddToQueue(track)),
-    selectTrack: (index, track, queue, tracklistId) => 
-        dispatch(selectTrack(index, track, queue, tracklistId)),
-    requestArtist: (id) => dispatch(requestArtist(id)),
-    updateCurrentAlbum: (album) => dispatch(updateCurrentAlbum(album)),
     addTrackToPlaylist: (spotifyId, playlistId, trackUri) => 
         dispatch(addTrackToPlaylist(spotifyId, playlistId, trackUri)),
-    removeTrackFromPlaylist: (spotifyId, playlist, trackUri) => 
-        dispatch(removeTrackFromPlaylist(spotifyId, playlist, trackUri))
-    
+    selectTrack: (index, track, queue, tracklistId) =>
+        dispatch(selectTrack(index, track, queue, tracklistId)),
 });
 
 

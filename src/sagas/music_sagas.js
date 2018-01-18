@@ -12,10 +12,11 @@ import {
 import { spotifyUrls } from '../constants/spotify';
 import { 
     selectTrack,
-    playAlbumError,
 } from '../actions/music_actions';
 import {
-    albumTracksSuccess, updateCurrentAlbum 
+    albumTracksSuccess, 
+    updateCurrentAlbum,
+    albumTracksError
 } from '../actions/album_actions';
 
 
@@ -39,7 +40,7 @@ function* albumTracksFetch() {
             
         } catch (e) {
             console.log(e);
-            yield put(playAlbumError(e));
+            yield put(albumTracksError(e));
         }
     }
 }

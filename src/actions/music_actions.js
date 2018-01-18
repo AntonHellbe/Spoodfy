@@ -4,11 +4,11 @@ export const togglePlaying = () => ({
     type: musicActions.TOGGLE_PLAYING,
 });
 
-export const selectTrack = (index, track, queue, tracklistId = '') => ({
+export const selectTrack = (index, track, tracklist, tracklistId = '') => ({
     type: musicActions.SELECT_TRACK,
     index,
     track,
-    queue,
+    tracklist,
     tracklistId
 });
 
@@ -40,25 +40,15 @@ export const updateVolume = (volume) => ({
     volume
 });
 
-export const previousTrack = () => ({
-    type: musicActions.PREVIOUS_TRACK
+export const previousTrack = (index) => ({
+    type: musicActions.PREVIOUS_TRACK,
+    index
 });
 
 export const requestPlayAlbum = (id, album) => ({
     type: musicActions.REQUEST_PLAY_ALBUM,
     id,
     album
-});
-
-export const playAlbumSuccess = (tracks, id) => ({
-    type: musicActions.PLAY_ALBUM_SUCCESS,
-    tracks,
-    id
-});
-
-export const playAlbumError = (error) => ({
-    type: musicActions.PLAY_ALBUM_ERROR,
-    error
 });
 
 export const requestPlayArtistTopTracks = (id) => ({
@@ -70,5 +60,9 @@ export const requestPlayPlaylist = (playlistUrl, playlist) => ({
     type: musicActions.REQUEST_PLAY_PLAYLIST,
     playlistUrl,
     playlist
+});
+
+export const loadNextQueueTrack = () => ({
+    type: musicActions.LOAD_NEXT_QUEUE_TRACK
 });
 
