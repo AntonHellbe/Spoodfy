@@ -48,11 +48,6 @@ class MusicBar extends Component {
             //Clear interval if it isn't the same track we are receiving, 
             //i.e slider needs to back to zero and then preview url on the incoming track is not null
         }
-        //  if (nextProps.currentTrack.preview_url === null) {
-        //     if (nextProps.playingIndex < nextProps.tracklist.length - 1) {
-        //         this.props.loadNextTrack(nextProps.playingIndex + 1);
-        //     }
-        //  }
 
         if (!nextProps.isPlaying && this.props.isPlaying) {
              clearInterval(this.currentTimeInterval);
@@ -170,7 +165,7 @@ class MusicBar extends Component {
         if (repeat) {
             this.audioElement.load();
             this.audioElement.play();
-        } else if (shuffle) {
+        } else if (shuffle && queue.length === 0) {
             this.props.loadNextTrack(Math.floor(Math.random() * (tracklist.length - 1)));
         } else if (queue.length > 0) {
             this.props.loadNextQueueTrack();
@@ -197,13 +192,13 @@ class MusicBar extends Component {
 
     handleMusicControls = (e) => {
         e.stopPropagation();
-        console.log(e.target.id);
+
         const {  
             currentTrack,
             playingIndex,
             queue
         } = this.props;
-        console.log(playingIndex);
+
         const id = e.target.id;
         switch (id) {
             case 'pause':

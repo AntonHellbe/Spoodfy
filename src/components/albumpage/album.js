@@ -8,11 +8,7 @@ import {
 import {
     selectTrack,
     requestPlayAlbum,
-    togglePlaying
 } from '../../actions/music_actions';
-import {
-    requestArtist
-} from '../../actions/artist_actions';
 
 
 class Album extends Component {
@@ -53,43 +49,23 @@ class Album extends Component {
 
     }
 
-    onClickArtist = () => {
-        console.log(this.props.currentAlbum.artists[0].id);
-        this.props.requestArtist(this.props.currentAlbum.artists[0].id);
-    }
 
     render() {
 
         const {
             currentAlbum: {
-                name,
                 type,
-                artists,
-                album_type,
-                images,
-                id
             },
             albumTracks,
             loadingAlbum,
-            tracklistId,
-            isPlaying
         } = this.props;
 
-        const isPlayingCurrentAlbum = tracklistId === id;
         return (
             <div className="main-content">
                 <div className="main-content-wrapper">
                 <Banner
-                title={ name }
-                subtitle={ type }
-                image={ images[0].url }
-                topRightInformation={ album_type }
-                items={ [`Artist: ${artists[0].name}`] }
-                playAction={ isPlayingCurrentAlbum ? this.props.togglePlaying : this.onClickPlay }
-                isPlaying={ isPlayingCurrentAlbum && isPlaying }
-                pauseAction={ this.props.togglePlaying }
-                link={ `/artists/${artists[0].id}` }
-                linkAction={ this.onClickArtist }
+                type={ type }
+                playAction={ this.onClickPlay }
 
                 />
                 
@@ -114,16 +90,12 @@ const mapStateToProps = (state) => ({
     currentAlbum: state.albums.currentAlbum,
     albumTracks: state.albums.albumTracks,
     loadingAlbum: state.albums.loadingAlbum,
-    tracklistId: state.music.tracklistId,
-    isPlaying: state.music.isPlaying
 });
 
 const mapDispatchToProps = (dispatch, props) => ({
     requestAlbumTracks: (album) => dispatch(requestAlbumTracks(props.match.params.id, album)),
     selectTrack: (track, queue) => dispatch(selectTrack(0, track, queue, props.match.params.id)),
     requestPlayAlbum: (id, album) => dispatch(requestPlayAlbum(id, album)),
-    togglePlaying: () => dispatch(togglePlaying()),
-    requestArtist: (id) => dispatch(requestArtist(id))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Album);

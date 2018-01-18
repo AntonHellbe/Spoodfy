@@ -44,9 +44,6 @@ class Artist extends Component {
         }
     }
 
-    onClickFollow = (action) => {
-        this.props.requestFollowArtist(action); //action = follow or unfollow
-    }
 
     handleCheckboxChange = (e) => {
         const id = e.target.id;
@@ -86,36 +83,19 @@ class Artist extends Component {
             relatedArtists,
             artistTopTracks,
             artistAlbums,
-            followedArtists,
-            currentArtist,
-            tracklistId,
-            isPlaying,
             currentArtist: {
                 type
             }
         } = this.props;
 
-        const isPlayingCurrentArtist = currentArtist.id === tracklistId;
-        const imageUrl = currentArtist.images ? currentArtist.images[0].url : null;
         // console.log(loadingArtist);
         return (
             <div className="main-content">
                 <div className="main-content-wrapper">
                 { !(_.isEmpty(this.props.currentArtist)) &&
                 <Banner
-                title={ currentArtist.name }
-                subtitle={ currentArtist.type }
-                topRightInformation={ 
-                    `Popularity ${this.props.currentArtist.popularity}` }
-                bottomRightInformation={ 
-                    `Followers ${this.props.currentArtist.followers.total}` }
-                image={ imageUrl }
-                followButton={ true } // eslint-disable-line
-                isFollowing={ followedArtists.find((artist) => currentArtist.id === artist.id) }
-                followAction={ this.onClickFollow }
-                isPlaying={ isPlayingCurrentArtist && isPlaying }
-                playAction={ isPlayingCurrentArtist ? this.props.togglePlaying : this.onClickPlay }
-                pauseAction={ this.props.togglePlaying }
+                type={ type }
+                playAction={ this.onClickPlay }
                 />
                 }
 
@@ -190,8 +170,6 @@ const mapStateToProps = (state) => ({
     loadingAlbum: state.albums.loadingAlbum,
     artistTopTracks: state.tracks.artistTopTracks,
     loadingTracks: state.tracks.loadingTracks,
-    tracklistId: state.music.tracklistId,
-    isPlaying: state.music.isPlaying
 });
 
 const mapDispatchToProps = (dispatch, props) => ({
@@ -199,7 +177,6 @@ const mapDispatchToProps = (dispatch, props) => ({
     requestArtistTopTracks: () => dispatch(requestArtistTopTracks(props.match.params.id)),
     requestPlayArtistTopTracks: () => dispatch(requestPlayArtistTopTracks(props.match.params.id)),
     selectTrack: (track, queue, id) => dispatch(selectTrack(0, track, queue, id)),
-    togglePlaying: () => dispatch(togglePlaying()),
     requestRelatedArtists: (id) => dispatch(requestRelatedArtists(id)),
 });
 

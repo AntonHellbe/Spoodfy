@@ -71,12 +71,10 @@ class TrackTable extends Component {
         } = this.props;
 
         const tracklist = type === 'playlist' ? 
-            tracks.map((item) => { 
-                if (item.track.preview_url !== null) { 
-                    return item.track; 
-                } 
-                return null; 
-            }) :
+            tracks.filter((item) => { 
+                return item.track.preview_url !== null;
+                 
+            }).map((item) => item.track) :
             tracks.filter((item) => item.preview_url !== null);
 
         if (type === 'playlist') {

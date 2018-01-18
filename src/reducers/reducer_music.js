@@ -57,7 +57,7 @@ const musicReducer = (state = INITIAL_STATE, action) => {
         case musicActions.ADD_TO_QUEUE:
             return { 
                 ...state, 
-                queue: state.queue.concat(action.track) };
+                queue: state.queue.concat(action.tracks) };
 
         case musicActions.UPDATE_VOLUME:
             return { 

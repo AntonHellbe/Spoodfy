@@ -212,7 +212,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    AddToQueue: (track) => dispatch(AddToQueue(track)),
+    AddToQueue: (tracks) => dispatch(AddToQueue(tracks)),
     updateCurrentAlbum: (album) => dispatch(updateCurrentAlbum(album)),
     requestArtist: (id) => dispatch(requestArtist(id)),
     removeTrackFromPlaylist: (spotifyId, playlist, trackUri) =>

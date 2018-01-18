@@ -17,9 +17,9 @@ export const selectSingleTrack = (track) => ({
     track
 });
 
-export const AddToQueue = (track) => ({
+export const AddToQueue = (tracks) => ({
     type: musicActions.ADD_TO_QUEUE,
-    track
+    tracks
 });
 
 export const loadNextTrack = (index) => ({
