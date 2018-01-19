@@ -55,6 +55,11 @@ class Album extends Component {
         const {
             currentAlbum: {
                 type,
+                name,
+                album_type,
+                artists,
+                images,
+                id
             },
             albumTracks,
             loadingAlbum,
@@ -65,8 +70,12 @@ class Album extends Component {
                 <div className="main-content-wrapper">
                 <Banner
                 type={ type }
+                name={ name }
+                topRight={ album_type }
+                id={ id }
                 playAction={ this.onClickPlay }
-
+                images={ images }
+                artists={ artists }
                 />
                 
                 <div className="main-content-bottom">

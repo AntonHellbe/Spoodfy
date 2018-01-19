@@ -35,30 +35,60 @@ class Profile extends Component {
             topArtists,
             recentlyPlayed,
             currentTrack,
-            loadingArtist
+            loadingArtist,
+            user: {
+                images,
+                type,
+                id,
+                display_name = id,
+                followers: {
+                    total
+                },
+                product
+            }
         } = this.props;
-        const {
-            display_name,
-            id,
-            followers: { total },
-            type,
-            external_urls: { spotify },
-            product
-        } = this.props.user;
+
         return (
-
+            
             <div className="main-content">
-
+            
                 <div className="main-content-wrapper">
+                  <div className="banner-container">
 
-                <Banner 
-                shareButton={ true } //eslint-disable-line
-                title={ display_name ? display_name : id }
-                subtitle={ type }
-                bottomRightInformation={ `followers \n ${total}` }
-                topRightInformation={ `product ${product}` }
-                />
+                    <div className="image-wrapper">
+                        { images[0] ? 
+                        (
+                        <img 
+                        src={ images[0].url }
+                        role="presentation"
+                        />
+                        ) :
+                        <img
+                        src="https://d1wn0q81ehzw6k.cloudfront.net/additional/thul/media/0eaa14d11e8930f5?w=400&h=400"
+                        role="presentation"
+                        />
+                        }
+                    </div>
+                    <div className="banner-title">
+                        <h3>
+                            {type}
+                        </h3>
+                        <h1>
+                            { display_name }
+                        </h1>
+                    </div>
+                    <div className="information-top-right">
+                        <p>
+                            {`followers \n ${total}`}
+                        </p>
 
+                    </div>
+                    <div className="information-bottom-right">
+                        <p>
+                            {`product ${product}`}
+                        </p>
+                    </div>
+            </div>
                 <div className="main-content-bottom">
                     <input
                         id="tab1"

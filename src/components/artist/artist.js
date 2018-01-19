@@ -76,6 +76,8 @@ class Artist extends Component {
     }
 
     render() {
+
+        console.log(this.props.currentArtist);
         const {
             loadingArtist,
             loadingTracks,
@@ -84,8 +86,14 @@ class Artist extends Component {
             artistTopTracks,
             artistAlbums,
             currentArtist: {
-                type
-            }
+                type,
+                name,
+                popularity,
+                images,
+                id
+            },
+            followedArtists,
+            currentArtist
         } = this.props;
 
         // console.log(loadingArtist);
@@ -96,6 +104,12 @@ class Artist extends Component {
                 <Banner
                 type={ type }
                 playAction={ this.onClickPlay }
+                name={ name }
+                topRight={ `Popularity ${popularity}` }
+                bottomRight={ `Followers ${currentArtist.followers.total}` }
+                isFollowing={ followedArtists.find((artist) => artist.id === id) }
+                images={ images }
+                id={ id }
                 />
                 }
 

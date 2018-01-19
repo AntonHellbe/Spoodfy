@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { togglePlaying } from '../../actions/music_actions';
 import { 
-    requestFollowArtist 
+    requestFollowArtist, 
+    requestArtist 
 } from '../../actions/artist_actions';
 import {
     requestFollowPlaylist
@@ -15,9 +16,7 @@ class Banner extends Component {
     onClickFollowArtist = (e) => {
         const action = e.target.id;
         const {
-            currentArtist: {
-                id
-            }
+            id
         } = this.props;
         this.props.requestFollowArtist(id, action);
     }
@@ -31,9 +30,19 @@ class Banner extends Component {
         this.props.requestFollowPlaylist(activePlaylist.playlist, action, spotifyId);
     }
 
+    followAction = (e) => {
+        if (this.props.type === 'artist') {
+            this.onClickFollowArtist(e);
+        }
+
+        if (this.props.type === 'playlist') {
+            this.onClickFollowPlaylist(e);
+        }
+    }
+
     renderImage = (images) => {
     
-        if (typeof images[0].url !== 'undefined') {
+        if (typeof images[0] !== 'undefined') {
             return (
                 <img 
                 src={ images[0].url }
@@ -50,29 +59,62 @@ class Banner extends Component {
         );
     }
 
-    renderArtist = () => {
+    renderFollowButton = () => {
         const {
-            currentArtist: {
-                images,
-                name,
-                type,
-                popularity,
-                followers: {
-                    total
-                },
-                id
-            },
-            followedArtists,
-            isPlaying,
-            tracklistId,
-            playAction
+            isFollowing
         } = this.props;
 
-        const isFollowing = followedArtists.find((artist) => artist.id === id);
-        const isPlayingCurrentArtist = tracklistId === id && isPlaying;
+        console.log('Rendering followbutton');
+       
+        if (isFollowing) {
+            return (
+                <button
+                className="btn-follow"
+                id="unfollow"
+                onClick={ this.followAction }
+                >
+                    Unfollow
+                </button>
 
+            );
+        }
         return (
-            <React.Fragment>
+            <button
+            className="btn-follow"
+            id="follow"
+            onClick={ this.followAction }
+            >
+                Follow
+            </button>
+        );
+        
+
+    }
+
+
+    render() {
+
+        const {
+            type,
+            images,
+            name,
+            topRight,
+            bottomRight,
+            isPlaying,
+            playAction,
+            id,
+            tracklistId,
+            artists,
+            author,
+            totalTracks
+
+        } = this.props;
+        
+        const isActive = id === tracklistId;
+
+        console.log(type);
+        return (
+            <div className="banner-container">
                 <div className="image-wrapper">
                     { this.renderImage(images) }
                 </div>
@@ -84,269 +126,80 @@ class Banner extends Component {
                         {name}
                     </h1>
                 </div>
-                <div className="information-top-right">
-                    <p>
-                        {`Popularity ${popularity}`}
-                    </p>
 
-                </div>
-
-                <div className="information-bottom-right">
-                    <p>
-                        {`Followers ${total}`}
-                    </p>
-                </div>
-                <div className="action-buttons">
-                    { isFollowing ?
-                        (
-                            <button 
-                            className="btn-follow" 
-                            id="unfollow" 
-                            onClick={ this.onClickFollowArtist }
-                            >
-                                Unfollow
-                            </button>
-                        ) : 
-                        (
-                            <button 
-                            className="btn-follow" 
-                            id="follow" 
-                            onClick={ this.onClickFollowArtist } 
-                            >
-                                    Follow
-                            </button>
-                        )
-                    }
-
-                    { isPlaying ?
-                        (
-                        <button className="btn-play" onClick={ this.props.togglePlaying } >
-                            Pause
-                        </button>
-                        )
-                        :
-                        (
-                        <button 
-                        className="btn-play" 
-                        onClick={ isPlayingCurrentArtist ? 
-                            this.props.togglePlaying :
-                            playAction
-                        }
-                        >
-                            Play
-                        </button>
-                        )
-                    
-                    }
-
-                </div>
-            </React.Fragment>
- 
-        );
-
-    }
-
-    renderAlbum = () => {
-        const {
-            currentAlbum: {
-                name,
-                id,
-                type,
-                images,
-                album_type
-            },
-            tracklistId,
-            isPlaying,
-            playAction
-        } = this.props;
-
-        const isPlayingCurrentAlbum = tracklistId === id && isPlaying;
-
-        return (
-            <React.Fragment>
-                <div className="image-wrapper">
-                    {this.renderImage(images)}
-                </div>
-                <div className="banner-title">
-                    <h3>
-                        {type}
-                    </h3>
-                    <h1>
-                        {name}
-                    </h1>
-                </div>
-                <div className="information-top-right">
-                    <p>
-                        {`${album_type}`}
-                    </p>
-
-                </div>
-
-                <div className="action-buttons">
-
-                    {isPlaying ?
-                        (
-                        <button 
-                        className="btn-play" 
-                        onClick={ this.props.togglePlaying } 
-                        >
-                            Pause
-                        </button>
-                        )
-                        :
-                        (
-                        <button
-                        className="btn-play"
-                        onClick={ isPlayingCurrentAlbum ?  
-                            this.props.togglePlaying :
-                            playAction }
-                        >
-                            Play
-                        </button>
-                        )
-
-                    }
-                    
-
-                </div>
-            </React.Fragment>
-
-        );
-
-    }
-
-    renderPlaylist = () => {
-        const {
-            activePlaylist: {
-                playlist: {
-                    name,
-                    type,
-                    owner: {
-                        id,
-                        display_name
-                    },
-                    tracks: { total },
-                    images,
-                
-                },
-                playlist
-            },
-            tracklistId,
-            isPlaying,
-            playAction,
-            isFollowingActivePlaylist
-        } = this.props;
-
-        const isPlayingCurrentPlaylist = tracklistId === playlist.id && isPlaying;
-
-        return (
-            <React.Fragment>
-                <div className="image-wrapper">
-                    {this.renderImage(images)}
-                </div>
-                <div className="banner-title">
-                    <h3>
-                        { type }
-                    </h3>
-                    <h1>
-                        { name }
-                    </h1>
-                </div>
                 <div className="banner-description">
                     <ul>
-                        <li> 
-                            { display_name ? `Created by:${display_name}` : `Created by:${id}` } 
-                        </li>
-                        <li>
-                            { `Total Tracks: ${total}` } 
-                        </li>
+                        { type === 'album' &&
+                            <li>
+                                <Link 
+                                to={ `/artists/${artists[0].id}` }
+                                onClick={ () => this.props.requestArtist(artists[0].id) }
+                                >
+                                    { `Artist: ${artists[0].name}` }
+                                </Link>
+
+                            </li>
+                        }
+                        { type === 'playlist' &&
+                            <React.Fragment>
+                                <li>
+                                    { author }
+                                </li>
+                                <li>
+                                    { totalTracks }
+                                </li>
+                            </React.Fragment>
+
+                        }
+                        
                     </ul>
+                </div>
 
-                </div>  
                 <div className="information-top-right">
-                    <p>
-                        {id}
-                    </p>
-
+                    { topRight &&
+                        <p>
+                            { topRight }
+                        </p>
+                    }
                 </div>
                 <div className="information-bottom-right">
-                    <p>
-                        { playlist.public ? 'Public Playlist' : 'Private Playlist' }
-                    </p>
+                    { bottomRight &&
+                        <p>
+                            { bottomRight }
+                        </p>
+                    }
                 </div>
 
                 <div className="action-buttons">
-
-                    {isPlaying ?
+                    { isPlaying ?
                         (
                         <button
-                            className="btn-play"
-                            onClick={ this.props.togglePlaying }
+                        className="btn-play"
+                        onClick={ this.props.togglePlaying }
                         >
-                            Pause
+                                Pause
                         </button>
                         )
                         :
                         (
                         <button
                         className="btn-play"
-                        onClick={ isPlayingCurrentPlaylist ? 
-                            this.props.togglePlaying :
-                            playAction }
+                        onClick={ isActive ?
+                        this.props.togglePlaying :
+                        playAction }
                         >
-                                Play
+                            Play
                         </button>
                         )
-
                     }
 
-                    { isFollowingActivePlaylist ?
-                        (
-                            <button
-                            className="btn-follow"
-                            id="unfollow"
-                            onClick={ this.onClickFollowPlaylist }
-                            >
-                                Unfollow
-                            </button>
-                        ) :
-                        (
-                            <button
-                            className="btn-follow"
-                            id="follow"
-                            onClick={ this.onClickFollowPlaylist }
-                            >
-                                Follow
-                            </button>
-                        )
+                    { type === 'artist' &&
+                        this.renderFollowButton()
+                    }
+                    { type === 'playlist' &&
+                        this.renderFollowButton()
                     }
                 </div>
-            </React.Fragment>
-
-        );
-
-    }
-
-
-    render() {
-
-        const {
-            type
-        } = this.props;
-
-        return (
-            <div className="banner-container">
-                { type === 'artist' && 
-                    this.renderArtist()
-                }
-
-                { type === 'playlist' &&
-                    this.renderPlaylist()
-                }
-
-                { type === 'album' &&
-                    this.renderAlbum()
-                }
 
 
             </div>
@@ -356,15 +209,11 @@ class Banner extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    currentArtist: state.artists.currentArtist,
-    currentAlbum: state.albums.currentAlbum,
-    activePlaylist: state.playlists.activePlaylist,
     isPlaying: state.music.isPlaying,
     tracklistId: state.music.tracklistId,
-    followedArtists: state.artists.followedArtists,
-    isFollowingActivePlaylist: state.playlists.isFollowingActivePlaylist,
-    spotifyId: state.user.spotifyId
-
+    spotifyId: state.user.spotifyId,
+    user: state.user.user,
+    activePlaylist: state.playlists.activePlaylist
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -373,6 +222,7 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch(requestFollowArtist(id, action)),
     requestFollowPlaylist: (playlist, action, spotifyId) =>
         dispatch(requestFollowPlaylist(playlist, action, spotifyId)),
+    requestArtist: (id) => dispatch(requestArtist(id))
 
 });
 

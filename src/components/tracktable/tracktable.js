@@ -120,6 +120,7 @@ class TrackTable extends Component {
                     {tracks.map((item, index) => {
 
                         //If it is a playlist, the track is located under item.track
+                        // Might need to be changed later to display when the tracks were added
                         const track = item.track ? item.track : item;
                             return (
                                 <TrackItem

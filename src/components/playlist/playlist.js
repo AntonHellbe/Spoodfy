@@ -2,11 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
     requestPlaylistSongs,
-    requestFollowPlaylist,
     clearActivePlaylistId,
 } from '../../actions/playlist_actions';
 import {
-    togglePlaying,
     selectTrack,
 } from '../../actions/music_actions';
 import Banner from '../banner/banner';
@@ -33,9 +31,19 @@ class Playlist extends Component {
             loadingPlaylist,
             activePlaylist: {
                 playlist: {
-                    type
-                }
-            }
+                    type,
+                    name,
+                    owner: {
+                        id,
+                        display_name = id
+                    },
+                    images,
+                    tracks: { total }
+                },
+                playlist
+            },
+            isFollowingActivePlaylist
+            
 
         } = this.props;
 
@@ -43,8 +51,16 @@ class Playlist extends Component {
             <div className="main-content">
                 <div className="main-content-wrapper">
                 <Banner
-                type={ type }
                 playAction={ this.onClickPlay }
+                type={ type }
+                name={ name }
+                topRight={ display_name ? display_name : id } // eslint-disable-line
+                bottomRight={ playlist.public ? 'Public Playlist' : 'Private Playlst' }
+                isFollowing={ isFollowingActivePlaylist }
+                id={ playlist.id }
+                images={ images }
+                author={ display_name ? `Created by: ${display_name}` : `Created by: ${id}` }
+                totalTracks={ `Total tracks ${total}` }
                 /> 
                 
                 <div className="main-content-bottom">
@@ -66,6 +82,7 @@ const mapStateToProps = (state) => ({
     playlistSongs: state.playlists.playlistSongs,
     activePlaylist: state.playlists.activePlaylist,
     loadingPlaylist: state.playlists.loadingPlaylist,
+    isFollowingActivePlaylist: state.playlists.isFollowingActivePlaylist,
 });
 
 const mapDispatchToProps = (dispatch, props) => ({

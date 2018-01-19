@@ -40,7 +40,7 @@ class MusicBar extends Component {
 
 
     componentWillReceiveProps(nextProps) {
-        console.log(nextProps.playingIndex);
+        // console.log(nextProps.playingIndex);
         if (nextProps.currentTrack.preview_url !== null && 
             this.props.currentTrack.id !== nextProps.currentTrack.id) {
             this.setState(() => ({ value: 0 }));
