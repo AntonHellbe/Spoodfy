@@ -5,6 +5,7 @@ const INITIAL_STATE = {
     artistTopTracks: [],
     recentlyPlayed: [],
     loadingTracks: false,
+    playlistTracks: []
 };
 
 const tracksReducer = (state = INITIAL_STATE, action) => {
@@ -32,6 +33,11 @@ const tracksReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 errorRecentlyPlayed: action.error
             };
+        case trackActions.REQUEST_PLAYLIST_TRACKS:
+            return { ...state, loadingTracks: true };
+
+        case trackActions.PLAYLIST_TRACKS_SUCCESS:
+            return { ...state, playlistTracks: action.tracks, loadingTracks: false };
 
 
         default:

@@ -3,7 +3,8 @@ import { take, call, put, fork, takeLatest } from 'redux-saga/effects';
 import { 
     trackActions, 
     musicActions, 
-    authActions 
+    authActions,
+    playlistActions
 } from '../constants/actions';
 import {
     userTopTracksSuccess, 
@@ -11,12 +12,17 @@ import {
     artistTopTracksSuccess,
     artistTopTracksError,
     updateRecentlyPlayed,
-    errorRecentlyPlayed
+    errorRecentlyPlayed,
+    playlistTracksSuccess,
+    playlistTracksError,
+    reuestPlaylistTracks
 } from '../actions/track_actions';
+import { 
+    selectTrack 
+} from '../actions/music_actions';
 import {
     spotifyUrls
 } from '../constants/spotify';
-import { selectTrack } from '../actions/music_actions';
 
 
 function* userTopTracksFetch() {
@@ -79,11 +85,45 @@ function* recentlyPlayedFetch() {
     }
 }
 
+function* playPlaylistHelper({ playlistUrl, playlist }) {
+    const URL = `${playlistUrl}${spotifyUrls.tracks}`;
+
+    try {
+        const data = yield call(axios.get, URL);
+        const tracks = data.data.items
+        .filter((item) => item.track.preview_url !== null)
+            .map((item) => item.track);
+        yield put(playlistTracksSuccess(tracks));
+        yield put(selectTrack(0, tracks[0], tracks, playlist.id));
+
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+function* playlistTracks() {
+    while (true) {
+        const { playlist } = yield take([playlistActions.UPDATE_PLAYLIST_ID,
+        playlistActions.REMOVE_TRACK_SUCCESS]);
+        yield put(reuestPlaylistTracks());
+        const URL = `${playlist.href}${spotifyUrls.tracks}?=limit50`;
+        try {
+            const data = yield call(axios.get, URL);
+            yield put(playlistTracksSuccess(data.data.items));
+        } catch (e) {
+            console.log(e);
+            yield put(playlistTracksError(e));
+        }
+    }
+}
+
 
 const trackSagas = [
+    fork(playlistTracks),
     fork(userTopTracksFetch),
     fork(playArtistTopTracksHelper),
     fork(recentlyPlayedFetch),
+    takeLatest(musicActions.REQUEST_PLAY_PLAYLIST, playPlaylistHelper),
     takeLatest(trackActions.REQUEST_ARTIST_TOP_TRACKS, topTracksFetch),
 ];
 

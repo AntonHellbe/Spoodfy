@@ -15,20 +15,6 @@ export const playlistError = (error) => ({
     error
 });
 
-export const requestPlaylistSongs = () => ({
-    type: playlistActions.REQUEST_PLAYLIST_TRACKS,
-});
-
-export const playlistTracksSuccess = (tracks) => ({
-    type: playlistActions.PLAYLIST_TRACKS_SUCCESS,
-    tracks
-});
-
-export const playlistTracksError = (error) => ({
-    type: playlistActions.PLAYLIST_TRACKS_ERROR,
-    error
-});
-
 export const updateActivePlaylist = (playlist, spotifyId) => ({
     type: playlistActions.UPDATE_PLAYLIST_ID,
     playlist,
@@ -93,4 +79,18 @@ export const removeTrackFromPlaylist = (spotifyId, playlist, trackUri) => ({
 export const removeTrackSuccess = (playlist) => ({
     type: playlistActions.REMOVE_TRACK_SUCCESS,
     playlist
+});
+
+export const requestFeturedPlaylists = () => ({
+    type: playlistActions.REQUEST_FEATURED_PLAYLISTS
+});
+
+export const featuredPlaylistsSuccess = (playlists) => ({
+    type: playlistActions.FEATURED_PLAYLISTS_SUCCESS,
+    playlists
+});
+
+export const featuredPlaylistsError = (error) => ({
+    type: playlistActions.FEATURED_PLAYLISTS_ERROR,
+    error
 });

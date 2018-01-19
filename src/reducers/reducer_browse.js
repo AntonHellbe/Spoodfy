@@ -11,8 +11,11 @@ const INITIAL_STATE = {
 
 const browseReducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
+        case browseActions.NEW_RELEASES_REQUESTED:
+            return { ...state, loadingBrowse: true };
+            
         case browseActions.NEW_RELEASES_SUCCESS:
-            return { ...state, newReleases: action.newReleases };
+            return { ...state, newReleases: action.newReleases, loadingBrowse: false };
 
         case browseActions.NEW_RELEASES_ERROR:
             return { ...state, newReleasesError: action.error };

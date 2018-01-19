@@ -196,7 +196,8 @@ class MusicBar extends Component {
         const {  
             currentTrack,
             playingIndex,
-            queue
+            queue,
+            tracklist
         } = this.props;
 
         const id = e.target.id;
@@ -222,13 +223,12 @@ class MusicBar extends Component {
             case 'next':
                 if (queue.length > 0) {
                     this.props.loadNextQueueTrack();
-                } else {
+                } else if (playingIndex < tracklist.length - 1) {
                     this.props.loadNextTrack(playingIndex + 1);
                 }
                 break;
             case 'prev':
                 if (playingIndex > 0) {
-                    console.log('Dispatching prev track');
                     this.props.previousTrack(playingIndex - 1);
                 }
                 break;

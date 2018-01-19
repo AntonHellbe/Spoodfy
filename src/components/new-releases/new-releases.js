@@ -5,6 +5,13 @@ import {
     newReleasesRequest
 } from '../../actions/browse_actions';
 import AlbumList from '../albumlist/albumlist';
+import Loader from '../loader/loader';
+import { 
+    updateActivePlaylist 
+} from '../../actions/playlist_actions';
+import { 
+    requestPlayPlaylist 
+} from '../../actions/music_actions';
 
 class NewReleases extends Component {
 
@@ -14,21 +21,51 @@ class NewReleases extends Component {
         }
 
     }
+    onClickPlay = (playlist) => {
+        this.props.requestPlayPlaylist(playlist.href, playlist);
+    }
+
+    onClickPlaylist = (playlist) => {
+        this.props.updateActivePlaylist(playlist, this.props.spotifyId);
+    }
 
     handleClick = () => {
         this.props.history.push('/');
     }
-        
+    
     
     render() {
-        const { newReleases } = this.props;
+        const { 
+            newReleases,
+            loadingBrowse,
+            featuredPlaylists
+        } = this.props;
+        console.log(featuredPlaylists);
         return (
-            <div className="newReleasesDiv">
-                <NewReleasesBanner handleClick={ this.handleClick } />
-                <h3> New Albums and Singles </h3>
-                <AlbumList
-                albums={ newReleases }
-                />
+            <div className="main-content">
+                <div className="main-content-wrapper">
+
+                    <NewReleasesBanner 
+                    handleClick={ this.handleClick } 
+                    playlists={ featuredPlaylists }
+                    onClickPlay={ this.onClickPlay }
+                    onClickPlaylist={ this.onClickPlaylist }
+                    />
+                    
+                    <div className="main-content-bottom">
+                    <h3> New Albums and Singles </h3>
+                    { loadingBrowse ?
+                    (
+                        <Loader />
+                    ) :
+                    (
+                        <AlbumList
+                        albums={ newReleases }
+                        />
+                    )
+                    }
+                    </div>
+                </div>
             </div>
         );
     }
@@ -36,10 +73,17 @@ class NewReleases extends Component {
 
 const mapStateToProps = (state) => ({
     newReleases: state.browse.newReleases,
+    featuredPlaylists: state.playlists.featuredPlaylists,
+    loadingBrowse: state.browse.loadingBrowse,
+    spotifyId: state.user.spotifyId
 });
 
 const mapDispatchToProps = (dispatch) => ({
     newReleasesRequest: () => dispatch(newReleasesRequest()),
+    updateActivePlaylist: (playlist, spotifyId) =>
+        dispatch(updateActivePlaylist(playlist, spotifyId)),
+    requestPlayPlaylist: (playlistUrl, playlist) =>
+        dispatch(requestPlayPlaylist(playlistUrl, playlist))
 });
 
 

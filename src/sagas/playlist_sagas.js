@@ -3,21 +3,19 @@ import axios from 'axios';
 import { spotifyUrls } from '../constants/spotify';
 import { 
     playlistActions,
-    musicActions,
-    authActions
+    authActions,
+    browseActions
 } from '../constants/actions';
 import { 
     playlistsFetched, 
     playlistError,
-    playlistTracksError,
-    playlistTracksSuccess,
     isFollowingPlaylistSuccess,
     isFollowingPlaylistError,
     followPlaylistSuccess,
-    playPlaylistSuccess,
-    removeTrackSuccess
+    removeTrackSuccess,
+    featuredPlaylistsSuccess,
+    featuredPlaylistsError
 } from '../actions/playlist_actions';
-import { selectTrack } from '../actions/music_actions';
 
 
 function* userPlaylistsFetch() {
@@ -36,20 +34,6 @@ function* userPlaylistsFetch() {
     }
 }
 
-function* playlistTracks() {
-    while (true) {
-        const { playlist } = yield take([playlistActions.UPDATE_PLAYLIST_ID, 
-            playlistActions.REMOVE_TRACK_SUCCESS]);
-        const URL = `${playlist.href}${spotifyUrls.tracks}?=limit50`;
-        try {
-            const data = yield call(axios.get, URL);
-            yield put(playlistTracksSuccess(data.data.items));
-        } catch (e) {
-            console.log('ERROR OCCURED - PLAYLISTTRACKS');
-            yield put(playlistTracksError(e));
-        }
-    }
-}
 
 function* followedPlaylistsFetch() {
     while (true) {
@@ -105,26 +89,16 @@ function* followPlaylistRequest() {
     
 }
 
-function* playPlaylistHelper({ playlistUrl, playlist }) {
-    const URL = `${playlistUrl}${spotifyUrls.tracks}`;
-
-    try {
-        const data = yield call(axios.get, URL);
-        const tracks = data.data.items.map((item) => item.track);
-        yield put(playPlaylistSuccess(playlist, data.data.items));
-        yield put(selectTrack(0, data.data.items[0].track, tracks, playlist.id));
-        
-    } catch (e) {
-        console.log(e);
-    }
-}
-
 function* addTrackToPlaylist({ spotifyId, playlistId, trackUri }) {
     const URL = `${spotifyUrls.baseURL}${spotifyUrls.version}${spotifyUrls.users}/` +
         `${spotifyId}${spotifyUrls.playlists}/${playlistId}${spotifyUrls.tracks}?uris=${trackUri}`;
     // console.log(URL);
     try {
         const data = yield call(axios.post, URL);
+        if (data.status === 201) {
+            //Add success to post notification that track is added
+        }
+        
         console.log(data);
     } catch (e) {
         console.log(e);
@@ -153,13 +127,29 @@ function* removeTrackFromPlaylistHelper({ spotifyId, playlist, trackUri }) {
     }
 }
 
+function* featuredPlaylistsFetch() {
+    while (true) {
+        yield take(browseActions.NEW_RELEASES_REQUESTED);
+        const URL = `${spotifyUrls.baseURL}${spotifyUrls.version}${spotifyUrls.browse}`
+        + `${spotifyUrls.featuredPlaylists}?${spotifyUrls.queryCountry}&limit=5`;
+        console.log(URL);
+        try {
+            const data = yield call(axios.get, URL);
+            yield put(featuredPlaylistsSuccess(data.data.playlists.items));
+        } catch (e) {
+            console.log(e);
+            yield put(featuredPlaylistsError(e));
+        }
+
+    }
+}
+
 
 const playlistSagas = [
-    fork(playlistTracks),
     fork(followedPlaylistsFetch),
     fork(followPlaylistRequest),
     fork(userPlaylistsFetch),
-    takeLatest(musicActions.REQUEST_PLAY_PLAYLIST, playPlaylistHelper),
+    fork(featuredPlaylistsFetch),
     takeLatest(playlistActions.REQUEST_ADD_TRACK_PLAYLIST, addTrackToPlaylist),
     takeEvery(playlistActions.REQUEST_REMOVE_TRACK_PLAYLIST, removeTrackFromPlaylistHelper)
 ];

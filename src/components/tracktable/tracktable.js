@@ -92,7 +92,7 @@ class TrackTable extends Component {
     const { 
         tracks,
         isLoading = null,
-        myPlaylists,
+        userPlaylists,
         spotifyId,
         type
     } = this.props;
@@ -139,7 +139,7 @@ class TrackTable extends Component {
             </table>
             <Modal>
                 <PlaylistModal 
-                playlists={ myPlaylists.filter((playlist) => 
+                playlists={ userPlaylists.filter((playlist) => 
                     (playlist.owner.id === spotifyId || playlist.collaborative)) }
                 isVisible={ this.state.displayPlaylistModal }
                 togglePlaylistModal={ this.togglePlaylistModal }
@@ -154,7 +154,7 @@ class TrackTable extends Component {
 const mapStateToProps = (state) => ({
     activePlaylist: state.playlists.activePlaylist,
     currentArtist: state.artists.currentArtist,
-    myPlaylists: state.playlists.myPlaylists,
+    userPlaylists: state.playlists.userPlaylists,
     spotifyId: state.user.spotifyId
 });
 

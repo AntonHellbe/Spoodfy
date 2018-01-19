@@ -13,7 +13,7 @@ class SideMenu extends Component {
 
     
     componentWillReceiveProps(nextProps) {
-        if (nextProps.playlists.length === 0) {
+        if (nextProps.userPlaylists.length === 0) {
             this.props.getUserPlaylists();
         }
     }
@@ -55,7 +55,7 @@ class SideMenu extends Component {
                     :
                     (
                         <PlaylistMenu 
-                        playlists={ this.props.playlists } 
+                        playlists={ this.props.userPlaylists } 
                         activePlaylist={ this.props.activePlaylist }
                         tracklistId={ this.props.tracklistId }
                         updateActivePlaylist={ this.onUpdateActivePlaylist }
@@ -76,7 +76,7 @@ const mapStateToProps = (state) => {
     return {
         isAuthenticated: state.user.isAuthenticated,
         spotifyId: state.user.spotifyId,
-        playlists: state.playlists.myPlaylists,
+        userPlaylists: state.playlists.userPlaylists,
         activePlaylist: state.playlists.activePlaylist,
         currentTrack: state.music.currentTrack,
         tracklistId: state.music.tracklistId,

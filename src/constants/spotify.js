@@ -24,7 +24,9 @@ export const spotifyUrls = {
     followers: '/followers',
     contains: '/contains',
     categories: '/categories',
-    queryAlbumType: '&album_type='
+    featuredPlaylists: '/featured-playlists',
+    queryAlbumType: '&album_type=',
+    queryCountry: 'country=SE'
 
 };
 

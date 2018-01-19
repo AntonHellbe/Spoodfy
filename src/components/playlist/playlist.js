@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
-    requestPlaylistSongs,
     clearActivePlaylistId,
 } from '../../actions/playlist_actions';
 import {
@@ -19,16 +18,18 @@ class Playlist extends Component {
 
     onClickPlay = () => {
         const { 
-            playlistSongs, 
+            playlistTracks, 
         } = this.props;
-        this.props.selectTrack(playlistSongs[0].track, playlistSongs.map((song) => song.track));    
+        const tracks = playlistTracks.filter((item) => item.track.preview_url !== null)
+            .map((item) => item.track);
+        this.props.selectTrack(tracks[0], tracks);
     }
 
 
     render() {
         const { 
-            playlistSongs,
-            loadingPlaylist,
+            playlistTracks,
+            loadingTracks,
             activePlaylist: {
                 playlist: {
                     type,
@@ -46,7 +47,7 @@ class Playlist extends Component {
             
 
         } = this.props;
-
+        console.log(playlistTracks);
         return (
             <div className="main-content">
                 <div className="main-content-wrapper">
@@ -66,9 +67,9 @@ class Playlist extends Component {
                 <div className="main-content-bottom">
                 
                     <TrackTable 
-                    tracks={ playlistSongs } 
+                    tracks={ playlistTracks } 
                     type={ type }
-                    isLoading={ loadingPlaylist }
+                    isLoading={ loadingTracks }
                     />
                 </div>
                 </div>
@@ -79,14 +80,13 @@ class Playlist extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    playlistSongs: state.playlists.playlistSongs,
+    playlistTracks: state.tracks.playlistTracks,
+    loadingTracks: state.tracks.loadingTracks,
     activePlaylist: state.playlists.activePlaylist,
-    loadingPlaylist: state.playlists.loadingPlaylist,
     isFollowingActivePlaylist: state.playlists.isFollowingActivePlaylist,
 });
 
 const mapDispatchToProps = (dispatch, props) => ({
-    requestPlaylistSongs: () => dispatch(requestPlaylistSongs(props.params.match.id)),
     clearActivePlaylistId: () => dispatch(clearActivePlaylistId()),
     selectTrack: (track, queue) => dispatch(selectTrack(0, track, queue, props.match.params.id)),
     

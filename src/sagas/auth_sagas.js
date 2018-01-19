@@ -33,12 +33,18 @@ function* requestToken() {
             let originalRequest = error.config; //eslint-disable-line
             if (error.response.status === 401 && !originalRequest._retry) {
                 originalRequest._retry = true;
+                console.log('Trying to refresh token');
                 return axios.get('http://localhost:5000/refreshtoken')
                 .then((newToken) => {
-                    store.dispatch(setToken(newToken.data));
-                    axios.defaults.headers.common.Authorization = `Bearer ${newToken.data}`;
+                    console.log('Request successfull');
+                    console.log(newToken);
+                    console.log(newToken['data']); //eslint-disable-line
+                    store.dispatch(setToken(newToken));
+                    axios.defaults.headers.common.Authorization = `Bearer ${newToken}`;
                     return axios(originalRequest);
-                }).catch(() => {
+                }).catch((e) => {
+                    console.log('Error refreshing token');
+                    console.log(e);
                     store.dispatch(clearToken());
                     window.sessionStorage.removeItem('token');
                     history.push('/login');
@@ -59,6 +65,29 @@ function* initialAuth() {
     const token = window.sessionStorage.getItem('token');
     if (token != null) {
         axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+        axios.interceptors.response.use((response) => {
+            return response;
+        }, (error) => {
+            let originalRequest = error.config; //eslint-disable-line
+            if (error.response.status === 401 && !originalRequest._retry) {
+                originalRequest._retry = true;
+                console.log('Trying to refresh token');
+                console.log(originalRequest);
+                return axios.get('http://localhost:5000/refreshtoken')
+                    .then((newToken) => {
+                        console.log(newToken);
+                        store.dispatch(setToken(newToken));
+                        axios.defaults.headers.common.Authorization = `Bearer ${newToken}`;
+                        return axios(originalRequest);
+                    }).catch((e) => {
+                        console.log('Error refreshing token');
+                        console.log(e);
+                        store.dispatch(clearToken());
+                        window.sessionStorage.removeItem('token');
+                        history.push('/login');
+                    });
+            }
+        });
         yield put(initialAuthSuccess(token));
         yield history.push('/new-releases');
     }

@@ -41,7 +41,7 @@ class Banner extends Component {
     }
 
     renderImage = (images) => {
-    
+        console.log(`url('${images[0].url}')`);
         if (typeof images[0] !== 'undefined') {
             return (
                 <img 
@@ -64,7 +64,7 @@ class Banner extends Component {
             isFollowing
         } = this.props;
 
-        console.log('Rendering followbutton');
+        // console.log('Rendering followbutton');
        
         if (isFollowing) {
             return (
@@ -109,10 +109,10 @@ class Banner extends Component {
             totalTracks
 
         } = this.props;
-        
+
         const isActive = id === tracklistId;
 
-        console.log(type);
+        // console.log(type);
         return (
             <div className="banner-container">
                 <div className="image-wrapper">
@@ -171,7 +171,7 @@ class Banner extends Component {
                 </div>
 
                 <div className="action-buttons">
-                    { isPlaying ?
+                    { isPlaying && isActive ?
                         (
                         <button
                         className="btn-play"

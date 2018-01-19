@@ -1,14 +1,14 @@
 import { playlistActions } from '../constants/actions';
 
 const INITIAL_STATE = {
-    myPlaylists: [],
-    playlistSongs: [],
+    userPlaylists: [],
     activePlaylist: {
         playlist: {},
         playlistId: null
     },
     loadingPlaylist: false,
-    isFollowingActivePlaylist: false
+    isFollowingActivePlaylist: false,
+    featuredPlaylists: []
 };
 
 const playlistReducer = (state = INITIAL_STATE, action) => {
@@ -19,14 +19,10 @@ const playlistReducer = (state = INITIAL_STATE, action) => {
                 activePlaylist: { 
                     playlist: action.playlist,
                     playlistId: action.playlist.id
-                }, 
-                loadingPlaylist: true };
-
-        case playlistActions.PLAYLIST_TRACKS_SUCCESS:
-            return { ...state, playlistSongs: action.tracks, loadingPlaylist: false };
+                } };
         
         case playlistActions.USER_PLAYLISTS_SUCCESS:
-            return { ...state, myPlaylists: action.playlists };
+            return { ...state, userPlaylists: action.playlists };
 
         case playlistActions.IS_FOLLOWING_SUCCESS:
             return { ...state, isFollowingActivePlaylist: action.bool };
@@ -34,8 +30,9 @@ const playlistReducer = (state = INITIAL_STATE, action) => {
         case playlistActions.CLEAR_ACTIVE_PLAYLIST_ID:
             return { ...state, activePlaylist: { ...state.activePlaylist, playlistId: null } };
         
-        case playlistActions.PLAY_PLAYLIST_SUCCESS:
-            return { ...state, activePlaylist: { id: action.playlist.id, playlist: action.playlist }, playlistSongs: action.tracks };
+        case playlistActions.FEATURED_PLAYLISTS_SUCCESS:
+            return { ...state, featuredPlaylists: action.playlists };
+        
         default:
             return state;
     }

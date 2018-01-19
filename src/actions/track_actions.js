@@ -40,3 +40,17 @@ export const errorRecentlyPlayed = (error) => ({
     error
 });
 
+export const reuestPlaylistTracks = () => ({
+    type: trackActions.REQUEST_PLAYLIST_TRACKS
+});
+
+export const playlistTracksSuccess = (tracks) => ({
+    type: trackActions.PLAYLIST_TRACKS_SUCCESS,
+    tracks
+});
+
+export const playlistTracksError = (error) => ({
+    type: trackActions.PLAYLIST_TRACKS_ERROR,
+    error
+});
+
