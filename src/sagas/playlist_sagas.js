@@ -16,6 +16,10 @@ import {
     featuredPlaylistsSuccess,
     featuredPlaylistsError
 } from '../actions/playlist_actions';
+import { 
+    startSubmit,
+    stopSubmit
+} from 'redux-form'
 
 
 function* userPlaylistsFetch() {
@@ -132,7 +136,8 @@ function* featuredPlaylistsFetch() {
         yield take(browseActions.NEW_RELEASES_REQUESTED);
         const URL = `${spotifyUrls.baseURL}${spotifyUrls.version}${spotifyUrls.browse}`
         + `${spotifyUrls.featuredPlaylists}?${spotifyUrls.queryCountry}&limit=5`;
-        console.log(URL);
+        // console.log(URL);
+        
         try {
             const data = yield call(axios.get, URL);
             yield put(featuredPlaylistsSuccess(data.data.playlists.items));
@@ -144,12 +149,50 @@ function* featuredPlaylistsFetch() {
     }
 }
 
+function* updatePlaylistHelper() {
+    while (true) {
+        const {
+            values,
+            spotifyId,
+            playlist
+        } = yield take(playlistActions.REQUEST_UPDATE_PLAYLIST_DETAILS);
+        const URL = `${spotifyUrls.baseURL}${spotifyUrls.version}${spotifyUrls.users}` +
+        `/${spotifyId}${spotifyUrls.playlists}/${playlist.id}`;
+        console.log(values);
+        yield put(startSubmit('playlist'));
+        try {
+            const data = yield call(axios.put, URL, {
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: {
+                    name: values.name,
+                    public: values.publicPlaylist,
+                    collaborative: values.collaborative,
+                    description: values.description
+                }
+            });
+            console.log(data);
+            if (data.status === 200) {
+                yield put(stopSubmit('playlist'));
+            }
+
+            console.log(data);
+        } catch (e) {
+            yield put(stopSubmit('playlist'));
+            console.log(e);
+        }
+
+    }
+};
+
 
 const playlistSagas = [
     fork(followedPlaylistsFetch),
     fork(followPlaylistRequest),
     fork(userPlaylistsFetch),
     fork(featuredPlaylistsFetch),
+    fork(updatePlaylistHelper),
     takeLatest(playlistActions.REQUEST_ADD_TRACK_PLAYLIST, addTrackToPlaylist),
     takeEvery(playlistActions.REQUEST_REMOVE_TRACK_PLAYLIST, removeTrackFromPlaylistHelper)
 ];

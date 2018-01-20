@@ -180,7 +180,16 @@
   letter-spacing: 2px;
   border-radius: 33px;
   color: #fff;
+}
 
+.btn-edit {
+  background: transparent;
+  margin: 0 auto;
+  margin-right: 0;
+  border: 1px solid #fff;
+  border-radius: 33px;
+  height: 30px;
+  width: 40px;
 }
 
 @media (min-width: 300px) and (max-width: 600px) {
@@ -201,5 +210,6 @@
   }
   
 }
+
 
 

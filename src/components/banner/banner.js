@@ -41,7 +41,6 @@ class Banner extends Component {
     }
 
     renderImage = (images) => {
-        console.log(`url('${images[0].url}')`);
         if (typeof images[0] !== 'undefined') {
             return (
                 <img 
@@ -106,8 +105,9 @@ class Banner extends Component {
             tracklistId,
             artists,
             author,
-            totalTracks
-
+            totalTracks,
+            edit,
+            editAction
         } = this.props;
 
         const isActive = id === tracklistId;
@@ -198,6 +198,14 @@ class Banner extends Component {
                     }
                     { type === 'playlist' &&
                         this.renderFollowButton()
+                    }
+
+                    { edit &&
+
+                        <button className="btn-edit" onClick={ editAction }>
+                            <i className="fa fa-pencil" aria-hidden="true" /> 
+                        </button>
+
                     }
                 </div>
 

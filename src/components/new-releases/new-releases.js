@@ -46,16 +46,11 @@ class NewReleases extends Component {
                     
                     <div className="main-content-bottom">
                     <h3> New Albums and Singles </h3>
-                    { loadingBrowse ?
-                    (
-                        <Loader />
-                    ) :
-                    (
-                        <AlbumList
-                        albums={ newReleases }
-                        />
-                    )
-                    }
+                    <AlbumList
+                    albums={ newReleases }
+                    isLoading={ loadingBrowse }
+                    />
+
                     </div>
                 </div>
             </div>

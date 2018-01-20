@@ -69,6 +69,7 @@ function* initialAuth() {
             return response;
         }, (error) => {
             let originalRequest = error.config; //eslint-disable-line
+            console.log(error.response);
             if (error.response.status === 401 && !originalRequest._retry) {
                 originalRequest._retry = true;
                 console.log('Trying to refresh token');
@@ -78,7 +79,7 @@ function* initialAuth() {
                         console.log(newToken);
                         store.dispatch(setToken(newToken));
                         axios.defaults.headers.common.Authorization = `Bearer ${newToken}`;
-                        return axios(originalRequest);
+                        return Promise.resolve(axios(originalRequest));
                     }).catch((e) => {
                         console.log('Error refreshing token');
                         console.log(e);

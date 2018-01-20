@@ -94,3 +94,10 @@ export const featuredPlaylistsError = (error) => ({
     type: playlistActions.FEATURED_PLAYLISTS_ERROR,
     error
 });
+
+export const requestUpdatePlaylistDetails = (values, spotifyId, playlist) => ({
+    type: playlistActions.REQUEST_UPDATE_PLAYLIST_DETAILS,
+    values,
+    spotifyId,
+    playlist
+});

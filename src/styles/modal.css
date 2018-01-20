@@ -86,4 +86,17 @@
 
 .edit-playlist-form > div > label {
     display:block;
+    font-size: 13px;
+    margin-bottom: 4px;
+}
+
+.edit-playlist-form > button {
+    width: 80px;
+    height: 30px;
+    border: none;
+    background: #ff6b42;
+    color: #fff;
+    font-size:12px;
+    border-radius: 33px;
+
 }
