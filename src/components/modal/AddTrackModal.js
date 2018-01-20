@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 
-class PlaylistModal extends Component {
+class AddTrackModal extends Component {
     
     state = {
         selectedPlaylist: ''
@@ -65,4 +65,4 @@ class PlaylistModal extends Component {
     }
 }
 
-export default PlaylistModal;
+export default AddTrackModal;

@@ -21,14 +21,7 @@ class NewReleases extends Component {
         }
 
     }
-    onClickPlay = (playlist) => {
-        this.props.requestPlayPlaylist(playlist.href, playlist);
-    }
-
-    onClickPlaylist = (playlist) => {
-        this.props.updateActivePlaylist(playlist, this.props.spotifyId);
-    }
-
+    
     handleClick = () => {
         this.props.history.push('/');
     }
@@ -40,7 +33,6 @@ class NewReleases extends Component {
             loadingBrowse,
             featuredPlaylists
         } = this.props;
-        console.log(featuredPlaylists);
         return (
             <div className="main-content">
                 <div className="main-content-wrapper">

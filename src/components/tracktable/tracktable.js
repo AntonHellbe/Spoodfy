@@ -10,7 +10,7 @@ import {
     addTrackToPlaylist
 } from '../../actions/playlist_actions';
 import Modal from '../modal/modal';
-import PlaylistModal from '../modal/playlistmodal';
+import AddTrackModal from '../modal/AddTrackModal';
 
 
 class TrackTable extends Component {
@@ -138,7 +138,7 @@ class TrackTable extends Component {
                 </tbody>
             </table>
             <Modal>
-                <PlaylistModal 
+                <AddTrackModal 
                 playlists={ userPlaylists.filter((playlist) => 
                     (playlist.owner.id === spotifyId || playlist.collaborative)) }
                 isVisible={ this.state.displayPlaylistModal }

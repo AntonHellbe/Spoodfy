@@ -11,7 +11,7 @@ import SideMenu from '../components/sidebar/sidemenu';
 import MusicBar from '../components/musicbar/musicbar';
 import RecentlyPlayed from '../components/recentlyplayed';
 import NewReleases from '../components/new-releases/new-releases';
-import Playlist from '../components/playlist/playlist';
+import Playlist from '../components/playlistpage/playlist';
 import Profile from '../components/profile/profile';
 import Artist from '../components/artist/artist';
 import Album from '../components/albumpage/album';

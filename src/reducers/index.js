@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import { reducer as formReducer } from 'redux-form';
 import AuthReducer from './reducer_auth';
 import PlaylistReducer from './reducer_playlists';
 import SearchReducer from './reducer_search';
@@ -16,7 +17,8 @@ const rootReducer = combineReducers({
     browse: BrowseReducer,
     artists: ArtistReducer,
     tracks: TrackReducer,
-    albums: AlbumReducer
+    albums: AlbumReducer,
+    form: formReducer
 });
 
 export default rootReducer;

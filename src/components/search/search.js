@@ -12,8 +12,6 @@ import _ from 'lodash';
 
 class Search extends Component {
 
-
-
     // this.scrollDebounce = _.debounce(this.onScroll, 500);
 
     // state = {

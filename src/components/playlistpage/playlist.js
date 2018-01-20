@@ -8,6 +8,8 @@ import {
 } from '../../actions/music_actions';
 import Banner from '../banner/banner';
 import TrackTable from '../tracktable/tracktable';
+import Modal from '../modal/modal';
+import EditPlaylistModal from '../modal/EditPlaylistModal';
 
 
 class Playlist extends Component {
@@ -47,7 +49,7 @@ class Playlist extends Component {
             
 
         } = this.props;
-        console.log(playlistTracks);
+        // console.log(playlistTracks);
         return (
             <div className="main-content">
                 <div className="main-content-wrapper">
@@ -73,6 +75,15 @@ class Playlist extends Component {
                     />
                 </div>
                 </div>
+                <Modal>
+                    <EditPlaylistModal 
+                    initialValues={ 
+                        { name, 
+                        public: playlist.public, 
+                        collaborative: playlist.collaborative } 
+                    }
+                    />
+                </Modal>
             </div>
 
         );

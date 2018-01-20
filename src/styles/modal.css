@@ -14,7 +14,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid green;
+    /* border: 1px solid green; */
 }
 
 .select-playlist {
@@ -77,5 +77,13 @@
     font-size: 12px;
     height: 20px;
     width: 70px;
-    
+}
+
+
+.edit-playlist-form > div {
+    margin: 15px 0;
+}
+
+.edit-playlist-form > div > label {
+    display:block;
 }

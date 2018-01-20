@@ -1,14 +1,13 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import PlaylistCollection from '../playlistcollection/playlistcollection';
 
 const NewReleasesBanner = (props) => {
 
         const {
             playlists,
-            onClickPlay,
-            onClickPlaylist,
             handleClick
         } = props;
+
         return (
             <div className="new-releases-banner">
                 <div className="new-releases-title">
@@ -21,41 +20,9 @@ const NewReleasesBanner = (props) => {
                     </button>
                 </div>
                 <div className="featured-playlists">
-                { playlists.map((playlist) => {
-                    const {
-                        images,
-                        id,
-                        name
-                    } = playlist;
-                    return (
-                        <div className="playlist-item">
-                            <div className="playlist-image-wrapper">
-                                <Link
-                                to={ `/playlists/${id}` }
-                                onClick={ () => onClickPlaylist(playlist) }
-                                >
-                                    <img
-                                        src={ images[0].url }
-                                        role="presentation"
-                                    />
-                                </Link>
-                                <i
-                                    className="fa fa-play"
-                                    aria-hidden="true"
-                                    onClick={ (e) => {
-                                        e.stopPropagation();
-                                        onClickPlay(playlist)
-                                    } }
-                                />
-                            </div>
-                            <ul>
-                                <li>{name}</li>
-                            </ul>
-                        </div>
-                    );
-                })
-
-                }
+                    <PlaylistCollection
+                    playlists={ playlists }
+                    />
                 </div>
             </div>
         );
