@@ -20,7 +20,7 @@ const authReducer = (state = INITIAL_STATE, action) => {
             return { ...state, token: action.token, isAuthenticated: true };
         
         case authActions.CLEAR_TOKEN:
-            return { ...state, token: '', isAuthenticated: false };
+            return { ...state, token: '', isAuthenticated: false, user: {}, spotifyId: '' };
         
         case authActions.ERROR_TOKEN:
             return { ...state, token_error: action.error };

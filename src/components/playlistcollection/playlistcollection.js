@@ -23,7 +23,7 @@ class PlaylistCollection extends Component {
     render() {
         const {
             playlists,
-            loadingBrowse
+            loadingBrowse,
         } = this.props;
 
         if (loadingBrowse) {
@@ -34,7 +34,9 @@ class PlaylistCollection extends Component {
         return (
 
 
-            <div className="playlist-wrapper">
+            <div 
+            className="playlist-wrapper"  
+            >
                 { playlists.map((playlist) => {
                     return (
                         <PlaylistItem

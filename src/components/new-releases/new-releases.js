@@ -45,7 +45,7 @@ class NewReleases extends Component {
                     />
                     
                     <div className="main-content-bottom">
-                    <h3> New Albums and Singles </h3>
+                    <h3 className="new-releases-albums"> New Albums and Singles </h3>
                     <AlbumList
                     albums={ newReleases }
                     isLoading={ loadingBrowse }

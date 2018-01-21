@@ -1,13 +1,16 @@
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import _ from 'lodash';
 import PlaylistMenu from './playlistmenu';
 import { 
     getUserPlaylists,
-    updateActivePlaylist
+    updateActivePlaylist,
+    toggleAddPlaylistModal,
+    toggleEditPlaylistModal,
+    requestCreatePlaylist,
 } from '../../actions/playlist_actions';
-import { DEFAULT_IMAGE_URL } from '../../constants/actions';
+import Modal from '../modal/modal';
+import AddPlaylistModal from '../modal/AddPlaylistModal';
 
 class SideMenu extends Component {
 
@@ -22,30 +25,37 @@ class SideMenu extends Component {
         this.props.updateActivePlaylist(playlist, this.props.spotifyId);
     }
 
-    renderAlbumImage = () => {
-        const {
-            currentTrack
-        } = this.props;
-
-        if (this.props.isAuthenticated) {
-            if (_.isEmpty(currentTrack) || typeof currentTrack.album.images[0] === 'undefined') {
-                return <img className="imgAlbum" src={ DEFAULT_IMAGE_URL } role="presentation" />;
-            }
-
-            return (<img 
-                    className="imgAlbum" 
-                    src={ currentTrack.album.images[0].url }
-                    role="presentation" 
-                    />);
-        }
-
+    submit = (values) => {
+        // console.log(values);
+        this.props.requestCreatePlaylist(values, this.props.spotifyId);
     }
 
+    toggleModal = () => {
+        const {
+            editPlaylistModal,
+            addPlaylistModal
+        } = this.props;
+
+        if (editPlaylistModal) {
+            this.props.toggleEditPlaylistModal();
+        }
+        console.log(addPlaylistModal);
+        console.log('Toggling add modal');
+        this.props.toggleAddPlaylistModal();
+
+    }
 
     render() {
         return (
             <div className="sidemenu">
-                <p className="playlistTitle"> Playlists </p>
+                <div className="sidemenu-title">
+                    <p className="playlistTitle"> Playlists </p>
+                    <i 
+                    className="fa fa-plus" 
+                    aria-hidden="true"
+                    onClick={ this.toggleModal }
+                    />
+                </div>
                 { !this.props.isAuthenticated ?
                     (
                         <p>
@@ -63,34 +73,41 @@ class SideMenu extends Component {
                         />
                     ) 
                 }
+
+                <Modal>
+                    <AddPlaylistModal
+                    onSubmit={ this.submit }
+                    isVisible={ this.props.addPlaylistModal }
+                    toggleModal={ this.props.toggleAddPlaylistModal }
+                    />
+                </Modal>
                 
-                <div className="albumImage">
-                    {this.renderAlbumImage()}
-                </div>
+
             </div>
         );
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        isAuthenticated: state.user.isAuthenticated,
-        spotifyId: state.user.spotifyId,
-        userPlaylists: state.playlists.userPlaylists,
-        activePlaylist: state.playlists.activePlaylist,
-        currentTrack: state.music.currentTrack,
-        tracklistId: state.music.tracklistId,
-        isPlaying: state.music.isPlaying
-    };
-};
+const mapStateToProps = (state) => ({ 
+    isAuthenticated: state.user.isAuthenticated,
+    spotifyId: state.user.spotifyId,
+    userPlaylists: state.playlists.userPlaylists,
+    activePlaylist: state.playlists.activePlaylist,
+    currentTrack: state.music.currentTrack,
+    tracklistId: state.music.tracklistId,
+    isPlaying: state.music.isPlaying,
+    editPlaylistModal: state.playlists.editPlaylistModal,
+    addPlaylistModal: state.playlists.addPlaylistModal
+});
 
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        getUserPlaylists: () => dispatch(getUserPlaylists()),
-        updateActivePlaylist: (playlist, spotifyId) => 
-            dispatch(updateActivePlaylist(playlist, spotifyId)),
-    };
-};
+const mapDispatchToProps = (dispatch) => ({ 
+    getUserPlaylists: () => dispatch(getUserPlaylists()),
+    updateActivePlaylist: (playlist, spotifyId) => 
+        dispatch(updateActivePlaylist(playlist, spotifyId)),
+    toggleAddPlaylistModal: () => dispatch(toggleAddPlaylistModal()),
+    requestCreatePlaylist: (values, spotifyId) => 
+        dispatch(requestCreatePlaylist(values, spotifyId))
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(SideMenu));

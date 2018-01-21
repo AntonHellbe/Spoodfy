@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import PlaylistForm from './PlaylistForm';
 
-
-class EditPlaylistModal extends Component {
-
+class AddPlaylistModal extends Component {
 
     componentWillReceiveProps(nextProps) {
 
@@ -26,31 +24,32 @@ class EditPlaylistModal extends Component {
 
     render() {
         const {
-            initialValues,
-            isVisible,
-            onSubmit
+            onSubmit,
+            isVisible
         } = this.props;
-        // console.log(this.props.onSubmit);
         return (
             <div 
-            className="modal-background" 
+            className="modal-background"
             style={ isVisible ? { display: 'block' } : { display: 'none' } }
             >
                 <div 
                 className="select-playlist"
-                ref={ modal => { this.modal = modal; } }
+                ref={ (modal) => { this.modal = modal; } }
                 >
                     <PlaylistForm 
-                    initialValues={ initialValues }
-                    form={ 'editPlaylist' }
+                    initialValues={ {
+                        name: '',
+                        public: false,
+                        collaborative: false,
+                        description: '' }
+                    }
                     onSubmit={ onSubmit }
+                    form={ 'addPlaylist' }
                     />
                 </div>
-
             </div>
         );
     }
 }
 
-
-export default EditPlaylistModal;
+export default AddPlaylistModal;

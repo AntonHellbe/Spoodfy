@@ -17,7 +17,8 @@ class Category extends Component {
         // console.log(this.props);
         const {
             categoryPlaylists,
-            loadingBrowse
+            loadingBrowse,
+            match
         } = this.props;
         return (
             <div className="main-content">
@@ -26,7 +27,7 @@ class Category extends Component {
                     className="category-banner"
                     >
                     <h3>
-                        { this.props.match.params.id }
+                        { match.params.id }
                     </h3>
                     </div>
             

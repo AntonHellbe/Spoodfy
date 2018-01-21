@@ -95,9 +95,33 @@ export const featuredPlaylistsError = (error) => ({
     error
 });
 
+export const toggleEditPlaylistModal = () => ({
+    type: playlistActions.TOGGLE_PLAYLIST_EDIT_MODAL
+});
+
+export const toggleAddPlaylistModal = () => ({
+    type: playlistActions.TOGGLE_PLAYLIST_ADD_MODAL
+});
+
 export const requestUpdatePlaylistDetails = (values, spotifyId, playlist) => ({
     type: playlistActions.REQUEST_UPDATE_PLAYLIST_DETAILS,
     values,
     spotifyId,
-    playlist
+    playlist,
+});
+
+export const updatePlaylistDetailsSuccess = (spotifyId, playlistId) => ({
+    type: playlistActions.UPDATE_PLAYLIST_DETAILS_SUCCESS,
+    spotifyId,
+    playlistId
+});
+
+export const requestCreatePlaylist = (values, spotifyId) => ({
+    type: playlistActions.REQUEST_ADD_PLAYLIST,
+    values,
+    spotifyId
+});
+
+export const addPlaylistSuccess = () => ({
+    type: playlistActions.ADD_PLAYLIST_SUCCESS,
 });

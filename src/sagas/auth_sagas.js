@@ -38,10 +38,10 @@ function* requestToken() {
                 .then((newToken) => {
                     console.log('Request successfull');
                     console.log(newToken);
-                    console.log(newToken['data']); //eslint-disable-line
-                    store.dispatch(setToken(newToken));
-                    axios.defaults.headers.common.Authorization = `Bearer ${newToken}`;
-                    return axios(originalRequest);
+                    store.dispatch(setToken(newToken.data));
+                    axios.defaults.headers.common.Authorization = `Bearer ${newToken.data}`;
+                    originalRequest.headers.Authorization = `Bearer ${newToken.data}`;
+                    return Promise.resolve(axios(originalRequest));
                 }).catch((e) => {
                     console.log('Error refreshing token');
                     console.log(e);
@@ -69,7 +69,7 @@ function* initialAuth() {
             return response;
         }, (error) => {
             let originalRequest = error.config; //eslint-disable-line
-            console.log(error.response);
+            console.log(error.config);
             if (error.response.status === 401 && !originalRequest._retry) {
                 originalRequest._retry = true;
                 console.log('Trying to refresh token');
@@ -77,8 +77,9 @@ function* initialAuth() {
                 return axios.get('http://localhost:5000/refreshtoken')
                     .then((newToken) => {
                         console.log(newToken);
-                        store.dispatch(setToken(newToken));
-                        axios.defaults.headers.common.Authorization = `Bearer ${newToken}`;
+                        store.dispatch(setToken(newToken.data));
+                        axios.defaults.headers.common.Authorization = `Bearer ${newToken.data}`;
+                        originalRequest.headers.Authorization = `Bearer ${newToken.data}`;
                         return Promise.resolve(axios(originalRequest));
                     }).catch((e) => {
                         console.log('Error refreshing token');

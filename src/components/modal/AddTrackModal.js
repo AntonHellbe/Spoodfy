@@ -43,6 +43,7 @@ class AddTrackModal extends Component {
                                 id={ playlist.id } 
                                 name="playlist-group"
                                 onClick={ this.onSelect }
+                                checked={ this.state.selectedPlaylist === playlist.id }
                                 />
                                 { playlist.name }
                             </li>
@@ -50,7 +51,9 @@ class AddTrackModal extends Component {
                         }) }
                     </ul>
                     <button
-                    onClick={ () => onSubmit(this.state.selectedPlaylist) }
+                    onClick={ () => {
+                        onSubmit(this.state.selectedPlaylist);
+                    } }
                     >
                         Add
                     </button>

@@ -5,6 +5,8 @@
     height: 100%;
     flex-grow: 0;
     flex-basis: 0;
+    justify-content: center;
+    box-sizing: border-box;
     /* border: 1px solid blue; */
 }
 
@@ -12,9 +14,11 @@
     height: 200px;
     width: 200px;
     margin: 15px 15px;
+    padding: 5px;
     /* border: 1px solid green; */
     position: relative;
     box-sizing: border-box;
+    /* border: 1px solid rgba(125, 125, 135, 0.25); */
 }
 
 .playlist-item > ul {

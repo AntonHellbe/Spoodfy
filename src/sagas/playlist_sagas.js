@@ -14,7 +14,12 @@ import {
     followPlaylistSuccess,
     removeTrackSuccess,
     featuredPlaylistsSuccess,
-    featuredPlaylistsError
+    featuredPlaylistsError,
+    updatePlaylistDetailsSuccess,
+    updateActivePlaylist,
+    toggleAddPlaylistModal,
+    toggleEditPlaylistModal,
+    addPlaylistSuccess
 } from '../actions/playlist_actions';
 import { 
     startSubmit,
@@ -25,7 +30,8 @@ import {
 function* userPlaylistsFetch() {
     while (true) {
         yield take([authActions.USER_INFO_SUCCESS,
-            playlistActions.IS_FOLLOWING_SUCCESS]);
+            playlistActions.IS_FOLLOWING_SUCCESS, 
+            playlistActions.ADD_PLAYLIST_SUCCESS]);
         const URL = `${spotifyUrls.baseURL}${spotifyUrls.version}${spotifyUrls.myPlaylists}`;
         try {
             const data = yield call(axios.get, URL);
@@ -154,37 +160,83 @@ function* updatePlaylistHelper() {
         const {
             values,
             spotifyId,
-            playlist
+            playlist,
         } = yield take(playlistActions.REQUEST_UPDATE_PLAYLIST_DETAILS);
         const URL = `${spotifyUrls.baseURL}${spotifyUrls.version}${spotifyUrls.users}` +
         `/${spotifyId}${spotifyUrls.playlists}/${playlist.id}`;
-        console.log(values);
-        yield put(startSubmit('playlist'));
+        // console.log(values);
+        yield put(startSubmit('editPlaylist'));
         try {
             const data = yield call(axios.put, URL, {
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: {
                     name: values.name,
                     public: values.publicPlaylist,
                     collaborative: values.collaborative,
                     description: values.description
                 }
-            });
-            console.log(data);
+            );
+            // console.log(data);
             if (data.status === 200) {
-                yield put(stopSubmit('playlist'));
+                yield put(stopSubmit('editPlaylist'));
+                yield put(updatePlaylistDetailsSuccess(spotifyId, playlist.id));
+                yield put(toggleEditPlaylistModal());
             }
 
-            console.log(data);
         } catch (e) {
-            yield put(stopSubmit('playlist'));
+            console.log(e);
+            yield put(stopSubmit('editPlaylist'));
+        }
+
+    }
+}
+
+function* updatePlaylistFetch({ spotifyId, playlistId }) {
+    const URL = `${spotifyUrls.baseURL}${spotifyUrls.version}${spotifyUrls.users}/` +
+    `${spotifyId}${spotifyUrls.playlists}/${playlistId}`;
+    try {
+        const data = yield call(axios.get, URL);
+        // console.log(data);
+        yield put(updateActivePlaylist(data.data));
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+function* addPlaylistHelper() {
+    while (true) {
+        const { 
+            spotifyId, 
+            values 
+        } = yield take(playlistActions.REQUEST_ADD_PLAYLIST);
+        console.log(values);
+        const URL = `${spotifyUrls.baseURL}${spotifyUrls.version}${spotifyUrls.users}/` +
+        `${spotifyId}${spotifyUrls.playlists}`;
+        console.log(URL);
+        yield put(startSubmit('addPlaylist'));
+        try {
+            const data = yield call(axios.post, URL, {
+                name: values.name,
+                public: values.public,
+                collaborative: values.collaborative,
+                description: values.description
+            });
+            // console.log(data);
+            if (data.status === 201) {
+                yield put(stopSubmit('addPlaylist'));
+                yield put(toggleAddPlaylistModal());
+                yield put(addPlaylistSuccess());
+            } else {
+                //If not 201, error occured.
+                console.log('Error occured adding playlist');
+                console.log(data.status);
+            }
+        } catch (e) {
+            yield put(stopSubmit('addPlaylist'));
+            // add Error handler that outputs the error inside the modal
             console.log(e);
         }
 
     }
-};
+}
 
 
 const playlistSagas = [
@@ -193,8 +245,10 @@ const playlistSagas = [
     fork(userPlaylistsFetch),
     fork(featuredPlaylistsFetch),
     fork(updatePlaylistHelper),
+    fork(addPlaylistHelper),
     takeLatest(playlistActions.REQUEST_ADD_TRACK_PLAYLIST, addTrackToPlaylist),
-    takeEvery(playlistActions.REQUEST_REMOVE_TRACK_PLAYLIST, removeTrackFromPlaylistHelper)
+    takeEvery(playlistActions.REQUEST_REMOVE_TRACK_PLAYLIST, removeTrackFromPlaylistHelper),
+    takeEvery(playlistActions.UPDATE_PLAYLIST_DETAILS_SUCCESS, updatePlaylistFetch)
 ];
 
 export default playlistSagas;

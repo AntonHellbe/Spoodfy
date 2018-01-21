@@ -2,8 +2,11 @@
     /* border: 1px solid green; */
     grid-area: 5 / 1 / 6 / 1;
     background: #282828;
-    padding-left:10px;
+    padding: 5px;
     border-top: 1px solid rgba(125, 125, 135, 0.25);
+    display: flex;
+    align-items: center;
+    /* overflow-y: hidden; */
 }
 
 .displayTrackInfo{
@@ -18,6 +21,10 @@
     color: #ffffff;
     font-size: 14px;
     font-family: 'Montserrat', sans-serif;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    box-sizing: border-box;
 }
 
 .displayTrackInfo > li {
@@ -26,6 +33,24 @@
     text-overflow: ellipsis;
     animation-name:slide-left;
     animation-duration: 4s;
+    box-sizing: border-box;
+}
+
+.playing-album-wrapper{
+    height:40px;
+    width: 60px;
+    min-width: 60px;
+    margin-right: 5px;
+    box-sizing: border-box;
+    /* animation-name: spinning; */
+    /* animation-duration: 20s; */
+}
+
+.playing-album-wrapper > img {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    box-sizing: border-box;
 }
 
 
@@ -40,3 +65,4 @@
         width:100%;
     }
 }
+

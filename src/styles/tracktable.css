@@ -100,18 +100,6 @@ td > button:hover {
     min-width: 3.3%;
 }
 
-.albums{
-    display:flex;
-    flex-flow: row wrap;
-    justify-content: flex-start;
-}
-
-.artists{
-    display:flex;
-    flex-flow: row wrap;
-    justify-content: flex-start;
-}
-
 .index-col{
     color: #858585;
 }
