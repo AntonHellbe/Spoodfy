@@ -36,11 +36,12 @@ function* requestToken() {
                 console.log('Trying to refresh token');
                 return axios.get('http://localhost:5000/refreshtoken')
                 .then((newToken) => {
-                    console.log('Request successfull');
+                    // console.log('Request successfull');
                     console.log(newToken);
                     store.dispatch(setToken(newToken.data));
                     axios.defaults.headers.common.Authorization = `Bearer ${newToken.data}`;
                     originalRequest.headers.Authorization = `Bearer ${newToken.data}`;
+                    console.log(originalRequest.headers.Authorization);
                     return Promise.resolve(axios(originalRequest));
                 }).catch((e) => {
                     console.log('Error refreshing token');
@@ -72,14 +73,14 @@ function* initialAuth() {
             console.log(error.config);
             if (error.response.status === 401 && !originalRequest._retry) {
                 originalRequest._retry = true;
-                console.log('Trying to refresh token');
-                console.log(originalRequest);
+                // console.log('Trying to refresh token');
                 return axios.get('http://localhost:5000/refreshtoken')
                     .then((newToken) => {
                         console.log(newToken);
                         store.dispatch(setToken(newToken.data));
                         axios.defaults.headers.common.Authorization = `Bearer ${newToken.data}`;
                         originalRequest.headers.Authorization = `Bearer ${newToken.data}`;
+                        console.log(originalRequest.headers.Authorization);
                         return Promise.resolve(axios(originalRequest));
                     }).catch((e) => {
                         console.log('Error refreshing token');

@@ -7,7 +7,7 @@ class PlaylistForm extends Component {
     render() {
         const {
             initialValues,
-            
+            create
         } = this.props;
         return (
             <form
@@ -43,9 +43,18 @@ class PlaylistForm extends Component {
                         type="text"
                     />
                 </div>
+                { !create ?
+                (
                 <button type="submit">
                     Update
+                </button>
+                ) : 
+                (
+                    <button type="submit">
+                        Create
                     </button>
+                )
+                }
             </form>
         );
     }

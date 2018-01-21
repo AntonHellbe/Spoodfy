@@ -45,6 +45,7 @@ class AddPlaylistModal extends Component {
                     }
                     onSubmit={ onSubmit }
                     form={ 'addPlaylist' }
+                    create={ true } //eslint-disable-line
                     />
                 </div>
             </div>
