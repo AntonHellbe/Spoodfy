@@ -9,8 +9,6 @@ const INITIAL_STATE = {
     loadingPlaylist: false,
     isFollowingActivePlaylist: false,
     featuredPlaylists: [],
-    editPlaylistModal: false,
-    addPlaylistModal: false
 };
 
 const playlistReducer = (state = INITIAL_STATE, action) => {
@@ -34,12 +32,6 @@ const playlistReducer = (state = INITIAL_STATE, action) => {
         
         case playlistActions.FEATURED_PLAYLISTS_SUCCESS:
             return { ...state, featuredPlaylists: action.playlists };
-
-        case playlistActions.TOGGLE_PLAYLIST_EDIT_MODAL:
-            return { ...state, editPlaylistModal: !state.editPlaylistModal };
-        
-        case playlistActions.TOGGLE_PLAYLIST_ADD_MODAL:
-            return { ...state, addPlaylistModal: !state.addPlaylistModal };
         
         default:
             return state;

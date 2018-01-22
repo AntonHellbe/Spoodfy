@@ -41,6 +41,7 @@ function* requestToken() {
                     store.dispatch(setToken(newToken.data));
                     axios.defaults.headers.common.Authorization = `Bearer ${newToken.data}`;
                     originalRequest.headers.Authorization = `Bearer ${newToken.data}`;
+                    window.sessionStorage.setItem('token', newToken.data);
                     console.log(originalRequest.headers.Authorization);
                     return Promise.resolve(axios(originalRequest));
                 }).catch((e) => {
@@ -65,6 +66,7 @@ function* requestToken() {
 function* initialAuth() {
     const token = window.sessionStorage.getItem('token');
     if (token != null) {
+        console.log(axios.defaults.headers.common.Authorization);
         axios.defaults.headers.common.Authorization = `Bearer ${token}`;
         axios.interceptors.response.use((response) => {
             return response;
@@ -80,6 +82,7 @@ function* initialAuth() {
                         store.dispatch(setToken(newToken.data));
                         axios.defaults.headers.common.Authorization = `Bearer ${newToken.data}`;
                         originalRequest.headers.Authorization = `Bearer ${newToken.data}`;
+                        window.sessionStorage.setItem('token', newToken.data);
                         console.log(originalRequest.headers.Authorization);
                         return Promise.resolve(axios(originalRequest));
                     }).catch((e) => {

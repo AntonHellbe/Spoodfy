@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
-    topArtistsRequest, 
+    topArtistsRequest,
+    requestArtist
 } from '../../actions/artist_actions';
 import {
-    selectSingleTrack
+    selectTrack
 } from '../../actions/music_actions';
 import {
     requestUserTopTracks
@@ -12,8 +13,8 @@ import {
 
 import RecentTrack from './recent-track';
 import ArtistList from '../artistlist/artistlist';
-import Banner from '../banner/banner';
 import TrackTable from '../tracktable/tracktable';
+import { updateCurrentAlbum } from '../../actions/album_actions';
 
 class Profile extends Component {
 
@@ -74,7 +75,7 @@ class Profile extends Component {
                             {type}
                         </h3>
                         <h1>
-                            { display_name }
+                            { display_name ? display_name : id }
                         </h1>
                     </div>
                     <div className="information-top-right">
@@ -126,8 +127,10 @@ class Profile extends Component {
                                 (
                                     <RecentTrack
                                         item={ item }
-                                        selectSingleTrack={ this.props.selectSingleTrack }
+                                        selectTrack={ this.props.selectTrack }
                                         currentTrack={ currentTrack }
+                                        updateCurrentAlbum={ this.props.updateCurrentAlbum }
+                                        requestArtist={ this.props.requestArtist }
                                     />
                                 )
                             )}
@@ -161,8 +164,10 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     topArtistsRequest: () => dispatch(topArtistsRequest()),
-    selectSingleTrack: (track) => dispatch(selectSingleTrack(track)),
-    requestUserTopTracks: () => dispatch(requestUserTopTracks())
+    selectTrack: (track) => dispatch(selectTrack(0, track, [])),
+    requestUserTopTracks: () => dispatch(requestUserTopTracks()),
+    updateCurrentAlbum: (album) => dispatch(updateCurrentAlbum(album)),
+    requestArtist: (id) => dispatch(requestArtist(id))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);

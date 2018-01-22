@@ -5,12 +5,10 @@ import PlaylistMenu from './playlistmenu';
 import { 
     getUserPlaylists,
     updateActivePlaylist,
-    toggleAddPlaylistModal,
-    toggleEditPlaylistModal,
-    requestCreatePlaylist,
 } from '../../actions/playlist_actions';
-import Modal from '../modal/modal';
-import AddPlaylistModal from '../modal/AddPlaylistModal';
+import {
+    showModal
+} from '../../actions/modal_actions';
 
 class SideMenu extends Component {
 
@@ -25,24 +23,10 @@ class SideMenu extends Component {
         this.props.updateActivePlaylist(playlist, this.props.spotifyId);
     }
 
-    submit = (values) => {
-        // console.log(values);
-        this.props.requestCreatePlaylist(values, this.props.spotifyId);
-    }
-
-    toggleModal = () => {
-        const {
-            editPlaylistModal,
-            addPlaylistModal
-        } = this.props;
-
-        if (editPlaylistModal) {
-            this.props.toggleEditPlaylistModal();
-        }
-        console.log(addPlaylistModal);
-        console.log('Toggling add modal');
-        this.props.toggleAddPlaylistModal();
-
+    openModal = () => {
+        this.props.showModal({
+            spotifyId: this.props.spotifyId,
+        });
     }
 
     render() {
@@ -53,7 +37,7 @@ class SideMenu extends Component {
                     <i 
                     className="fa fa-plus" 
                     aria-hidden="true"
-                    onClick={ this.toggleModal }
+                    onClick={ this.openModal }
                     />
                 </div>
                 { !this.props.isAuthenticated ?
@@ -73,14 +57,6 @@ class SideMenu extends Component {
                         />
                     ) 
                 }
-
-                <Modal>
-                    <AddPlaylistModal
-                    onSubmit={ this.submit }
-                    isVisible={ this.props.addPlaylistModal }
-                    toggleModal={ this.props.toggleAddPlaylistModal }
-                    />
-                </Modal>
                 
 
             </div>
@@ -96,8 +72,6 @@ const mapStateToProps = (state) => ({
     currentTrack: state.music.currentTrack,
     tracklistId: state.music.tracklistId,
     isPlaying: state.music.isPlaying,
-    editPlaylistModal: state.playlists.editPlaylistModal,
-    addPlaylistModal: state.playlists.addPlaylistModal
 });
 
 
@@ -105,9 +79,7 @@ const mapDispatchToProps = (dispatch) => ({
     getUserPlaylists: () => dispatch(getUserPlaylists()),
     updateActivePlaylist: (playlist, spotifyId) => 
         dispatch(updateActivePlaylist(playlist, spotifyId)),
-    toggleAddPlaylistModal: () => dispatch(toggleAddPlaylistModal()),
-    requestCreatePlaylist: (values, spotifyId) => 
-        dispatch(requestCreatePlaylist(values, spotifyId))
+    showModal: (modalProps) => dispatch(showModal('ADD_PLAYLIST_MODAL', modalProps)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(SideMenu));

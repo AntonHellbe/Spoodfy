@@ -17,6 +17,7 @@ import Artist from '../components/artist/artist';
 import Album from '../components/albumpage/album';
 import Browse from '../components/browse/browse';
 import Category from '../components/browse/category';
+import ModalRoot from '../components/modal/ModalRoot';
 
 
 const Routes = (props) => {
@@ -71,6 +72,7 @@ const Routes = (props) => {
             </Switch>
             <RecentlyPlayed />
             <MusicBar />
+            <ModalRoot />
         </div>
     </Router>
     );

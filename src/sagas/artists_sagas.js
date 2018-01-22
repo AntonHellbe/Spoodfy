@@ -36,7 +36,7 @@ function* artistFetch() {
         const URL = `${spotifyUrls.baseURL}${spotifyUrls.version}${spotifyUrls.artists}/${id}`;
         try {
             const data = yield call(axios.get, URL);
-            // console.log(data);
+            console.log(data);
             yield put(artistSuccess(data.data));
         } catch (e) {
             yield put(artistError(e));

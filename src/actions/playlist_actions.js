@@ -95,14 +95,6 @@ export const featuredPlaylistsError = (error) => ({
     error
 });
 
-export const toggleEditPlaylistModal = () => ({
-    type: playlistActions.TOGGLE_PLAYLIST_EDIT_MODAL
-});
-
-export const toggleAddPlaylistModal = () => ({
-    type: playlistActions.TOGGLE_PLAYLIST_ADD_MODAL
-});
-
 export const requestUpdatePlaylistDetails = (values, spotifyId, playlist) => ({
     type: playlistActions.REQUEST_UPDATE_PLAYLIST_DETAILS,
     values,

@@ -51,9 +51,6 @@ class TrackItem extends Component {
             this.props.dropdownChange(this.props.index);
         }
         
-        toggleModal = () => {
-            this.props.togglePlaylistModal(this.props.index);
-        }
 
         //Hide dropdown
         hide = (e) => {
@@ -176,7 +173,7 @@ class TrackItem extends Component {
                         }
                         { track.preview_url && 
                         <li 
-                        onClick={ this.toggleModal }
+                        onClick={ this.props.openModal }
                         >
                         <button>
                             

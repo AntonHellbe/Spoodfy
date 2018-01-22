@@ -1,4 +1,10 @@
 import React, { Component } from 'react';
+import _ from 'lodash';
+import { connect } from 'react-redux';
+import { hideModal } from '../../actions/modal_actions';
+import {
+    addTrackToPlaylist
+} from '../../actions/playlist_actions';
 
 
 class AddTrackModal extends Component {
@@ -6,33 +12,51 @@ class AddTrackModal extends Component {
     state = {
         selectedPlaylist: ''
     }
-    
-    componentWillReceiveProps(nextProps) {
-        if (!nextProps.isVisible && this.props.isVisible) {
-            this.setState(() => ({ selectedPlaylist: '' }));
-        }
+
+    componentWillMount() {
+        document.addEventListener('click', this.handlePageClick);
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener('click', this.handlePageClick);
+        this.setState(() => ({ selectedPlaylist: '' }));
     }
 
     onSelect = (e) => {
-        const playlist = e.target.id;
-        this.setState(() => ({ selectedPlaylist: playlist }));
+        const playlistId = e.target.id;
+        console.log(playlistId);
+        this.setState(() => ({ selectedPlaylist: playlistId }));
+    }
+    onSubmit = () => {
+        const {
+            spotifyId,
+            track
+        } = this.props;
+        console.log(track);
+        console.log(spotifyId);
+        this.props.addTrackToPlaylist(spotifyId, this.state.selectedPlaylist, track.uri);
     }
 
+    handlePageClick = (e) => {
+        if (this.modal.contains(e.target)) {
+            return;
+        }
+        this.props.hideModal();
+    }
+
+
     render() {
-
     const {
-    onSubmit,
-        togglePlaylistModal,
-        isVisible,
-        playlists,
-
+        playlists
     } = this.props;
     return (
             <div 
             className="modal-background" 
-            style={ isVisible ? { display: 'block' } : { display: 'none' } }
             >
-                <div className="select-playlist">
+                <div 
+                className="select-playlist"
+                ref={ modal => { this.modal = modal; } }
+                >
                     <h3> Select Playlist </h3>
                     <ul>
                         { playlists.map((playlist) => {
@@ -51,14 +75,12 @@ class AddTrackModal extends Component {
                         }) }
                     </ul>
                     <button
-                    onClick={ () => {
-                        onSubmit(this.state.selectedPlaylist);
-                    } }
+                    onClick={ this.onSubmit }
                     >
                         Add
                     </button>
                     <button
-                    onClick={ togglePlaylistModal }
+                    onClick={ this.props.hideModal }
                     >
                         Cancel
                     </button>
@@ -68,4 +90,10 @@ class AddTrackModal extends Component {
     }
 }
 
-export default AddTrackModal;
+const mapDispatchToProps = (dispatch) => ({
+    hideModal: () => dispatch(hideModal()),
+    addTrackToPlaylist: (spotifyId, playlistId, trackUri) =>
+        dispatch(addTrackToPlaylist(spotifyId, playlistId, trackUri))
+});
+
+export default connect(null, mapDispatchToProps)(AddTrackModal);

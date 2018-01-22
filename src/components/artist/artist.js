@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 import { 
     requestRelatedArtists,
-    requestFollowArtist,
 } from '../../actions/artist_actions';
 import {
     requestArtistTopTracks
@@ -11,7 +10,6 @@ import {
 import {
     selectTrack,
     requestPlayArtistTopTracks,
-    togglePlaying
 } from '../../actions/music_actions';
 import {
     requestArtistAlbums
@@ -77,7 +75,6 @@ class Artist extends Component {
 
     render() {
 
-        console.log(this.props.currentArtist);
         const {
             loadingArtist,
             loadingTracks,

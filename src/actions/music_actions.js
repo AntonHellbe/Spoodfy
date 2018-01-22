@@ -12,11 +12,6 @@ export const selectTrack = (index, track, tracklist, tracklistId = '') => ({
     tracklistId
 });
 
-export const selectSingleTrack = (track) => ({
-    type: musicActions.SELECT_SINGLE_TRACK,
-    track
-});
-
 export const AddToQueue = (tracks) => ({
     type: musicActions.ADD_TO_QUEUE,
     tracks

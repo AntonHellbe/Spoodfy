@@ -9,35 +9,17 @@ import {
 import {
     addTrackToPlaylist
 } from '../../actions/playlist_actions';
-import Modal from '../modal/modal';
-import AddTrackModal from '../modal/AddTrackModal';
+import {
+    showModal
+} from '../../actions/modal_actions';
 
 
 class TrackTable extends Component {
 
     state = {
-        activeDropdown: '',
-        displayPlaylistModal: false,
         trackIndex: ''
     }
 
-    onSubmit = (playlistId) => {
-        const {
-            trackIndex,
-        } = this.state;
-        const { 
-            tracks,
-            type,
-            spotifyId
-        } = this.props;
-
-        const track = type === 'playlist' ? 
-            tracks[trackIndex].track : 
-            tracks[trackIndex];
-        
-        this.props.addTrackToPlaylist(spotifyId, playlistId, track.uri);
-        this.togglePlaylistModal();
-    }
 
     onRemove = (index) => {
         const {
@@ -52,12 +34,24 @@ class TrackTable extends Component {
     }
     
     onClickDropdown = (index) => {
-        this.setState(() => ({ activeDropdown: index }));
+        this.setState(() => ({ trackIndex: index }));
     }
 
-    togglePlaylistModal = (index = '') => {
-        this.setState((prevState) => 
-            ({ displayPlaylistModal: !prevState.displayPlaylistModal, trackIndex: index }));
+    openModal = () => {
+        const {
+            tracks,
+            spotifyId,
+            userPlaylists
+        } = this.props;
+        const {
+            trackIndex
+        } = this.state;
+        const track = tracks[trackIndex].track ? tracks[trackIndex].track : tracks[trackIndex];
+        this.props.showModal({
+            playlists: userPlaylists,
+            track,
+            spotifyId
+        });
     }
 
     selectTrackHandler = (index, track) => {
@@ -92,8 +86,6 @@ class TrackTable extends Component {
     const { 
         tracks,
         isLoading = null,
-        userPlaylists,
-        spotifyId,
         type
     } = this.props;
     
@@ -128,8 +120,8 @@ class TrackTable extends Component {
                                 selectTrack={ this.selectTrackHandler }
                                 index={ index }
                                 dropdownChange={ this.onClickDropdown }
-                                dropdownStatus={ this.state.activeDropdown }
-                                togglePlaylistModal={ this.togglePlaylistModal }
+                                dropdownStatus={ this.state.trackIndex }
+                                openModal={ this.openModal }
                                 type={ type }
                                 />
                             );
@@ -137,15 +129,6 @@ class TrackTable extends Component {
                     )}
                 </tbody>
             </table>
-            <Modal>
-                <AddTrackModal 
-                playlists={ userPlaylists.filter((playlist) => 
-                    (playlist.owner.id === spotifyId || playlist.collaborative)) }
-                isVisible={ this.state.displayPlaylistModal }
-                togglePlaylistModal={ this.togglePlaylistModal }
-                onSubmit={ this.onSubmit }
-                />
-            </Modal>
         </React.Fragment>
         );
     }
@@ -159,10 +142,9 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    addTrackToPlaylist: (spotifyId, playlistId, trackUri) => 
-        dispatch(addTrackToPlaylist(spotifyId, playlistId, trackUri)),
     selectTrack: (index, track, queue, tracklistId) =>
         dispatch(selectTrack(index, track, queue, tracklistId)),
+    showModal: (modalProps) => dispatch(showModal('ADD_TRACK_MODAL', modalProps))
 });
 
 

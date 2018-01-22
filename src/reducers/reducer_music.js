@@ -26,12 +26,6 @@ const musicReducer = (state = INITIAL_STATE, action) => {
                 tracklist: action.tracklist, 
                 tracklistId: action.tracklistId };
 
-        case musicActions.SELECT_SINGLE_TRACK:
-            return { ...state,
-                    currentTrack: action.track,
-                    playingIndex: 0,
-                    tracklist: [] };
-
         case musicActions.NEXT_TRACK:
             return { 
                 ...state, 

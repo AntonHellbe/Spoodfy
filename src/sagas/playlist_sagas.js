@@ -1,5 +1,9 @@
 import { put, call, takeLatest, take, fork, takeEvery } from 'redux-saga/effects';
 import axios from 'axios';
+import { 
+    startSubmit,
+    stopSubmit
+} from 'redux-form';
 import { spotifyUrls } from '../constants/spotify';
 import { 
     playlistActions,
@@ -17,14 +21,11 @@ import {
     featuredPlaylistsError,
     updatePlaylistDetailsSuccess,
     updateActivePlaylist,
-    toggleAddPlaylistModal,
-    toggleEditPlaylistModal,
     addPlaylistSuccess
 } from '../actions/playlist_actions';
-import { 
-    startSubmit,
-    stopSubmit
-} from 'redux-form'
+import {
+    hideModal
+} from '../actions/modal_actions';
 
 
 function* userPlaylistsFetch() {
@@ -102,10 +103,12 @@ function* followPlaylistRequest() {
 function* addTrackToPlaylist({ spotifyId, playlistId, trackUri }) {
     const URL = `${spotifyUrls.baseURL}${spotifyUrls.version}${spotifyUrls.users}/` +
         `${spotifyId}${spotifyUrls.playlists}/${playlistId}${spotifyUrls.tracks}?uris=${trackUri}`;
+    console.log(URL);
     // console.log(URL);
     try {
         const data = yield call(axios.post, URL);
         if (data.status === 201) {
+            yield put(hideModal());
             //Add success to post notification that track is added
         }
         
@@ -165,6 +168,7 @@ function* updatePlaylistHelper() {
         const URL = `${spotifyUrls.baseURL}${spotifyUrls.version}${spotifyUrls.users}` +
         `/${spotifyId}${spotifyUrls.playlists}/${playlist.id}`;
         // console.log(values);
+        console.log(URL);
         yield put(startSubmit('editPlaylist'));
         try {
             const data = yield call(axios.put, URL, {
@@ -178,7 +182,7 @@ function* updatePlaylistHelper() {
             if (data.status === 200) {
                 yield put(stopSubmit('editPlaylist'));
                 yield put(updatePlaylistDetailsSuccess(spotifyId, playlist.id));
-                yield put(toggleEditPlaylistModal());
+                yield put(hideModal());
             }
 
         } catch (e) {
@@ -222,7 +226,7 @@ function* addPlaylistHelper() {
             // console.log(data);
             if (data.status === 201) {
                 yield put(stopSubmit('addPlaylist'));
-                yield put(toggleAddPlaylistModal());
+                yield put(hideModal());
                 yield put(addPlaylistSuccess());
             } else {
                 //If not 201, error occured.

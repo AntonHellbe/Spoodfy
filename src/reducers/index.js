@@ -8,6 +8,7 @@ import BrowseReducer from './reducer_browse';
 import ArtistReducer from './reducer_artists';
 import TrackReducer from './reducer_track';
 import AlbumReducer from './reducer_albums';
+import ModalReducer from './reducer_modal';
 
 const rootReducer = combineReducers({
     user: AuthReducer,
@@ -18,7 +19,8 @@ const rootReducer = combineReducers({
     artists: ArtistReducer,
     tracks: TrackReducer,
     albums: AlbumReducer,
-    form: formReducer
+    form: formReducer,
+    modals: ModalReducer
 });
 
 export default rootReducer;

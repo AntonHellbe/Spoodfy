@@ -10,6 +10,9 @@ import {
     updateVolume,
     loadNextQueueTrack
 } from '../../actions/music_actions';
+import {
+    showModal
+} from '../../actions/modal_actions';
 import MusicControls from './musiccontrols';
 import Playing from './playing';
 
@@ -24,7 +27,8 @@ class MusicBar extends Component {
     }
 
     state = {
-        value: 0
+        value: 0,
+        isDropdownVisible: false
     }
 
 
@@ -239,17 +243,39 @@ class MusicBar extends Component {
         }
     }
 
-    playAudio = () => {
-        this.audioElement.play();
+    toggleDropdown = () => {
+        this.setState((prevState) => ({ isDropdownVisible: !prevState.isDropdownVisible }));
     }
 
-    playAndLoad = () => {
-        this.audioElement.load();
+    hide = (e) => {
+        if (e && e.relatedTarget) {
+            e.relatedTarget.click();
+        }
+
+        this.toggleDropdown();
+    }
+
+    playAudio = () => {
         this.audioElement.play();
     }
 
     pauseAudio = () => {
         this.audioElement.pause();
+    }
+
+    openModal = () => {
+        const {
+            currentTrack,
+            userPlaylists,
+            spotifyId
+        } = this.props;
+        if (_.isEmpty(currentTrack)) {
+            return;
+        }
+        this.props.showModal({ 
+            playlists: userPlaylists, 
+            spotifyId,
+            track: currentTrack });
     }
 
     render() {
@@ -301,13 +327,34 @@ class MusicBar extends Component {
                     </div>
 
 
-                <div className="volumeControl" key="volume">
-                        <i 
-                        className="fa fa-volume-up"
-                        id="volume"
-                        aria-hidden="true"
-                        onClick={ this.onVolumeClick }  
-                        />
+                <div className="volume-area" key="volume">
+                    <button
+                    onClick={ this.toggleDropdown }
+                    onBlur={ this.hide }
+                    >
+                    <i className="fa fa-angle-up" aria-hidden="true" />
+                    </button>
+                    <ul
+                    className="dropdown-playing"
+                    style={ this.state.isDropdownVisible ? 
+                        { display: 'block' } : { display: 'none' } }
+                    >
+                        <li>
+                            <button
+                            onClick={ this.openModal }
+                            >
+                                Add to playlist
+                            </button>
+                        </li>
+                    
+
+                    </ul>
+                    <div className="volume-control">
+                    <i 
+                    className="fa fa-volume-up"
+                    aria-hidden="true"
+                    onClick={ this.onVolumeClick }  
+                    />
                     <input
                         className="volumeInput"
                         type="range"
@@ -317,8 +364,8 @@ class MusicBar extends Component {
                         min="0"
                         step="any"
                         onChange={ this.onChangeVolume }
-
                     />
+                    </div>
 
                 </div>
                 </div>
@@ -355,7 +402,9 @@ const mapStateToProps = (state) => ({
     isAuthenticated: state.user.isAuthenticated,
     playingIndex: state.music.playingIndex,
     currentAlbum: state.music.currentAlbum,
-    queue: state.music.queue
+    queue: state.music.queue,
+    userPlaylists: state.playlists.userPlaylists,
+    spotifyId: state.user.spotifyId
 });
 
 const mapDispatchToProps = (dispatch) => {
@@ -366,7 +415,8 @@ const mapDispatchToProps = (dispatch) => {
         toggleRepeat: () => dispatch(toggleRepeat()),
         updateVolume: (volume) => dispatch(updateVolume(volume)),
         previousTrack: (index) => dispatch(previousTrack(index)),
-        loadNextQueueTrack: () => dispatch(loadNextQueueTrack())
+        loadNextQueueTrack: () => dispatch(loadNextQueueTrack()),
+        showModal: (modalProps) => dispatch(showModal(modalProps))
     };
 };
 

@@ -3,9 +3,10 @@ import { connect } from 'react-redux';
 import {
     clearActivePlaylistId,
     requestUpdatePlaylistDetails,
-    toggleEditPlaylistModal,
-    toggleAddPlaylistModal
 } from '../../actions/playlist_actions';
+import {
+    showModal
+} from '../../actions/modal_actions';
 import {
     selectTrack,
 } from '../../actions/music_actions';
@@ -42,14 +43,17 @@ class Playlist extends Component {
         // this.onClickEdit();
     }
 
-    toggleModal = () => {
+    openModal = () => {
         const {
-            addPlaylistModal
+            activePlaylist: {
+                playlist
+            },
+            spotifyId
         } = this.props;
-        if (addPlaylistModal) {
-            this.props.toggleAddPlaylistModal();
-        }
-        this.props.toggleEditPlaylistModal();
+        this.props.showModal({
+            playlist,
+            spotifyId
+        });
     }
 
 
@@ -92,7 +96,7 @@ class Playlist extends Component {
                 author={ display_name ? `Created by: ${display_name}` : `Created by: ${id}` }
                 totalTracks={ `Total tracks ${total}` }
                 edit={ spotifyId === id }
-                editAction={ this.toggleModal }
+                editAction={ this.openModal }
                 /> 
                 
                 <div className="main-content-bottom">
@@ -104,18 +108,6 @@ class Playlist extends Component {
                     />
                 </div>
                 </div>
-                <Modal>
-                    <EditPlaylistModal 
-                    initialValues={ 
-                        { name, 
-                        publicPlaylist: playlist.public, 
-                        collaborative: playlist.collaborative }
-                    }
-                    isVisible={ editPlaylistModal }
-                    toggleModal={ this.props.toggleEditPlaylistModal }
-                    onSubmit={ this.submit }
-                    />
-                </Modal>
             </div>
 
         );
@@ -128,17 +120,12 @@ const mapStateToProps = (state) => ({
     activePlaylist: state.playlists.activePlaylist,
     isFollowingActivePlaylist: state.playlists.isFollowingActivePlaylist,
     spotifyId: state.user.spotifyId,
-    editPlaylistModal: state.playlists.editPlaylistModal,
-    addPlaylistModal: state.playlists.addPlaylistModal
 });
 
 const mapDispatchToProps = (dispatch, props) => ({
     clearActivePlaylistId: () => dispatch(clearActivePlaylistId()),
     selectTrack: (track, queue) => dispatch(selectTrack(0, track, queue, props.match.params.id)),
-    requestUpdatePlaylistDetails: (values, spotifyId, playlist) => 
-        dispatch(requestUpdatePlaylistDetails(values, spotifyId, playlist)),
-    toggleEditPlaylistModal: () => dispatch(toggleEditPlaylistModal()),
-    toggleAddPlaylistModal: () => dispatch(toggleAddPlaylistModal())
+    showModal: (modalProps) => dispatch(showModal('EDIT_PLAYLIST_MODAL', modalProps))
     
 });
 

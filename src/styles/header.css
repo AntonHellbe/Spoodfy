@@ -69,8 +69,8 @@
     font-weight: bold;
     vertical-align: middle;
     font-family: 'Open sans', sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 3px;
+    text-transform: capitalize;
+    letter-spacing: 2px;
 }
 
 .brand > a > h3:hover {
