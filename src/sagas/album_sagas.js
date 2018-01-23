@@ -12,7 +12,8 @@ import {
     artistAlbumsSuccess,
     artistAlbumsError,
     albumTracksError,
-    albumTracksSuccess
+    albumTracksSuccess,
+    updateCurrentAlbum
 } from '../actions/album_actions';
 
 
@@ -51,9 +52,24 @@ function* albumTracksFetch() {
     }
 }
 
+function* albumFetchHelper() {
+    while (true) {
+        const { albumId } = yield take(albumActions.REQUEST_ALBUM);
+        const URL = `${spotifyUrls.baseURL}${spotifyUrls.version}${spotifyUrls.albums}/${albumId}`;
+        try {
+            const data = yield call(axios.get, URL);
+            console.log(data.data);
+            yield put(updateCurrentAlbum(data.data));
+        } catch (e) {
+            console.log(e);
+        }
+    }
+}
+
 const albumSagas = [
-    takeLatest(albumActions.REQUEST_ARTIST_ALBUMS, artistAlbumsFetch),
     fork(albumTracksFetch),
+    fork(albumFetchHelper),
+    takeLatest(albumActions.REQUEST_ARTIST_ALBUMS, artistAlbumsFetch),
 ];
 
 export default albumSagas;

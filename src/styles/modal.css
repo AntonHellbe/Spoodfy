@@ -39,7 +39,8 @@
     margin: 0;
     padding: 0;
     color: #fff;
-    border-bottom: 1px solid #fff;
+    margin-bottom: 10px;
+    /* border-bottom: 1px solid #fff; */
 }
 
 .select-playlist > ul {
@@ -48,12 +49,11 @@
     margin: 0;
     padding: 0;
     margin-bottom: 10px;
-    border-bottom: 1px solid rgba(125, 125, 135, 0.25);
 }
 
 .select-playlist > ul > li {
     /* border: 1px solid green; */
-    margin: 7px 0;
+    height: 25px;
     display: flex;
     align-items: center;
 }
@@ -98,5 +98,4 @@
     color: #fff;
     font-size:12px;
     border-radius: 33px;
-
 }

@@ -117,6 +117,7 @@ class MusicBar extends Component {
         } else if (playingIndex < tracklist.length - 1) {
             this.props.loadNextTrack(playingIndex + 1);            
         } else {
+            this.setState(() => ({ value: 0 }));
             this.props.togglePlaying();
         }
     }

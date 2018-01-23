@@ -36,3 +36,8 @@ export const updateCurrentAlbum = (album) => ({
     type: albumActions.UPDATE_CURRENT_ALBUM,
     album
 });
+
+export const requestAlbum = (albumId) => ({
+    type: albumActions.REQUEST_ALBUM,
+    albumId
+});

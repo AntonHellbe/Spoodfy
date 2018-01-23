@@ -52,7 +52,7 @@ class AudioPlayer extends Component {
                 volume={ 0.05 } //This doesn't work it seems like
                 onTimeUpdate={ this.onTimeUpdate }
                 onEnded={ this.props.onEnded }
-                autoPlay={ autoPlay } //eslint-disable-line
+                autoPlay={ autoPlay }
                 loop={ repeat }
             />
         );

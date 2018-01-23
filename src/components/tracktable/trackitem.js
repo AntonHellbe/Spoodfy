@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import {
-    AddToQueue
+    AddToQueue, requestPlayPlaylist
 } from '../../actions/music_actions';
 import {
-    updateCurrentAlbum
+    updateCurrentAlbum, requestAlbum
 } from '../../actions/album_actions';
 
 import {
@@ -20,7 +20,8 @@ class TrackItem extends Component {
         
 
         onUpdateAlbum = () => {
-            this.props.updateCurrentAlbum(this.props.track.album);
+            // console.log(this.props.track.album);
+            this.props.requestAlbum(this.props.track.album.id);
         }
 
         onAddToQueue = () => {
@@ -142,6 +143,7 @@ class TrackItem extends Component {
                     <Link
                     to={ `/albums/${album.id}` }
                     onClick={ this.onUpdateAlbum }
+                    style={ { color } }
                     >
                     { album.name } 
                     </Link>
@@ -238,7 +240,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     AddToQueue: (tracks) => dispatch(AddToQueue(tracks)),
-    updateCurrentAlbum: (album) => dispatch(updateCurrentAlbum(album)),
+    requestAlbum: (id) => dispatch(requestAlbum(id)),
     requestArtist: (id) => dispatch(requestArtist(id)),
     removeTrackFromPlaylist: (spotifyId, playlist, trackUri) =>
         dispatch(removeTrackFromPlaylist(spotifyId, playlist, trackUri)),

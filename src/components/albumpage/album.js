@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Banner from '../banner/banner';
 import TrackTable from '../tracktable/tracktable';
+import _ from 'lodash';
 import {
     requestAlbumTracks
 } from '../../actions/album_actions';
@@ -61,6 +62,7 @@ class Album extends Component {
                 images,
                 id
             },
+            currentAlbum,
             albumTracks,
             loadingAlbum,
         } = this.props;
@@ -68,15 +70,17 @@ class Album extends Component {
         return (
             <div className="main-content">
                 <div className="main-content-wrapper">
-                <Banner
-                type={ type }
-                name={ name }
-                topRight={ album_type }
-                id={ id }
-                playAction={ this.onClickPlay }
-                images={ images }
-                artists={ artists }
-                />
+                { !_.isEmpty(currentAlbum) && 
+                    <Banner
+                    type={ type }
+                    name={ name }
+                    topRight={ album_type }
+                    id={ id }
+                    playAction={ this.onClickPlay }
+                    images={ images }
+                    artists={ artists }
+                    />
+                }
                 
                 <div className="main-content-bottom">
                     <TrackTable

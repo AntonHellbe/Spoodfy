@@ -24,6 +24,7 @@ const albumReducer = (state = INITIAL_STATE, action) => {
         
         case albumActions.UPDATE_CURRENT_ALBUM:
             return { ...state, currentAlbum: action.album };
+        
             
         default:
             return state;
