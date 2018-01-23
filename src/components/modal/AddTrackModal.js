@@ -47,8 +47,11 @@ class AddTrackModal extends Component {
 
     render() {
     const {
-        playlists
+        playlists,
+        spotifyId
     } = this.props;
+
+    console.log(this.props);
     return (
             <div 
             className="modal-background" 
@@ -60,6 +63,10 @@ class AddTrackModal extends Component {
                     <h3> Select Playlist </h3>
                     <ul>
                         { playlists.map((playlist) => {
+                            if (playlist.owner.id !== spotifyId) {
+                                return null;
+                            }
+
                             return (
                                 <li>
                                 <input 

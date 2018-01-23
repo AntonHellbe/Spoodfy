@@ -139,7 +139,12 @@ class TrackItem extends Component {
                     </Link>
                 </td>
                 <td> 
+                    <Link
+                    to={ `/albums/${album.id}` }
+                    onClick={ this.onUpdateAlbum }
+                    >
                     { album.name } 
+                    </Link>
                 </td>
                 <td>
                     <div className="div-track-popularity">

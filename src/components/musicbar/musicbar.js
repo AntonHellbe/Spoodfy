@@ -7,7 +7,6 @@ import {
     previousTrack,
     toggleShuffle,
     toggleRepeat,
-    updateVolume,
     loadNextQueueTrack
 } from '../../actions/music_actions';
 import {
@@ -15,99 +14,49 @@ import {
 } from '../../actions/modal_actions';
 import MusicControls from './musiccontrols';
 import Playing from './playing';
+import AudioPlayer from './AudioPlayer';
 
 let WIDTH = 0;
 let HEIGHT = 0;
 
 class MusicBar extends Component {
 
-    constructor(props) {
-        super(props);
-        this.currentTimeInterval = null;
-    }
-
     state = {
         value: 0,
-        isDropdownVisible: false
+        isDropdownVisible: false,
+        volume: 0.05
     }
 
 
     componentDidMount() {
-        this.audioElement.addEventListener('ended', this.OnEndedListener);
-        this.audioElement.addEventListener('play', this.OnPlay);
-        this.audioElement.addEventListener('loadedmetadata', this.metaDataloaded);
-        this.audioElement.addEventListener('loadeddata', this.onLoadedData);
-        this.audioElement.addEventListener('pause', this.OnPause);
+        this.audioElement = document.getElementById('audioPlayer');
         this.initializeVisualization();
-        this.audioElement.volume = this.props.volume; //Why?
+        
     }
 
-
-    componentWillReceiveProps(nextProps) {
-        // console.log(nextProps.playingIndex);
-        if (typeof nextProps.currentTrack !== 'undefined' &&
-            nextProps.currentTrack.preview_url !== null && 
-            this.props.currentTrack.id !== nextProps.currentTrack.id) {
-            this.setState(() => ({ value: 0 }));
-            clearInterval(this.currentTimeInterval); 
-            //Clear interval if it isn't the same track we are receiving, 
-            //i.e slider needs to back to zero and then preview url on the incoming track is not null
-        }
-
-        if (!nextProps.isPlaying && this.props.isPlaying) {
-             clearInterval(this.currentTimeInterval);
-             this.audioElement.pause();
-         }
-
-        if (nextProps.isPlaying && !this.props.isPlaying) {
-            this.audioElement.play();
-        }
-
-
-    }
-
-    componentWillUnmount() {
-        this.audioElement.removeEventListener('loadmetadata', this.metaDataloaded);
-        this.audioElement.removeEventListener('play', this.OnPlay);
-        this.audioElement.removeEventListener('ended', this.props.OnEndedListener);
-        this.audioElement.removeEventListener('loadeddata', this.onLoadedData);
-        this.audioElement.removeEventListener('pause', this.OnPause);
-    }
 
     onMouseDown = () => {
-        this.audioElement.pause();
+        this.props.togglePlaying();
     }
 
     onChange = (e) => {
         const value = e.target.value;
         this.setState(() => ({ value }));
         this.audioElement.currentTime = value;
-        clearInterval(this.currentTimeInterval);
     }
 
     onMouseUp = () => {
-        this.audioElement.play();
+        this.props.togglePlaying();
     }
 
     onVolumeClick = () => {
-        this.audioElement.volume = 0;
         this.props.updateVolume(0);
-    }
-    
-    onLoadedData = () => {
-        if (!this.props.isPlaying) {
-            this.props.togglePlaying();
-        }
-        if (!this.state.isSeeking) {
-            this.playAudio();
-        }
-
     }
     
     onChangeVolume = (e) => {
         const volume = e.target.value;
-        this.audioElement.volume = (volume);
-        this.props.updateVolume(volume);
+        this.setState(() => ({ volume }));
+        this.audioElement.volume = volume;
     }
 
     initializeVisualization() {
@@ -152,25 +101,16 @@ class MusicBar extends Component {
         renderAnim();
         
     }
-    
-    OnPause = () => {
-        clearInterval(this.currentTimeInterval);
-    }
-
 
     OnEndedListener = () => {
         const { 
             tracklist, 
-            repeat, 
             playingIndex, 
             shuffle, 
             queue 
         } = this.props;
 
-        if (repeat) {
-            this.audioElement.load();
-            this.audioElement.play();
-        } else if (shuffle && queue.length === 0) {
+        if (shuffle && queue.length === 0) {
             this.props.loadNextTrack(Math.floor(Math.random() * (tracklist.length - 1)));
         } else if (queue.length > 0) {
             this.props.loadNextQueueTrack();
@@ -179,20 +119,10 @@ class MusicBar extends Component {
         } else {
             this.props.togglePlaying();
         }
-
-        clearInterval(this.currentTimeInterval);
-        this.setState(() => ({ value: 0 }));
-
     }
 
-
-    OnPlay = () => {
-        this.audioElement.currentTime = this.state.value;
-        this.currentTimeInterval = setInterval(() => {
-            this.setState(() => ({ value: this.audioElement.currentTime }));
-        }, 500);
-        this.audioElement.play();
-
+    timeUpdate = (value) => {
+        this.setState(() => ({ value }));
     }
 
     handleMusicControls = (e) => {
@@ -208,17 +138,14 @@ class MusicBar extends Component {
         const id = e.target.id;
         switch (id) {
             case 'pause':
-                this.pauseAudio();
                 this.props.togglePlaying();
                 break;
 
             case 'play':
                 if (!_.isEmpty(currentTrack)) {
-                    this.playAudio();
                     this.props.togglePlaying();
                 }
                 break;
-
             case 'shuffle':
                 this.props.toggleShuffle();
                 break;
@@ -255,14 +182,6 @@ class MusicBar extends Component {
         this.toggleDropdown();
     }
 
-    playAudio = () => {
-        this.audioElement.play();
-    }
-
-    pauseAudio = () => {
-        this.audioElement.pause();
-    }
-
     openModal = () => {
         const {
             currentTrack,
@@ -284,26 +203,27 @@ class MusicBar extends Component {
             currentTrack,
             isPlaying,
             shuffle,
-            volume
-            
+            autoPlay
          } = this.props;
 
         let preview_url = null;
         if (!_.isEmpty(currentTrack)) {
-            preview_url = currentTrack.track ? 
+            preview_url = currentTrack.track ?
                 currentTrack.track.preview_url : currentTrack.preview_url; //eslint-disable-line
         } 
+
+        
         return (
             <React.Fragment>
                 <div className="musicDisplay" key="musicDisplay">
-                    <MusicControls 
-                    handleMusicControls={ this.handleMusicControls }
-                    repeat={ repeat }
-                    currentTrack={ currentTrack }
-                    isPlaying={ isPlaying }
-                    shuffle={ shuffle }
-                    key="musicPlayer"
-                    />
+                <MusicControls 
+                handleMusicControls={ this.handleMusicControls }
+                repeat={ repeat }
+                currentTrack={ currentTrack }
+                isPlaying={ isPlaying }
+                shuffle={ shuffle }
+                key="musicPlayer"
+                />
 
                 <div className="progress" key="progress">
                     
@@ -359,30 +279,33 @@ class MusicBar extends Component {
                         className="volumeInput"
                         type="range"
                         name="points"
-                        value={ volume }
                         max="1"
                         min="0"
                         step="any"
+                        value={ this.state.volume }
                         onChange={ this.onChangeVolume }
                     />
                     </div>
 
                 </div>
                 </div>
-                <audio 
-                ref={ (audio) => { this.audioElement = audio; } }
-                src={ preview_url }
-                key="audio"
-                id="audioPlayer"
-                crossOrigin="anonymous"
-                volume={ volume } //This doesn't work it seems like
-                />
                 <div className="discodiv">
                     <canvas 
                     className="disco" 
                     ref={ (canvas) => { this.canvas = canvas; } } 
                     />
                 </div>
+
+                <AudioPlayer
+                onEnded={ this.OnEndedListener }
+                preview_url={ preview_url }
+                timeUpdate={ this.timeUpdate }
+                isPlaying={ isPlaying }
+                togglePlaying={ this.props.togglePlaying }
+                repeat={ repeat }
+                autoPlay={ autoPlay }
+                volume={ this.state.volume }
+                />
                     
                 <Playing currentTrack={ currentTrack } key="playing" />
 
@@ -394,11 +317,11 @@ class MusicBar extends Component {
 
 const mapStateToProps = (state) => ({
     repeat: state.music.repeat,
+    autoPlay: state.music.autoPlay,
     isPlaying: state.music.isPlaying,
     tracklist: state.music.tracklist,
     currentTrack: state.music.currentTrack,
     shuffle: state.music.shuffle,
-    volume: state.music.volume,
     isAuthenticated: state.user.isAuthenticated,
     playingIndex: state.music.playingIndex,
     currentAlbum: state.music.currentAlbum,
@@ -413,10 +336,9 @@ const mapDispatchToProps = (dispatch) => {
         loadNextTrack: (index) => dispatch(loadNextTrack(index)),
         toggleShuffle: () => dispatch(toggleShuffle()),
         toggleRepeat: () => dispatch(toggleRepeat()),
-        updateVolume: (volume) => dispatch(updateVolume(volume)),
         previousTrack: (index) => dispatch(previousTrack(index)),
         loadNextQueueTrack: () => dispatch(loadNextQueueTrack()),
-        showModal: (modalProps) => dispatch(showModal(modalProps))
+        showModal: (modalProps) => dispatch(showModal('ADD_TRACK_MODAL', modalProps))
     };
 };
 

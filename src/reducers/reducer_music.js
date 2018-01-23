@@ -2,14 +2,14 @@ import { musicActions } from '../constants/actions';
 
 const INITIAL_STATE = {
     repeat: false,
-    currentTrack: {},
+    autoPlay: true,
     isPlaying: false,
+    currentTrack: {},
     tracklist: [],
     queue: [],
-    errorRecentlyPlayed: '',
-    volume: 0.05,
+    error: '',
     playingIndex: 0,
-    tracklistId: ''
+    tracklistId: '',
 };
 
 const musicReducer = (state = INITIAL_STATE, action) => {
@@ -52,14 +52,8 @@ const musicReducer = (state = INITIAL_STATE, action) => {
             return { 
                 ...state, 
                 queue: state.queue.concat(action.tracks) };
-
-        case musicActions.UPDATE_VOLUME:
-            return { 
-                ...state, 
-                volume: action.volume };
         
         case musicActions.LOAD_NEXT_QUEUE_TRACK:
-            console.log(state.tracklist.slice(0, state.playingIndex + 1).concat(state.queue[0]));
             return {
                 ...state,
                 currentTrack: state.queue[0],
