@@ -61,18 +61,36 @@ class TrackItem extends Component {
             this.props.dropdownChange('');
         }
 
+        renderPopularity = (popularity) => {
+            const num = Number(popularity);
+            const popDivs = [];
+
+            for (let i = 1; i < 11; i++) {
+                if (num / (i * 10) > 1) {
+                    popDivs[i] = (
+                        <div className="div-pop" />
+                    );
+                } else {
+                    popDivs[i] = (
+                        <div className="div-pop-gray" />
+                    );
+                }
+            }
+            return popDivs;
+        }
+
         render() {
         
         const { 
             currentTrack = null,
             track, 
             index, 
-            track: { name, artists, duration_ms, album, id },
+            track: { name, artists, duration_ms, album, id, popularity },
             dropdownStatus,
             type,
             activePlaylist,
             spotifyId,
-            selectTrack
+            selectTrack,
             } = this.props;
 
         let currentId = null;
@@ -122,6 +140,11 @@ class TrackItem extends Component {
                 </td>
                 <td> 
                     { album.name } 
+                </td>
+                <td>
+                    <div className="div-track-popularity">
+                        { this.renderPopularity(popularity) }
+                    </div>
                 </td>
                 <td
                 className="dropdown-action-trackitem"

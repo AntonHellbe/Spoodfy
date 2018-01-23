@@ -102,7 +102,7 @@ class Artist extends Component {
                 type={ type }
                 playAction={ this.onClickPlay }
                 name={ name }
-                topRight={ `Popularity ${popularity}` }
+                popularity={ popularity }
                 bottomRight={ `Followers ${currentArtist.followers.total}` }
                 isFollowing={ followedArtists.find((artist) => artist.id === id) }
                 images={ images }

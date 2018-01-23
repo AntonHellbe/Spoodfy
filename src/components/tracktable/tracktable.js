@@ -7,7 +7,7 @@ import {
     selectTrack,
 } from '../../actions/music_actions';
 import {
-    addTrackToPlaylist
+    removeTrackFromPlaylist
 } from '../../actions/playlist_actions';
 import {
     showModal
@@ -102,8 +102,11 @@ class TrackTable extends Component {
                     <tr className="tableHeader">
                         <th className="table-col-index" />
                         <th className="table-col-title"> Title </th>
-                        <th className="table-col-album"> Artist </th>
+                        <th className="table-col-artist"> Artist </th>
                         <th className="table-col-album"> Album </th>
+                        <th className="table-col-popularity">
+                            <i className="fa fa-thumbs-o-up" aria-hidden="true" />
+                        </th>
                         <th className="table-col-actions" />
                         <th className="table-col-time"> 
                             <i className="fa fa-clock-o" aria-hidden="true" /> 
@@ -144,7 +147,9 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
     selectTrack: (index, track, queue, tracklistId) =>
         dispatch(selectTrack(index, track, queue, tracklistId)),
-    showModal: (modalProps) => dispatch(showModal('ADD_TRACK_MODAL', modalProps))
+    showModal: (modalProps) => dispatch(showModal('ADD_TRACK_MODAL', modalProps)),
+    removeTrackFromPlaylist: (spotifyId, playlist, trackUri) => 
+        dispatch(removeTrackFromPlaylist(spotifyId, playlist, trackUri))
 });
 
 

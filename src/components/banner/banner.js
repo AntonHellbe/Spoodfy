@@ -90,6 +90,24 @@ class Banner extends Component {
 
     }
 
+    renderPopularity = (popularity) => {
+        const num = Number(popularity);
+        const popDivs = [];
+
+        for (let i = 1; i < 11; i++) {
+            if (num / (i * 10) > 1) {
+                popDivs[i] = (
+                    <div className="div-pop" />
+                );
+            } else {
+                popDivs[i] = (
+                    <div className="div-pop-gray" />
+                );
+            }
+        }
+        return popDivs;
+    }
+
 
     render() {
 
@@ -107,7 +125,8 @@ class Banner extends Component {
             author,
             totalTracks,
             edit,
-            editAction
+            editAction,
+            popularity
         } = this.props;
 
         const isActive = id === tracklistId;
@@ -156,6 +175,14 @@ class Banner extends Component {
                 </div>
 
                 <div className="information-top-right">
+                    { popularity &&
+                        <React.Fragment>
+                            <p>Popularity</p>
+                             <div className="div-artist-popularity">
+                                {this.renderPopularity(popularity)}
+                            </div>
+                        </React.Fragment>
+                    }
                     { topRight &&
                         <p>
                             { topRight }
@@ -199,6 +226,9 @@ class Banner extends Component {
                     { type === 'playlist' &&
                         this.renderFollowButton()
                     }
+                    <h3>
+                        { name }
+                    </h3>
 
                     { edit &&
 

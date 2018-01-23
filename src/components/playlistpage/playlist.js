@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
+import _ from 'lodash';
 import { connect } from 'react-redux';
 import {
     clearActivePlaylistId,
-    requestUpdatePlaylistDetails,
 } from '../../actions/playlist_actions';
 import {
     showModal
@@ -12,12 +12,16 @@ import {
 } from '../../actions/music_actions';
 import Banner from '../banner/banner';
 import TrackTable from '../tracktable/tracktable';
-import Modal from '../modal/modal';
-import EditPlaylistModal from '../modal/EditPlaylistModal';
 
 
 class Playlist extends Component {
 
+    constructor(props) {
+        super(props);
+
+        this.debouncedScroll = _.debounce(this.onScroll, 100);
+        this.banner = document.getElementsByClassName('action-buttons');
+    }
     componentWillUnmount() {
         this.props.clearActivePlaylistId();
     }
@@ -30,6 +34,19 @@ class Playlist extends Component {
             .map((item) => item.track);
         this.props.selectTrack(tracks[0], tracks);
     }
+
+    onScroll = () => {
+        let scrolled = false;
+        if (this.wrapper.scrollTop > 270) {
+            if (scrolled === false) {
+                scrolled = true;
+                this.banner[0].classList = [this.banner[0].classList + ' effect1'];
+            }
+        } else {
+            scrolled = false;
+            this.banner[0].classList = ['action-buttons'];
+        }
+    };
 
 
     submit = (values) => {
@@ -75,15 +92,16 @@ class Playlist extends Component {
                 playlist
             },
             isFollowingActivePlaylist,
-            spotifyId,
-            editPlaylistModal
-            
-
+            spotifyId,       
         } = this.props;
-        // console.log(playlistTracks);
+
         return (
             <div className="main-content">
-                <div className="main-content-wrapper">
+                <div 
+                className="main-content-wrapper" 
+                onScroll={ this.debouncedScroll }
+                ref={ test => { this.wrapper = test; } }
+                >
                 <Banner
                 playAction={ this.onClickPlay }
                 type={ type }

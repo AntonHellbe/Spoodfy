@@ -16,7 +16,7 @@
 .image-wrapper > img {
   height: 100%;
   width: 100%;
-  background: linear-gradient(rgba(255, 0, 0, 0.5), rgba(255, 0, 0, 0.5))
+  /* background: linear-gradient(rgba(255, 0, 0, 0.5), rgba(255, 0, 0, 0.5)) */
 }
 
 .banner-title {
@@ -86,11 +86,8 @@
   grid-area: 1 / 3 / 2 / 4;
   /* border:1px solid blue; */
   padding:5px;
-  display:flex;
-  justify-content:center;
-  align-items:flex-start;
-  /* text-align:left; */
-  text-align: center;
+  /* text-align: center; */
+  /* border: 1px solid blue; */
 }
 
 .information-top-right > p {
@@ -98,25 +95,28 @@
   padding: 0;
   font-size: 13px;
   color: #858585;
-  display: inline;
+  display: block;
+  width: 100%;
+  text-align: right;
+  /* border: 1px solid white; */
 }
 
 .information-bottom-right {
   grid-area: 2 / 3 / 3 / 4;
   padding: 5px;
   /* border: 1px solid green; */
-  display:flex;
-  justify-content:center;
-  align-items: flex-end;
-  text-align:center;
+  text-align:right;
   color: #858585;
+  margin: auto 0;
+  margin-bottom: 0;
 }
 
 .information-bottom-right > p {
   margin: 0;
   padding: 0;
   font-size:13px;
-  display: inline;
+  width: 100%;
+  display: block;
   /* border:1px solid blue; */
 }
 .action-buttons {
@@ -126,8 +126,18 @@
   /* border: 1px solid pink; */
   display: flex;
   flex-flow: row nowrap;
-  align-items:flex-end;
+  align-items:center;
   justify-content:flex-start;
+}
+
+.action-buttons > h3 {
+  display: none;
+}
+
+.banner-effect-title {
+  height: 100%;
+  /* border: 1px solid #fff; */
+  margin: auto 0;
 }
 
 .action-buttons > button {
@@ -136,6 +146,10 @@
 
 .action-buttons > button:hover {
   cursor: pointer;
+}
+
+.action-buttons > button:focus {
+  outline: none;
 }
 
 .btn-play{
@@ -171,6 +185,7 @@
   color:#ff6b42;
 }
 
+
 .btn-share {
   background: transparent;
   border: 1px solid #fff;
@@ -190,6 +205,7 @@
   border-radius: 33px;
   height: 30px;
   width: 40px;
+  padding: 0;
 }
 
 @media (min-width: 300px) and (max-width: 600px) {
@@ -210,6 +226,61 @@
   }
   
 }
+
+.div-artist-popularity {
+  height: 20px;
+  width: 100%;
+  display: block;
+  text-align: right;
+}
+
+.div-pop {
+  height: 10px;
+  border-right: 2px solid #ff6b42;
+  margin-left: 1px;
+  display: inline-block;
+}
+
+.div-pop-gray {
+  height: 10px;
+  border-right: 2px solid gray;
+  margin-left: 1px;
+  display: inline-block;
+}
+
+.effect1 {
+  top: 57px;
+  grid-area: 3 / 1 / 4 / 4;
+  /* border: 1px solid green; */
+  left: 257px;
+  right: 267px;
+  position: fixed;
+  z-index: 999;
+  height: 40px;
+  animation-name: test;
+  animation-duration: 1s;
+  background: linear-gradient(0deg,#181818, #121212);
+  box-shadow: 0px 2px 8px 0px rgba(0,0,0,0.2);
+}
+
+.effect1 > h3 {
+  margin: 0;
+  padding: 0;
+  display: none;
+  font-size: 16px;
+  display: block;
+}
+
+@keyframes test {
+  from {
+    height: 0px;
+  }
+
+  to {
+    height: 40px;
+  }
+}
+
 
 
 

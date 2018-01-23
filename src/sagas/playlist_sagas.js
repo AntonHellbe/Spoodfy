@@ -167,17 +167,24 @@ function* updatePlaylistHelper() {
         } = yield take(playlistActions.REQUEST_UPDATE_PLAYLIST_DETAILS);
         const URL = `${spotifyUrls.baseURL}${spotifyUrls.version}${spotifyUrls.users}` +
         `/${spotifyId}${spotifyUrls.playlists}/${playlist.id}`;
-        // console.log(values);
-        console.log(URL);
         yield put(startSubmit('editPlaylist'));
+        const {
+            name,
+            collaborative,
+            description
+        } = values;
+        const requestBody = {
+            name,
+            collaborative,
+            public: values.public
+        };
+
+        if (description.length > 1) {
+            requestBody.description = description;
+        }
+
         try {
-            const data = yield call(axios.put, URL, {
-                    name: values.name,
-                    public: values.publicPlaylist,
-                    collaborative: values.collaborative,
-                    description: values.description
-                }
-            );
+            const data = yield call(axios.put, URL, requestBody);
             // console.log(data);
             if (data.status === 200) {
                 yield put(stopSubmit('editPlaylist'));

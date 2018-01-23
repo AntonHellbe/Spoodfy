@@ -77,6 +77,17 @@
     text-align: center;
 }
 
+.recent-track > ul > li > a {
+    text-decoration: none;
+    font-size: inherit;
+    color: inherit;
+
+}
+
+.recent-track > ul > li > a:hover {
+    text-decoration: underline;
+}
+
 .recent-track > ul > li {
     overflow: hidden;
     white-space: nowrap;
