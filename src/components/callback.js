@@ -3,10 +3,30 @@ import { connect } from 'react-redux';
 import { requestToken } from '../actions/auth_actions';
 
 
+const getParameterByName = (name, url = window.location.href) => {
+    const regex = new RegExp(`[?&]${name}(=([^&#]*)|&|#|$)`);
+    const results = regex.exec(url);
+    name = name.replace(/[\[\]]/g, '\\$&'); //eslint-disable-line
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+};
+
 class Callback extends Component {
 
-    componentWillMount() {
-        this.props.requestToken(this.props.history.push);
+
+    componentDidMount() {
+        console.log(window.location.href.split('=')[1]);
+        const match = getParameterByName('code');
+        console.log(match);
+        if (match) {
+            window.opener.postMessage({
+                type: 'code',
+                code: match
+            }, '*');
+            
+        }
+        window.close();
     }
 
     render() {
@@ -20,7 +40,7 @@ class Callback extends Component {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        requestToken: (history) => dispatch(requestToken(history))
+        requestToken: (code) => dispatch(requestToken(code))
     };
 };
 

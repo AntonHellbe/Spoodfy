@@ -22,10 +22,12 @@ import history from '../history';
 import { store } from '../app';
 
 
-function* requestToken() {
-    const URL = 'http://localhost:5000/token';
+function* requestToken({ code }) {
+    const URL = `http://localhost:5000/token?code=${code}`;
     try {
+        console.log(code);
         const data = yield call(axios.get, URL);
+        console.log(data);
         axios.defaults.headers.common.Authorization = `Bearer ${data.data}`; //eslint-disable-line
         axios.interceptors.response.use((response) => {
             return response;
@@ -57,6 +59,7 @@ function* requestToken() {
         window.sessionStorage.setItem('token', data.data);
         yield history.push('/new-releases');
     } catch (e) {
+        console.log(e);
         yield put(errorToken(e));
         yield history.push('/login');
     }

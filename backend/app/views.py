@@ -42,34 +42,29 @@ def index():
     auth_url = "{}/?{}".format(SPOTIFY_AUTH_URL, url_args)
     return redirect(auth_url)
 
-@app.route("/callback")
+@app.route("/token")
 def callback():
     global TOKEN
     global CURRENT_REFRESH_TOKEN
     auth_token = request.args['code']
+    # print(auth_token, file=sys.stderr)
     code_payload = {
         "grant_type": "authorization_code",
         "code": str(auth_token),
-        "redirect_uri": REDIRECT_URI
+        "redirect_uri": 'http://localhost:8080/callback'
     }
-    base64encoded = base64.standard_b64encode(b"6c94d2c6becc41c6a84429c86270179e:875b30af700543bc87f7260b61bb028d").decode('ascii')
+    base64encoded = base64.standard_b64encode((CLIENT_ID + ":" + CLIENT_SECRET).encode('utf-8')).decode('ascii')
     # print(base64encoded, file=sys.stderr)
     headers = { "Authorization": "Basic " + str(base64encoded) }
     # print(headers, file=sys.stderr)
     post_request = requests.post(SPOTIFY_TOKEN_URL, data = code_payload, headers = headers)
     response_data = json.loads(post_request.text)
-    # print(response_data, file=sys.stderr)
+    print(response_data, file=sys.stderr)
     TOKEN = response_data["access_token"]
     CURRENT_REFRESH_TOKEN = response_data["refresh_token"]
     token_type = response_data["token_type"]
     expires_in = response_data["expires_in"]
 
-    return redirect("http://localhost:8080/callback")
-
-
-@app.route('/token')
-def tokenroute():
-    global TOKEN
     return jsonify(TOKEN)
 
 @app.route('/test')

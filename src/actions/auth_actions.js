@@ -1,8 +1,12 @@
 import { authActions } from '../constants/actions';
 
-export const requestToken = () => ({
-    type: authActions.REQUEST_TOKEN,
-});
+export const requestToken = (code) => {
+    console.log('We are dispatched');
+    return {
+        type: authActions.REQUEST_TOKEN,
+        code
+    };
+};
 
 export const setToken = (token) => ({
     type: authActions.SET_TOKEN,
