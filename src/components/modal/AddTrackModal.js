@@ -54,14 +54,14 @@ class AddTrackModal extends Component {
     console.log(this.props);
     return (
             <div 
-            className="modal-background" 
+            className="modal-overlay" 
             >
                 <div 
-                className="select-playlist"
+                className="modal-container"
                 ref={ modal => { this.modal = modal; } }
                 >
                     <h3> Select Playlist </h3>
-                    <ul>
+                    <ul className="select-playlist">
                         { playlists.map((playlist) => {
                             if (playlist.owner.id !== spotifyId) {
                                 return null;

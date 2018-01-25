@@ -1,4 +1,5 @@
 const path = require('path');
+const autoprefixer = require('autoprefixer'); //eslint-disable-line
 
 module.exports = {
     entry: './src/app.js',
@@ -6,6 +7,7 @@ module.exports = {
         path: path.join(__dirname, 'public'),
         filename: 'bundle.js',
     },
+
 
     module: {
         rules: [{
@@ -15,7 +17,25 @@ module.exports = {
         },
         {
             test: /\.s?css$/,
-            loaders: ['style-loader', 'css-loader', 'sass-loader']
+            use: [
+            {
+                loader: 'style-loader'
+            },
+            {
+                loader: 'css-loader'
+            },
+            {
+                loader: 'postcss-loader',
+                options: {
+                    plugins: function() { //eslint-disable-line
+                        return [autoprefixer];
+                    }
+                }
+            },
+            {
+                loader: 'sass-loader'
+            }
+            ]
         }]
     },
 

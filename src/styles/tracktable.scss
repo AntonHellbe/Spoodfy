@@ -1,0 +1,217 @@
+.searchDiv{
+    background: #181818;
+    grid-area: 2 / 2 / 5 / 3;
+    padding: 25px;
+    overflow-y: auto;
+    border-top: 0.5px solid rgba(125, 125, 135, 0.25);
+    box-sizing: border-box;
+    position: relative;
+}
+
+
+.track-table-header{
+    color: #cfcfd1;
+    border-bottom: 1px solid #7d7d87;
+
+    & > th {
+        text-align: left;
+        font-weight: normal;
+        font-size: 12px;
+        text-transform: uppercase;
+        color: #7b7b7b;
+        text-indent: 10px;
+    }
+}
+
+.track-table{
+    width: 100%;
+    background:#181818; 
+    table-layout: fixed;
+    border-collapse: collapse;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border-spacing: 0 10px;
+    box-sizing: border-box;
+
+}
+.track{
+    border-bottom: 1px solid rgba(125, 125, 135, 0.25);
+    box-sizing: border-box;
+
+    &:hover {
+        background:#282828;
+
+        & > td > button {
+            opacity: 1;
+        }
+    }
+
+    & > td {
+    padding: 10px 10px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 100;
+    width: 100%;
+    box-sizing: border-box;
+        & > a {
+            text-decoration: none;
+            color:#fff;
+            box-sizing: border-box;
+            font-size: inherit;
+            font-weight: inherit;
+            font-style: inherit;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+
+        & > button:hover {
+            cursor: pointer
+        }
+    }
+}   
+
+
+.table-col-index{
+    width: 5%;
+}
+
+.table-col-title{
+    width:20%;
+}
+
+.table-col-artist{
+    width:20%;
+
+}
+
+.table-col-album{
+    width:20%;
+}
+
+.table-col-popularity {
+    margin-left: 10px;
+    width: 10%;
+
+    & > i {
+        font-size: 14px;
+    }
+}
+
+.table-col-actions{
+    width:10%;
+}
+
+.table-col-time{
+    width: 5%;
+
+    & > i {
+        font-size: 16px;
+        font-weight: normal;
+    }
+}
+
+.index-col{
+    color: #858585;
+}
+
+
+.dropdown-action-trackitem > button {
+    border: none;
+    background: transparent;
+    margin: 0;
+    padding: 0;
+    color: #fff;
+    opacity: 0;
+    margin-left: 10px;
+}
+
+.dropdown-action-trackitem > button:focus {
+    outline: none;
+}
+
+.dropdown-trackitem {
+    display: none;
+    height:200px;
+    width: 175px;
+    position: absolute;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+    background:#282828;
+    color: #858585;
+    z-index: 30;
+    box-shadow: 0px 8px 4px 0px rgba(0,0,0,0.2);
+    padding: 5px 0;
+    text-align: center;
+    box-sizing: border-box;
+
+    & > li {
+        margin-top: 8px;
+        height:25px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        & > a {
+            text-decoration: none;
+            font-size: inherit;
+            color: inherit;
+            width: 100%;
+            height: 100%;
+            &:hover {
+                background: #858585;
+                color:#fff;
+            }
+
+            &:focus {
+                outline: none;
+            }
+    
+        }
+
+        & > button {
+            border: none;
+            background: transparent;
+            font-size: inherit;
+            font-family: inherit;
+            color: #858585;
+            width: 100%;
+            height: 100%;
+
+            &:hover {
+                background: #858585;
+                color: #fff;
+                cursor: pointer;
+            }
+        }
+    }
+
+    & > li:nth-child(2) {
+        border-bottom: 1px solid rgba(125, 125, 135, 0.25);
+    }
+
+    & > li:nth-child(4) {
+        border-bottom: 1px solid rgba(125, 125, 135, 0.25);
+    }
+
+}
+
+.div-track-popularity{
+    height: 20px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+
+

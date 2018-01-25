@@ -27,6 +27,12 @@ class AudioPlayer extends Component {
         const time = this.audioElement.currentTime;
         this.props.timeUpdate(time);
     }
+
+    onLoaded = () => {
+        if (this.props.isPlaying) {
+            this.audioElement.play();
+        }
+    }
     
 
     playAudio = () => {
@@ -52,7 +58,8 @@ class AudioPlayer extends Component {
                 volume={ 0.05 } //This doesn't work it seems like
                 onTimeUpdate={ this.onTimeUpdate }
                 onEnded={ this.props.onEnded }
-                autoPlay={ autoPlay }
+                onLoadedData={ this.onLoaded }
+                // autoPlay={ autoPlay }
                 loop={ repeat }
             />
         );

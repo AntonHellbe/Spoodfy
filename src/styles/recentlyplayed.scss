@@ -7,7 +7,7 @@
     border-top: 1px solid rgba(125, 125, 135, 0.25);
     display:flex;
     flex-flow: column nowrap;
-    overflow-y:auto;
+    overflow-y:hidden;
     box-sizing: border-box;
 }
 
@@ -19,6 +19,7 @@
     text-transform: uppercase;
     border-bottom: 0.5px solid rgba(125, 125, 135, 0.35);
     padding-bottom: 5px;
+    box-sizing: border-box;
 }
 
 .recentItem{
@@ -27,13 +28,14 @@
     width: 100%;
     display: flex;
     align-items:center;
-
+    box-sizing: border-box;
 }
 
 .recentItem > img {
     height:80px;
     width: 80px;
     float:left;
+    box-sizing: border-box;
 }
 
 .recentItem > ul {
@@ -43,8 +45,12 @@
     font-size:12px;
     list-style: none;
     color:#cfcfd1;
+    box-sizing: border-box;
 }
 
-.recentItem > img:hover {
-    
+@media only screen and (max-width: 1400px) {
+
+    .recent {
+        padding: 0px;
+    }
 }

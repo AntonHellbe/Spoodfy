@@ -1,12 +1,10 @@
 .playing{
-    /* border: 1px solid green; */
     grid-area: 5 / 1 / 6 / 1;
     background: #282828;
-    padding: 5px;
+    padding: 5px; 
     border-top: 1px solid rgba(125, 125, 135, 0.25);
     display: flex;
     align-items: center;
-    /* overflow-y: hidden; */
 }
 
 .displayTrackInfo{
@@ -15,9 +13,9 @@
     justify-content: center;
     list-style-type: none;
     height: 100%;
+    width: 100%;
     margin: 0;
     padding:0;
-    /* border: 1px solid green; */
     color: #ffffff;
     font-size: 14px;
     font-family: 'Montserrat', sans-serif;
@@ -39,7 +37,6 @@
 .playing-album-wrapper{
     height:40px;
     width: 60px;
-    min-width: 60px;
     margin-right: 5px;
     box-sizing: border-box;
     /* animation-name: spinning; */

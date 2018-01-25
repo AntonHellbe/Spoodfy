@@ -14,8 +14,7 @@ import {
     selectTrack,
 } from '../actions/music_actions';
 import {
-    albumTracksSuccess, 
-    updateCurrentAlbum,
+    albumTracksSuccess,
     albumTracksError
 } from '../actions/album_actions';
 
@@ -32,10 +31,15 @@ function* albumTracksFetch() {
                     { ...track, album }
                 );
             });
+
+            const tracksToPlay = tracks.filter((track) => 
+                track.preview_url !== null
+            );
             // console.log(tracks);
             yield put(albumTracksSuccess(tracks));
-            yield put(updateCurrentAlbum(album));
-            yield put(selectTrack(0, tracks[0], tracks, id));
+            if (tracksToPlay.length !== 0) {
+                yield put(selectTrack(0, tracksToPlay[0], tracksToPlay, id));
+            }
 
             
         } catch (e) {

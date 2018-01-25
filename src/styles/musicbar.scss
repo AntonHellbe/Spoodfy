@@ -9,6 +9,7 @@
     box-sizing: border-box;
     padding: 0px 7px;
     /* position: relative; */
+    /* border: 1px solid red; */
 }
 
 .progress{
@@ -86,8 +87,9 @@
     grid-area: 5 / 3 / 6 / 3;
     background: #282828;
     border-top: 1px solid rgba(125, 125, 135, 0.25);
-    max-height: 100%;
-    padding: 5px;
+    height: 99%;
+    width: 99%;
+    padding: 1%;
     padding-left: 0;
     /* border:1px solid blue; */
 }
@@ -104,6 +106,7 @@
     height: 40px;
     display:block;
     border-top: 0;
+    box-sizing: border-box;
 }
 
 

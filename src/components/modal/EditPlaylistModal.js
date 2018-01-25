@@ -48,10 +48,10 @@ class EditPlaylistModal extends Component {
         } = this.props;
         return (
             <div 
-            className="modal-background" 
+            className="modal-overlay" 
             >
                 <div 
-                className="select-playlist"
+                className="modal-container"
                 ref={ modal => { this.modal = modal; } }
                 >
                     <PlaylistForm 

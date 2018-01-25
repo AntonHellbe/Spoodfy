@@ -4,7 +4,7 @@
     /* border: 1px solid blue; */
 }
 
-.modal-background {
+.modal-overlay {
     background-color: rgba(0, 0, 0, 0.5);
     position: fixed;
     height: 100%;
@@ -14,10 +14,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    /* border: 1px solid green; */
 }
 
-.select-playlist {
+.modal-container {
     height: 400px;
     width: 300px;
     background: #181818;
@@ -31,52 +30,51 @@
     padding: 20px;
     color: #858585;
     border-radius: 10px;
+
+    & > h3 {
+        font-weight: normal;
+        font-size: 16px;
+        margin: 0;
+        padding: 0;
+        color: #fff;
+        margin-bottom: 10px;
+    }
 }
 
-.select-playlist > h3 {
-    font-weight: normal;
-    font-size: 16px;
-    margin: 0;
-    padding: 0;
-    color: #fff;
-    margin-bottom: 10px;
-    /* border-bottom: 1px solid #fff; */
-}
 
-.select-playlist > ul {
+.select-playlist{
     list-style: none;
     font-size: 12px;
     margin: 0;
     padding: 0;
     margin-bottom: 10px;
-}
 
-.select-playlist > ul > li {
-    /* border: 1px solid green; */
-    height: 25px;
-    display: flex;
-    align-items: center;
-}
+    & > li {
+        height: 25px;
+        display: flex;
+        align-items: center;
+        
+        & > li > input[type=radio] {
+            margin-right: 5px;
+            border-radius: 0;
 
-.select-playlist > ul > li > input[type=radio] {
-    margin-right: 5px;
-    border-radius: 0;
-}
+            &:focus {
+                outline: none;
+            }
+        }
+    }
 
-.select-playlist > ul > li > input[type=radio]:focus {
-    outline: none;
-}
-
-.select-playlist > button {
-    display: inline;
-    background: transparent;
-    border: 1px solid white;
-    color: #fff;
-    margin-right: 10px;
-    border-radius: 34px;
-    font-size: 12px;
-    height: 20px;
-    width: 70px;
+    & ~ button {
+        display: inline;
+        background: transparent;
+        border: 1px solid white;
+        color: #fff;
+        margin-right: 10px;
+        border-radius: 34px;
+        font-size: 12px;
+        height: 20px;
+        width: 70px;
+    }
 }
 
 

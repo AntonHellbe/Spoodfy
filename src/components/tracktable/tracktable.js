@@ -97,9 +97,9 @@ class TrackTable extends Component {
 
     return (
         <React.Fragment>
-            <table className="table">
+            <table className="track-table">
                 <tbody>
-                    <tr className="tableHeader">
+                    <tr className="track-table-header">
                         <th className="table-col-index" />
                         <th className="table-col-title"> Title </th>
                         <th className="table-col-artist"> Artist </th>

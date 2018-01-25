@@ -11,6 +11,9 @@
     font-size:16px;
 }
 
+.fa.fa.repeat {
+    font-size: 16px;
+}
 
 .fa{
     color: #cfcfd1;
@@ -27,24 +30,22 @@
 
 .innerDiv{
     width: 250px;
-    /* border:1px solid green; */
     height: 100%;
     display:flex;
     justify-content: center;
     align-content: center;
     flex-shrink: 0;
     flex-basis: 0;
+
+    & > button {
+        margin: auto 20px;
+        padding: 0;
+        border: none;
+        background: transparent;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
 }
 
-
-
-.innerDiv > button {
-    margin: auto 20px;
-    padding: 0;
-    border: none;
-    background: transparent;
-}
-
-.innerDiv > button:hover {
-    cursor: pointer;
-}
