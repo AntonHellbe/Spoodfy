@@ -1,3 +1,4 @@
+@import 'base';
 @import 'main';
 @import 'header';
 @import 'sidemenu';
@@ -19,8 +20,4 @@
 @import 'category';
 @import 'modal';
 @import 'playlistcollection';
-
-
-html, body{
-    font-family: proxima-nova, Helvetica, Arial, sans-serif
-}
+@import 'toplist';

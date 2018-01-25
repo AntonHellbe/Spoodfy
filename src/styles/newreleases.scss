@@ -1,49 +1,41 @@
-.new-releases-banner {
-    display:grid;
-    /* border: 1px solid blue; */
-    /* padding: 5px; */
+.thin-banner {
+    height: 50px;
     width: 100%;
-    height: 100%;
-    grid-template-rows: 50px 1fr;
-    overflow: hidden;
-}
-
-.new-releases-title {
-    grid-row: 1 / 2;
-    /* border: 1px solid green; */
+    padding: 10px 25px;
     display: flex;
+    box-sizing: border-box;
+    // display: flex;
     align-items: center;
-    justify-content: flex-start;
-    border-bottom: 1px solid rgba(125, 125, 135, 0.25);
+    text-align: center;
+    & > button {
+        margin: 0;
+        padding: 0;
+        // align-self: flex-end;
+        margin-left: auto;
+        margin-right: 0;
+        border-radius: $button-radius;
+        background: $orange;
+        width: 120px;
+        height: 30px;
+        border: none;
+        color: #fff;
+
+        &:focus {
+            outline: none;
+        }
+    }
 }
-
-
-.featured-playlists {
-    grid-row: 2 / 3;
-}
-
-
-.btn-search {
-    margin:0;
-    padding: 0;
-    width:120px;
-    height: 30px;
-    border-radius: 34px; 
-    -moz-border-radius: 34px; 
-    -webkit-border-radius: 34px;
-    background: #ff6b42;
-    border: none;
+.new-releases-title {
     color:#fff;
-    font-size:12px;
-    letter-spacing: 2px;
-    margin:auto;
-    margin-right: 0;
-    /* box-shadow: 0px 4px 0px 8px #fff; */
-    
+    font-size: 24px;
+    font-weight: 100;
+    font-style: normal;
+    margin: 0;
+    padding: 0;
 }
 
 .new-releases-albums {
     padding-bottom: 15px;
-    border-bottom: 1px solid rgba(125, 125, 135, 0.25);
+    border-bottom: 1px solid $thingray;
 
 }

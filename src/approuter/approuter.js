@@ -18,6 +18,7 @@ import Album from '../components/albumpage/album';
 import Browse from '../components/browse/browse';
 import Category from '../components/browse/category';
 import ModalRoot from '../components/modal/ModalRoot';
+import TopLists from '../components/toplists/toplists';
 
 
 const Routes = (props) => {
@@ -66,6 +67,11 @@ const Routes = (props) => {
                     path="/category/:id"
                     isAuthenticated={ props.isAuthenticated }
                     component={ Category }
+                />
+                <PrivateRoute
+                    path="/toplists"
+                    isAuthenticated={ props.isAuthenticated }
+                    component={ TopLists }
                 />
                 <Route path="/login" component={ Login } />
                 <Route path="/callback" component={ Callback } />

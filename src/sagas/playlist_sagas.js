@@ -8,7 +8,6 @@ import { spotifyUrls } from '../constants/spotify';
 import { 
     playlistActions,
     authActions,
-    browseActions
 } from '../constants/actions';
 import { 
     playlistsFetched, 
@@ -142,9 +141,9 @@ function* removeTrackFromPlaylistHelper({ spotifyId, playlist, trackUri }) {
 
 function* featuredPlaylistsFetch() {
     while (true) {
-        yield take(browseActions.NEW_RELEASES_REQUESTED);
+        yield take(playlistActions.REQUEST_FEATURED_PLAYLISTS);
         const URL = `${spotifyUrls.baseURL}${spotifyUrls.version}${spotifyUrls.browse}`
-        + `${spotifyUrls.featuredPlaylists}?${spotifyUrls.queryCountry}&limit=5`;
+        + `${spotifyUrls.featuredPlaylists}?${spotifyUrls.queryCountry}&limit=10`;
         // console.log(URL);
         
         try {

@@ -117,3 +117,7 @@ export const requestCreatePlaylist = (values, spotifyId) => ({
 export const addPlaylistSuccess = () => ({
     type: playlistActions.ADD_PLAYLIST_SUCCESS,
 });
+
+export const requestFeaturedPlaylists = () => ({
+    type: playlistActions.REQUEST_FEATURED_PLAYLISTS,
+});

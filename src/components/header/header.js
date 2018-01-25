@@ -62,6 +62,12 @@ class Header extends Component {
                         >
                             <p>Browse</p>
                         </NavLink>
+                        <NavLink
+                        to="/toplists"
+                        activeClassName="active-link"
+                        >
+                            <p>Toplists</p>
+                        </NavLink>
                     </div>
                 
                 </div>
