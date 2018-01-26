@@ -55,6 +55,11 @@ class TrackTable extends Component {
     }
 
     selectTrackHandler = (index, track) => {
+
+        if (track.preview_url === null) {
+            return;
+        }
+
         const {
             activePlaylist: {
                 playlistId,

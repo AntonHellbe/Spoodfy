@@ -118,7 +118,10 @@ class Artist extends Component {
                             defaultChecked
                         />
 
-                        <label htmlFor="tab1">Related artists</label>
+                        <label htmlFor="tab1">
+                            Related artists
+                            <hr />
+                        </label>
 
                         <input
                             id="tab2"
@@ -126,7 +129,10 @@ class Artist extends Component {
                             name="tabs"
                             onClick={ this.handleCheckboxChange }
                         />
-                        <label htmlFor="tab2" >Top Tracks</label>
+                        <label htmlFor="tab2">
+                            Top Tracks
+                            <hr />
+                        </label>
 
                         <input
                             id="tab3"
@@ -134,7 +140,10 @@ class Artist extends Component {
                             name="tabs"
                             onClick={ this.handleCheckboxChange }
                         />
-                        <label htmlFor="tab3" >Albums</label>
+                        <label htmlFor="tab3">
+                            Albums
+                            <hr />
+                        </label>
 
                         <section id="content1">
                             <ArtistList

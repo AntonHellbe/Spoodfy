@@ -15,12 +15,25 @@
     box-sizing: border-box;
     position: relative;
     
-    & > h3 {
+
+    & > .category-title-link {
+        text-decoration: none;
         position: absolute;
-        top: 60%;
         width: 100%;
+        top: 60%;
+        left: 0;
         font-size: 14px;
         font-weight: normal;
+        color: #fff;
+
+        & > h3 {
+            font-size: inherit;
+            font-weight: inherit;
+
+        }
+        &:hover {
+            text-decoration: underline;
+        }
     }
 
     & > a:focus {
@@ -32,10 +45,6 @@
 
         & > a > .category-image-wrapper > img {
             opacity: 0.5;
-        }
-
-        & > h3 {
-            text-decoration: underline;
         }
     }
 

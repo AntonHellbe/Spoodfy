@@ -23,16 +23,16 @@ const PlaylistItem = (props) => {
     let display = 'none';
 
     if (playlistId !== '' && playlistId === id) {
-        color = '#ff6b42';
-        border = '3px solid #ff6b42';
+        color = '#03A9F4';
+        border = '3px solid #03A9F4';
     }
     if (isPlaying && tracklistId === id) {
         display = 'inline';
     }
     return (
         <li
-            style={ { paddingTop: '5px' } }
-            key={ playlist.id }
+        key={ playlist.id }
+        className="side-playlist-item"
         >
             <Link
             to={ `/playlists/${playlist.id}` }

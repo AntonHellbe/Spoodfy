@@ -15,6 +15,7 @@ import {
 import MusicControls from './musiccontrols';
 import Playing from './playing';
 import AudioPlayer from './AudioPlayer';
+import WithAuthentication from '../../HOC/WithAuthentication';
 
 let WIDTH = 0;
 let HEIGHT = 0;
@@ -88,7 +89,7 @@ class MusicBar extends Component {
             for (let i = 0; i < analyser.frequencyBinCount; i++) {
                 barHeight = freqData[i];
 
-                this.ctx.fillStyle = '#ff6b42';
+                this.ctx.fillStyle = '#03A9F4';
                 this.ctx.fillRect(x, HEIGHT, barWidth, -(barHeight / 2));
 
                 x += barWidth + 2;
@@ -328,7 +329,7 @@ const mapStateToProps = (state) => ({
     currentAlbum: state.music.currentAlbum,
     queue: state.music.queue,
     userPlaylists: state.playlists.userPlaylists,
-    spotifyId: state.user.spotifyId
+    spotifyId: state.user.spotifyId,
 });
 
 const mapDispatchToProps = (dispatch) => {
@@ -343,4 +344,4 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(MusicBar);
+export default connect(mapStateToProps, mapDispatchToProps)(WithAuthentication(MusicBar));

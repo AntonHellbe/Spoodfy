@@ -36,7 +36,14 @@ module.exports = {
                 loader: 'sass-loader'
             }
             ]
-        }]
+        },
+        {
+            test: /\.(png|jpg)$/,
+            use: [
+                { loader: 'url-loader?limit=250000' }
+            ]
+        }
+    ]
     },
 
     devtool: 'cheap-module-source-map',

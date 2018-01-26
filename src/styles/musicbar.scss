@@ -177,7 +177,7 @@ Fixed for Chrome?
 }
 
 .progress > input[type=range]::-webkit-slider-runnable-track{
-    background:#ff6b42;
+    background:$base-color;
     border: none;
     border-radius: 3px;
     height:5px;
@@ -216,7 +216,7 @@ Fixed for Chrome?
 
 .progress > input[type=range]::-moz-range-progress{
     height: 5px;
-    background: #ff6b42;
+    background: $base-color;
     border: none;
     border-radius: 3px;
     outline: none;

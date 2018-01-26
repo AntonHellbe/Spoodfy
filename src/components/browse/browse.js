@@ -47,9 +47,14 @@ class Browse extends Component {
                                                 />
                                             </div>
                                         </Link>
+                                        <Link
+                                        className="category-title-link"
+                                        to={ `/category/${category.id}` }
+                                        >
                                             <h3>
                                                 { category.name }
                                             </h3>
+                                        </Link>
                                     </div>
                                 );
                             })

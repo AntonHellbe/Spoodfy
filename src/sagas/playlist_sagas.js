@@ -143,7 +143,7 @@ function* featuredPlaylistsFetch() {
     while (true) {
         yield take(playlistActions.REQUEST_FEATURED_PLAYLISTS);
         const URL = `${spotifyUrls.baseURL}${spotifyUrls.version}${spotifyUrls.browse}`
-        + `${spotifyUrls.featuredPlaylists}?${spotifyUrls.queryCountry}&limit=10`;
+        + `${spotifyUrls.featuredPlaylists}?${spotifyUrls.queryCountry}&limit=12`;
         // console.log(URL);
         
         try {

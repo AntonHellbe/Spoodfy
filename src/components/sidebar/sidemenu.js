@@ -1,6 +1,5 @@
-import { connect } from 'react-redux';
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 import PlaylistMenu from './playlistmenu';
 import { 
     getUserPlaylists,
@@ -9,6 +8,7 @@ import {
 import {
     showModal
 } from '../../actions/modal_actions';
+import WithAuthentication from '../../HOC/WithAuthentication';
 
 class SideMenu extends Component {
 
@@ -33,7 +33,7 @@ class SideMenu extends Component {
         return (
             <div className="sidemenu">
                 <div className="sidemenu-title">
-                    <p className="playlistTitle"> Playlists </p>
+                    <p className="playlist-sidemnu-title"> Playlists </p>
                     <i 
                     className="fa fa-plus" 
                     aria-hidden="true"
@@ -82,4 +82,4 @@ const mapDispatchToProps = (dispatch) => ({
     showModal: (modalProps) => dispatch(showModal('ADD_PLAYLIST_MODAL', modalProps)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(SideMenu));
+export default connect(mapStateToProps, mapDispatchToProps)(WithAuthentication(SideMenu));

@@ -2,7 +2,6 @@
     display: inline-block;
     padding: 5px 10px;
     text-align: center;
-    /* border: 1px solid transparent; */
     color: #fff;
     user-select: none;
     -ms-user-select: none;
@@ -10,6 +9,10 @@
     -webkit-user-select: none;
     font-size: 13px;
     text-transform: uppercase;
+
+    & > hr {
+        display: none;
+    }
 }
 
 .main-content-bottom > label:hover {
@@ -30,8 +33,17 @@
 .main-content-bottom > section {
     display: none;
     padding: 10px;
-    border-top: 0.5px solid rgba(125, 125, 135, 0.25);
 }
 .main-content-bottom > input:checked + label {
-    color: #7b7b7b;
+    color: rgb(123, 123, 123);
+    & > hr {
+        margin: 0 auto;
+        padding: 0;
+        display: block;
+        width: 35px;
+        height: 3px;
+        color: $base-color;
+        background: $base-color;
+        border: 0 none;
+    }
 }

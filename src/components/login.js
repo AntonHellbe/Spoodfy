@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { initialAuthRequest,
         requestToken
 } from '../actions/auth_actions';
+// import Background from '../images/pink_floyd.jpg';
 
 const SCOPES = [
     'playlist-modify-public',
@@ -58,11 +59,16 @@ class Login extends Component {
     }
 
     render() {
-        return (
-            <div className="loginDiv">
-                <h1>Hello!</h1>
-                <p>Login using the button top right</p>
 
+        return (
+            <div 
+            className="login-wrapper"
+            style={ { backgroundImage: `url(${require('../../public/images/pink_floyd.jpg')})` } }
+            >
+            <div 
+            className="login-image" 
+            >
+                <h1> Login to play music </h1>
                 <button
                 onClick={ this.login }
                 >
@@ -78,8 +84,9 @@ class Login extends Component {
                         <p>{ this.props.user_error }</p>
                     }
                 </div>
-                    
             </div>
+                
+        </div>
         );
 
     }

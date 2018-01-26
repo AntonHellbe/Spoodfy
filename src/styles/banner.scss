@@ -23,30 +23,31 @@
   grid-area: 1 / 2 / 2 / 3;
   /* border: 1px solid brown; */
   padding: 15px;
-}
 
-.banner-title > h1, h3 {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  color: #fff;
-}
+  & > h1, h3 {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color: #fff;
+  }
 
-.banner-title > h3 {
-  margin:0;
-  padding:0;
-  font-weight:normal;
-  font-size: 12px;
-  margin-bottom: 7px;
-  text-transform: uppercase;
-}
-.banner-title > h1 {
-  margin: 0;
-  padding: 0;
-  font-weight:800;
-  font-size: 32px;
-  font-family: 'Open sans', sans-serif;
-  
+  & > h1 {
+    margin: 0;
+    padding: 0;
+    font-weight:800;
+    font-size: 32px;
+    font-family: 'Open sans', sans-serif;
+  }
+
+  & > h3 {
+    margin:0;
+    padding:0;
+    font-weight:normal;
+    font-size: 12px;
+    margin-bottom: 7px;
+    text-transform: uppercase;    
+  }
+
 }
 
 .banner-description {
@@ -56,49 +57,46 @@
   width: 100%;
   box-sizing:border-box;
   padding: 15px;
-}
 
-.banner-description > ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  font-size: 14px;
-  color: #fff;
-}
+  & > .banner-description-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 14px;
+    color: #fff;
 
-.banner-description > ul > li {
-  display:block;
-  overflow:hidden;
-  white-space:nowrap;
-  text-overflow: ellipsis;
-}
+     & > li {
+      display:block;
+      overflow:hidden;
+      white-space:nowrap;
+      text-overflow: ellipsis;
 
-.banner-description > ul > li > a {
-  text-decoration: none;
-  color: #fff;
-}
+      & > a {
+        text-decoration: none;
+        color: inherit;
 
-.banner-description > ul > li > a:hover {
-  text-decoration: underline;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+
+     }
+  }
 }
 
 .information-top-right {
   grid-area: 1 / 3 / 2 / 4;
-  /* border:1px solid blue; */
   padding:5px;
-  /* text-align: center; */
-  /* border: 1px solid blue; */
-}
 
-.information-top-right > p {
-  margin:0;
-  padding: 0;
-  font-size: 13px;
-  color: #858585;
-  display: block;
-  width: 100%;
-  text-align: right;
-  /* border: 1px solid white; */
+  & > p {
+    margin:0;
+    padding: 0;
+    font-size: 13px;
+    color: #858585;
+    display: block;
+    width: 100%;
+    text-align: right;
+  }
 }
 
 .information-bottom-right {
@@ -109,28 +107,90 @@
   color: #858585;
   margin: auto 0;
   margin-bottom: 0;
+
+  & > p {
+    margin: 0;
+    padding: 0;
+    font-size:13px;
+    width: 100%;
+    display: block;
+  }
 }
 
-.information-bottom-right > p {
-  margin: 0;
-  padding: 0;
-  font-size:13px;
-  width: 100%;
-  display: block;
-  /* border:1px solid blue; */
-}
 .action-buttons {
   grid-area: 3 / 2 / 4 / 4;
   padding-left: 15px;
-  /* width: 100%; */
-  /* margin: auto 0; */
-  /* border: 1px solid pink; */
   display: flex;
   align-items:center;
-}
 
-.action-buttons > h3 {
-  display: none;
+  & > h3 {
+    margin: 0;
+    padding: 0;
+    color:#fff;
+    display: none;
+  }
+
+  & > .btn-play{
+    margin-right: 15px;
+    border-radius: 33px;
+    border:none;
+    width: 100px;
+    height: 30px;
+    color: #fff;
+    background: $base-color;
+    font-size: 12px;
+    letter-spacing: 2px;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  & > .btn-follow {
+    background: transparent;
+    border: 1px solid white;
+    width: 120px;
+    height: 30px;
+    font-size:12px;
+    letter-spacing: 2px;
+    border-radius: 33px;
+    color:#fff;
+    margin-right: 10px;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  & > .btn-share {
+    background: transparent;
+    border: 1px solid #fff;
+    width: 60px;
+    height: 30px;
+    font-size: 16px;
+    letter-spacing: 2px;
+    border-radius: 33px;
+    color: #fff;
+  }
+
+  & > .btn-edit {
+    background: transparent;
+    margin: 0 auto;
+    margin-right: 0;
+    border: 1px solid #fff;
+    border-radius: 33px;
+    height: 30px;
+    width: 40px;
+    padding: 0;
+  }
 }
 
 .banner-effect-title {
@@ -139,73 +199,7 @@
   margin: auto 0;
 }
 
-.action-buttons > button {
-  margin-right: 15px;
-}
 
-.action-buttons > button:hover {
-  cursor: pointer;
-}
-
-.action-buttons > button:focus {
-  outline: none;
-}
-
-.btn-play{
-  border-radius: 33px;
-  border:none;
-  width: 100px;
-  height: 30px;
-  color: #fff;
-  background: #ff6b42;
-  font-size: 12px;
-  letter-spacing: 2px;
-}
-
-.btn-follow {
-  background: transparent;
-  border: 1px solid white;
-  width: 120px;
-  height: 30px;
-  font-size:12px;
-  letter-spacing: 2px;
-  border-radius: 33px;
-  color:#fff;
-}
-
-.btn-unfollow {
-  background: transparent;
-  border: 1px solid white;
-  width: 120px;
-  height: 30px;
-  font-size:12px;
-  letter-spacing: 2px;
-  border-radius: 33px;
-  color:#ff6b42;
-}
-
-
-.btn-share {
-  background: transparent;
-  border: 1px solid #fff;
-  width: 60px;
-  height: 30px;
-  font-size: 16px;
-  letter-spacing: 2px;
-  border-radius: 33px;
-  color: #fff;
-}
-
-.btn-edit {
-  background: transparent;
-  margin: 0 auto;
-  margin-right: 0;
-  border: 1px solid #fff;
-  border-radius: 33px;
-  height: 30px;
-  width: 40px;
-  padding: 0;
-}
 
 @media (min-width: 300px) and (max-width: 600px) {
   .banner-container > .information-top-right {
@@ -235,7 +229,7 @@
 
 .div-pop {
   height: 10px;
-  border-right: 2px solid #ff6b42;
+  border-right: 2px solid $base-color;
   margin-left: 1px;
   display: inline-block;
 }
@@ -262,14 +256,14 @@
   animation-duration: 1s;
   background: linear-gradient(0deg,#181818, #121212);
   box-shadow: 0px 2px 8px 0px rgba(0,0,0,0.2);
+
 }
 
 .effect1 > h3 {
-  margin: 0;
-  padding: 0;
-  display: none;
-  font-size: 16px;
-  display: block;
+    padding: 0;
+    display: none;
+    font-size: 16px;
+    display: block;
 }
 
 @keyframes slide-down {

@@ -147,7 +147,7 @@ class Banner extends Component {
                 </div>
 
                 <div className="banner-description">
-                    <ul>
+                    <ul className="banner-description-list" >
                         { type === 'album' &&
                             <li>
                                 <Link 

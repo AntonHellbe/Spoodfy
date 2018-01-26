@@ -111,7 +111,7 @@ class TrackItem extends Component {
         if (seconds < 10) {
             seconds = `0${seconds}`;
         }
-        const color = currentId === id ? '#ff6b42' : '#ffffff';
+        const color = currentId === id ? '#03A9F4' : '#ffffff';
         return (
             <tr 
             className="track" 
@@ -121,6 +121,7 @@ class TrackItem extends Component {
             >
                 <td 
                 className="index-col"
+                style={ { color } }
                 > 
                     { track.preview_url ? 
                         index : 

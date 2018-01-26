@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import RecentItem from './recentitem';
+import WithAuthentication from '../HOC/WithAuthentication';
 
 class RecentlyPlayed extends Component {
 
@@ -23,6 +24,7 @@ class RecentlyPlayed extends Component {
 
 const mapStateToProps = (state) => ({
     recentlyPlayed: state.tracks.recentlyPlayed,
+    isAuthenticated: state.user.isAuthenticated
 });
 
-export default connect(mapStateToProps, null)(RecentlyPlayed);
+export default connect(mapStateToProps, null)(WithAuthentication(RecentlyPlayed));

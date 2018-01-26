@@ -98,21 +98,33 @@ class Profile extends Component {
                         defaultChecked
                     />
 
-                    <label htmlFor="tab1">Your top artists</label>
+                    <label htmlFor="tab1">
+                        Your top artists
+                        <hr />
+                    </label>
 
                     <input
                         id="tab2"
                         type="radio"
                         name="tabs"
                     />
-                        <label htmlFor="tab2">Recently Played Tracks</label>
+                        <label htmlFor="tab2">
+                            Recently Played Tracks
+                            <hr />
+                        </label>
 
                     <input
                         id="tab3"
                         type="radio"
                         name="tabs"
                     />
-                    <label htmlFor="tab3" onClick={ this.topTracksClick } >Your Top Tracks</label>
+                    <label 
+                    htmlFor="tab3" 
+                    onClick={ this.topTracksClick }
+                    >
+                        Your Top Tracks
+                        <hr />
+                    </label>
 
                     <section id="content1">
                         <ArtistList

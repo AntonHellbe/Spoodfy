@@ -14,7 +14,7 @@ class PlaylistMenu extends Component {
 
 
         return (
-            <ul className="playlists" style={ { listStyle: 'none' } }>
+            <ul className="playlists-sidemenu">
                 { playlists.map((playlist) => (
                     <PlaylistItem 
                     playlist={ playlist }

@@ -33,13 +33,13 @@
     
 }
 
-.playlistTitle {
+.playlist-sidemnu-title {
     color: #fff;
     font-size: 13px;
     text-transform: uppercase;
 }
 
-.playlists{
+.playlists-sidemenu{
     max-height: 100%;
     width: 100%;
     margin: 0px;
@@ -50,16 +50,17 @@
     text-overflow: ellipsis;
     box-sizing: border-box;
 
-    & > li {
+    & > .side-playlist-item {
         height: 34px;
         position:relative;
         display:block;
         margin:0;
         padding: 0;
+        margin:3px 0;
         box-sizing: border-box;
     }
 
-    & > li > a {
+    & > .side-playlist-item > a {
         display:flex;
         height: 34px;
         width: 200px;
@@ -72,7 +73,7 @@
         padding-left: 5px;
     }
 
-    & > li > a > span {
+    & > .side-playlist-item > a > span {
         font-size: 12px;
         overflow: hidden;
         white-space: nowrap;
@@ -81,16 +82,16 @@
         box-sizing: border-box;
     }
 
-    & > li > a > img {
+    & > .side-playlist-item > a > img {
         margin-right: 5px;
         box-sizing: border-box;
     }
 
-    & > li > a:focus {
+    & > .side-playlist-item > a:focus {
         outline: none;
     }
 
-    & > li > a > i {
+    & > .side-playlist-item > a > i {
         position: absolute;
         left: 90%;
         font-size:14px;

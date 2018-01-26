@@ -16,7 +16,7 @@
 
 .fa.fa-spotify {
     font-size: 24px;
-    color: #ff6b42;
+    color: $base-color;
 }
 
 .navLinks{
@@ -43,11 +43,11 @@
 
 
 .links > a:hover {
-    border-bottom: 3px solid #ff6b42;
+    border-bottom: 3px solid $base-color;
 }
 
 .active-link {
-    border-bottom: 3px solid #ff6b42;   
+    border-bottom: 3px solid $base-color;   
 }
 
 .brand > a {
