@@ -51,7 +51,8 @@ class MusicBar extends Component {
     }
 
     onVolumeClick = () => {
-        this.props.updateVolume(0);
+        this.setState(() => ({ volume: 0 }));
+        this.audioElement.volume = 0;
     }
     
     onChangeVolume = (e) => {
@@ -134,7 +135,8 @@ class MusicBar extends Component {
             currentTrack,
             playingIndex,
             queue,
-            tracklist
+            tracklist,
+            shuffle
         } = this.props;
 
         const id = e.target.id;
@@ -157,7 +159,9 @@ class MusicBar extends Component {
             case 'next':
                 if (queue.length > 0) {
                     this.props.loadNextQueueTrack();
-                } else if (playingIndex < tracklist.length - 1) {
+                } else if (shuffle) {
+                    this.props.loadNextTrack(Math.floor(Math.random() * tracklist.length - 1) + 1);
+                } else {
                     this.props.loadNextTrack(playingIndex + 1);
                 }
                 break;
@@ -272,12 +276,12 @@ class MusicBar extends Component {
 
                     </ul>
                     <div className="volume-control">
-                    <i 
-                    className="fa fa-volume-up"
-                    aria-hidden="true"
-                    onClick={ this.onVolumeClick }  
-                    />
-                    <input
+                        <i 
+                        className="fa fa-volume-up"
+                        aria-hidden="true"
+                        onClick={ this.onVolumeClick }  
+                        />
+                        <input
                         className="volumeInput"
                         type="range"
                         name="points"
@@ -286,7 +290,7 @@ class MusicBar extends Component {
                         step="any"
                         value={ this.state.volume }
                         onChange={ this.onChangeVolume }
-                    />
+                        />
                     </div>
 
                 </div>

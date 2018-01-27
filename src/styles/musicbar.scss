@@ -8,7 +8,7 @@
     align-items: center;
     box-sizing: border-box;
     padding: 0px 7px;
-    /* position: relative; */
+    position: relative;
     /* border: 1px solid red; */
 }
 
@@ -51,26 +51,31 @@
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    /* border: 1px solid green; */
-}
 
-.volume-area > button {
-    border: none;
-    background: transparent;
-    color: #fff;
-    width: 45px;
-    height: 30px;
-    box-sizing:border-box;
-    /* border: 1px solid #fff; */
-}
+    & > button {
+        border: none;
+        background: transparent;
+        color: #fff;
+        width: 45px;
+        height: 30px;
+        box-sizing:border-box;
 
-.volume-area > button:hover {
-    cursor: pointer;
+        &:hover {
+            cursor: pointer;
+        }
+
+        &:focus {
+            outline: none;
+        }
+
+        &::-moz-focus-inner {
+            border: 0;
+        }
+    }
 }
 
 .volume-control {
     width: 140px;
-    
     height: 100%;
     display: flex;
     align-items: center;
@@ -257,3 +262,4 @@ Fixed for Chrome?
     width: 100%;
     z-index: 1000;
 }
+

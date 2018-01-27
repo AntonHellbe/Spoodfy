@@ -39,6 +39,7 @@ class AddPlaylistModal extends Component {
                 className="modal-container"
                 ref={ (modal) => { this.modal = modal; } }
                 >
+                <h3> Create a new Playlist </h3>
                     <PlaylistForm 
                     initialValues={ {
                         name: '',

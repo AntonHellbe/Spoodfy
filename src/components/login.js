@@ -63,7 +63,10 @@ class Login extends Component {
         return (
             <div 
             className="login-wrapper"
-            style={ { backgroundImage: `url(${require('../../public/images/pink_floyd.jpg')})` } }
+                style={ {
+                    backgroundImage: 
+                    `linear-gradient(135deg, rgba(3, 169, 244, 1), rgba(2, 166, 242, 0.3)), 
+                    url(${require('../../public/images/pink_floyd.jpg')}` } } //eslint-disable-line
             >
             <div 
             className="login-image" 

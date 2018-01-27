@@ -20,8 +20,9 @@ const PlaylistItem = (props) => {
         <div className="playlist-item">
             <div className="playlist-image-wrapper">
                 <Link
-                    to={ `/playlists/${playlist.id}` }
-                    onClick={ () => onClickPlaylist(playlist) }
+                to={ `/playlists/${playlist.id}` }
+                onClick={ () => onClickPlaylist(playlist) }
+                className="playlist-image-link"
                 >
                     <img
                         src={ images[0].url }
@@ -37,8 +38,8 @@ const PlaylistItem = (props) => {
                 } }
                 />
             </div>
-            <ul>
-                <li>
+            <ul className="playlist-item-description">
+                <li className="playlist-item-name">
                     <Link 
                     to={ `/playlists/${playlist.id}` }
                     onClick={ () => onClickPlaylist(playlist) }

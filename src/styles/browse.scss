@@ -7,13 +7,12 @@
 }
 
 .category-image {
-    height: 300px;
-    width: 300px;
-    margin: 20px 0;
-    /* margin: 10px; */
+    height: 325px;
+    width: 325px;
     text-align: center;
     box-sizing: border-box;
     position: relative;
+    margin-bottom: 20px;
     
 
     & > .category-title-link {
@@ -52,8 +51,8 @@
 }
 
 .category-image-wrapper {
-    width: 300px;
-    height: 300px;
+    width: 325px;
+    height: 325px;
     box-sizing: border-box;
 
     & > img {
@@ -63,6 +62,7 @@
         margin: 0;
         display: block;
         box-sizing: border-box;
+        transition: all ease-in 0.2s;
     }
 }
 

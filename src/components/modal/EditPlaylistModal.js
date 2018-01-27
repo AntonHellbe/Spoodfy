@@ -54,6 +54,7 @@ class EditPlaylistModal extends Component {
                 className="modal-container"
                 ref={ modal => { this.modal = modal; } }
                 >
+                    <h3> Edit Playlist: { name } </h3>
                     <PlaylistForm 
                     initialValues={ {
                         name,

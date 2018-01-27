@@ -32,6 +32,9 @@ class Playlist extends Component {
         } = this.props;
         const tracks = playlistTracks.filter((item) => item.track.preview_url !== null)
             .map((item) => item.track);
+        if (tracks.length === 0) {
+            return;
+        }
         this.props.selectTrack(tracks[0], tracks);
     }
 
