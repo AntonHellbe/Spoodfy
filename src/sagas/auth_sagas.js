@@ -15,8 +15,7 @@ import {
     clearToken,
     userInformationSuccess,
     userInformationError,
-    } 
-    from '../actions/auth_actions';
+    } from '../actions/auth_actions';
 import { spotifyUrls } from '../constants/spotify';
 import history from '../history';
 import { store } from '../app';

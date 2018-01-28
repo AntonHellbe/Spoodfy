@@ -49,18 +49,18 @@ class AudioPlayer extends Component {
         } = this.props;
         return (
             <audio
-                ref={ (audio) => { this.audioElement = audio; } }
-                id="audioPlayer"
-                src={ preview_url }
-                key="audio"
-                id="audioPlayer"
-                crossOrigin="anonymous"
-                volume={ 0.05 } //This doesn't work it seems like
-                onTimeUpdate={ this.onTimeUpdate }
-                onEnded={ this.props.onEnded }
-                onLoadedData={ this.onLoaded }
-                // autoPlay={ autoPlay }
-                loop={ repeat }
+            ref={ (audio) => { this.audioElement = audio; } }
+            id="audioPlayer"
+            src={ preview_url }
+            key="audio"
+            id="audioPlayer"
+            crossOrigin="anonymous"
+            volume={ 0.05 } //This doesn't work it seems like
+            onTimeUpdate={ this.onTimeUpdate }
+            onEnded={ this.props.onEnded }
+            onLoadedData={ this.onLoaded }
+            // autoPlay={ autoPlay }
+            loop={ repeat }
             />
         );
     }
