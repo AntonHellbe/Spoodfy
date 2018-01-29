@@ -11,7 +11,6 @@ import {
 import WithAuthentication from '../../HOC/WithAuthentication';
 
 class SideMenu extends Component {
-
     
     componentWillReceiveProps(nextProps) {
         if (nextProps.userPlaylists.length === 0) {
@@ -31,7 +30,8 @@ class SideMenu extends Component {
 
     render() {
         return (
-            <div className="sidemenu">
+            <div className="sidemenu" id="abc">
+
                 <div className="sidemenu-title">
                     <p className="playlist-sidemnu-title"> Playlists </p>
                     <i 

@@ -2,13 +2,18 @@
     border-top: 1px solid rgba(125, 125, 135, 0.25);
     grid-area: 2 / 1 / 5 / 2;
     width: 100%;
+    max-width: 100%;
     height: 100%;
-    padding: 10px;
+    padding: 1%;
     background: $darkblack;
     overflow-y: auto;
     overflow-x: hidden;
     box-sizing: border-box;
     /* border-right: 1px solid rgba(125, 125, 135, 0.25); */
+
+    & > .fa.fa-bars {
+        display: none;
+    }
 }
 
 .sidemenu-title {
@@ -40,10 +45,9 @@
 }
 
 .playlists-sidemenu{
-    max-height: 100%;
     width: 100%;
     margin: 0px;
-    padding: 0px 0px 5px 0px;
+    padding: 0px;
     line-height: 1.25;
     font-size: 12px;
     white-space: nowrap;
@@ -69,8 +73,8 @@
         align-items: center;
         font-size: 12px;
         text-decoration: none;
-        box-sizing: border-box;
         padding-left: 5px;
+        box-sizing: border-box;
     }
 
     & > .side-playlist-item > a > span {
@@ -84,7 +88,6 @@
 
     & > .side-playlist-item > a > img {
         margin-right: 5px;
-        box-sizing: border-box;
     }
 
     & > .side-playlist-item > a:focus {
@@ -96,6 +99,7 @@
         left: 90%;
         font-size:14px;
         display: none;
+        box-sizing: border-box;
     }
 }
 
@@ -104,6 +108,7 @@
     height: 25px;
     width: 25px;
     vertical-align: middle;
+    box-sizing: border-box;
 }
 
 .playlist:hover{
@@ -114,5 +119,34 @@
 @keyframes spinning {
     100% {
         transform: rotate(360deg)
+    }
+}
+
+.effect2 {
+    grid-area: 0;
+    position: absolute;
+    left: 0;
+    padding: 1%;
+    z-index: 999;
+    width: 257px;
+    height: calc(100% - 107px);
+    animation-name: width-anim;
+    animation-duration: 1s;
+    overflow-y: auto;
+    overflow-x: hidden;
+    top: 57px;
+    bottom: 50px;
+    box-sizing: border-box;
+    
+    background: $darkblack;
+}
+
+@keyframes width-anim {
+    from {
+        width: 0px;
+    }
+
+    to {
+        width: 257px;
     }
 }

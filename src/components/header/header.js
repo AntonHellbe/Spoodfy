@@ -7,8 +7,42 @@ import { logoutRequest } from '../../actions/auth_actions';
 
 class Header extends Component { 
 
+    constructor(props) {
+        super(props);
+
+        this.sidemenu = null;
+    }
+
     state = {
-        isVisible: false
+        isVisible: false,
+        isSidemenuVisible: false
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.isAuthenticated && this.sidemenu === null) {
+            this.sidemenu = document.getElementById('abc');
+            console.log(this.sidemenu);
+        }
+    }
+
+    
+    onToggleSidemenu = () => {
+        console.log('click registrd!');
+        if (this.state.isSidemenuVisible) {
+            this.sidemenu.classList = ['sidemenu'];
+        } else {
+            this.sidemenu.classList = [this.sidemenu.classList[0] + ' effect2'];
+        }
+
+        this.setState((prevState) => ({ isSidemenuVisible: !prevState.isSidemenuVisible }));
+    }
+
+    OnLogoutHandler = () => {
+        this.props.logoutRequest();
+    }
+
+    handleOnClick = () => {
+        this.setState((prevState) => ({ isVisible: !prevState.isVisible }));
     }
 
     hide = (e) => {
@@ -16,14 +50,6 @@ class Header extends Component {
             e.relatedTarget.click();
         }
         this.setState(() => ({ isVisible: false }));
-    }
-
-    handleOnClick = () => {
-        this.setState((prevState) => ({ isVisible: !prevState.isVisible }));
-    }
-    
-    OnLogoutHandler = () => {
-        this.props.logoutRequest();
     }
 
     render() {
@@ -36,14 +62,25 @@ class Header extends Component {
         return (
 
             <div className="header">
+                <button onClick={ this.onToggleSidemenu }>
+                    <i className="fa fa-bars" aria-hidden="true" />
+                </button>
                 <div className="brand">
+                    
                     <Link to="/">
                     <i className="fa fa-spotify" aria-hidden="true" />
                         <h3>spoodfy </h3>
                     </Link>
                 </div>
+                <div className="nav-btn">
+                    <label htmlFor="nav-check">
+                    <span />
+                    <span />
+                    <span />
+                    </label>
+                </div>
+                <input type="checkbox" id="nav-check" />
                 <div className="navLinks">
-                    <div className="links">
                         <NavLink 
                         exact to="/"
                         activeClassName="active-link"
@@ -68,7 +105,6 @@ class Header extends Component {
                         >
                             <p>Toplists</p>
                         </NavLink>
-                    </div>
                 
                 </div>
                 <div className="usersection" id="usersection">

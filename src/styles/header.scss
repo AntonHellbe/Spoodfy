@@ -3,15 +3,44 @@
     background: linear-gradient(to bottom, #3f3f3f, #121212);
     display: flex;
     width: 100%;
-    height: 100%;
+    height: 57px;
     align-items: center;
     justify-content: flex-start;
+    box-sizing: border-box;
+
+    & > .nav-btn {
+        display: none;
+    }
+
+    & > #nav-check {
+        display: none;
+    }
+
+    & > .fa.fa-bars {
+        display: none;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        // font-size: 24px;
+    }
+
+    & > button {
+        background: transparent;
+        border: none;
+        box-sizing: border-box;
+        margin: 0;
+        margin-left: 15px;
+        font-size: 16px;
+        padding: 0;
+        display: none;
+    }
+
 }
+
 
 .brand {
     height: 100%;
     padding: 10px;
-    padding-left: 25px;
 }
 
 .fa.fa-spotify {
@@ -20,31 +49,26 @@
 }
 
 .navLinks{
-    width:auto;
+    display: flex;
+    width: 100%;
     height: 100%;
     overflow: hidden;
     flex-grow: 100;
-}
-
-.links{
-    width: 100%;
-    height: 100%;
-    display: flex;
     justify-content: center;
+
+    & > a {
+        text-decoration: none;
+        color:#fff;
+        margin: 0 15px;
+        outline: none;
+        margin-bottom: 1px;
+
+        &:hover {
+            border-bottom: 3px solid $base-color;
+        }
+    }
 }
 
-.links > a {
-    text-decoration: none;
-    color:#fff;
-    margin: 0 15px;
-    outline: none;
-    margin-bottom: 1px;
-}
-
-
-.links > a:hover {
-    border-bottom: 3px solid $base-color;
-}
 
 .active-link {
     border-bottom: 3px solid $base-color;   
@@ -117,7 +141,6 @@
 }
 
 .dropdown {
-    /* border: 1px solid red; */
     margin: auto 0px;
     position: relative;
     display: inline-block;
@@ -175,4 +198,77 @@
 
 .fa-angle-down:hover{
     cursor: pointer;
+}
+
+
+
+@media (max-width: 1000px) {
+    .header > .nav-btn {
+        display: inline-block;
+        height: 57px;
+        position: absolute;
+        right: 0;
+        margin-right: 10px;
+    }
+
+    .usersection  {
+        display: none;
+    }
+
+    .header > .nav-btn > label {
+        display: inline-block;
+        width: 30px;
+        height: 100%;
+        // display: flex;
+        padding-top: 15px;
+        box-sizing: border-box;
+        margin: auto 0;
+    }
+
+    .header > .nav-btn > label > span {
+        display: block;
+        // width: 25px;
+        height: 10px;
+        border-top: 2px solid #eee;
+        // margin: 1px 0px;
+
+    }
+
+    .header > .navLinks {
+        position: absolute;
+        display: block;
+        width: 100%;
+        background-color: #333;
+        height: calc(100% - 107px);
+        transition: all 0.3 ease in;
+        overflow-y: hidden;
+        top: 57px;
+        bottom: 50px;
+        left: 0px;
+    }
+
+    .header > .navLinks > a {
+        display: block;
+        width: 100%;
+        height: 50px;
+    }
+
+    .header > #nav-check:not(:checked) + .navLinks {
+        height: 0px;
+    }
+
+    .header > #nav-check:checked + .navLinks {
+        height: calc(100vh - 50px);
+        overflow-y: auto;
+        z-index: 999;
+    }
+}
+
+
+@media only screen and (max-width: 800px) {
+
+    .header > button {
+        display: inline;
+    }
+
 }
