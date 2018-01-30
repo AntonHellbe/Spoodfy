@@ -3,12 +3,11 @@ import _ from 'lodash';
 import { connect } from 'react-redux';
 import {
     togglePlaying,
-    loadNextTrack,
-    previousTrack,
+    requestPreviousTrack,
+    requestNextTrack,
     toggleShuffle,
     toggleRepeat,
-    loadNextQueueTrack
-} from '../../actions/music_actions';
+} from '../../actions/musiccontrol_actions';
 import {
     showModal
 } from '../../actions/modal_actions';
@@ -105,23 +104,7 @@ class MusicBar extends Component {
     }
 
     OnEndedListener = () => {
-        const { 
-            tracklist, 
-            playingIndex, 
-            shuffle, 
-            queue 
-        } = this.props;
-
-        if (shuffle && queue.length === 0) {
-            this.props.loadNextTrack(Math.floor(Math.random() * (tracklist.length - 1)));
-        } else if (queue.length > 0) {
-            this.props.loadNextQueueTrack();
-        } else if (playingIndex < tracklist.length - 1) {
-            this.props.loadNextTrack(playingIndex + 1);            
-        } else {
-            this.setState(() => ({ value: 0 }));
-            this.props.togglePlaying();
-        }
+        this.props.requestNextTrack();
     }
 
     timeUpdate = (value) => {
@@ -131,12 +114,8 @@ class MusicBar extends Component {
     handleMusicControls = (e) => {
         e.stopPropagation();
 
-        const {  
-            currentTrack,
-            playingIndex,
-            queue,
-            tracklist,
-            shuffle
+        const {
+            currentTrack
         } = this.props;
 
         const id = e.target.id;
@@ -157,18 +136,10 @@ class MusicBar extends Component {
                 this.props.toggleRepeat();
                 break;
             case 'next':
-                if (queue.length > 0) {
-                    this.props.loadNextQueueTrack();
-                } else if (shuffle) {
-                    this.props.loadNextTrack(Math.floor(Math.random() * tracklist.length - 1) + 1);
-                } else {
-                    this.props.loadNextTrack(playingIndex + 1);
-                }
+                this.props.requestNextTrack();
                 break;
             case 'prev':
-                if (playingIndex > 0) {
-                    this.props.previousTrack(playingIndex - 1);
-                }
+                this.props.requestPreviousTrack();
                 break;
 
             default:
@@ -209,7 +180,6 @@ class MusicBar extends Component {
             currentTrack,
             isPlaying,
             shuffle,
-            autoPlay
          } = this.props;
 
         let preview_url = null;
@@ -309,7 +279,6 @@ class MusicBar extends Component {
                 isPlaying={ isPlaying }
                 togglePlaying={ this.props.togglePlaying }
                 repeat={ repeat }
-                autoPlay={ autoPlay }
                 volume={ this.state.volume }
                 />
                     
@@ -322,12 +291,11 @@ class MusicBar extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    repeat: state.music.repeat,
-    autoPlay: state.music.autoPlay,
-    isPlaying: state.music.isPlaying,
+    repeat: state.controls.repeat,
+    isPlaying: state.controls.isPlaying,
     tracklist: state.music.tracklist,
     currentTrack: state.music.currentTrack,
-    shuffle: state.music.shuffle,
+    shuffle: state.controls.shuffle,
     isAuthenticated: state.user.isAuthenticated,
     playingIndex: state.music.playingIndex,
     currentAlbum: state.music.currentAlbum,
@@ -339,12 +307,11 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => {
     return {
         togglePlaying: () => dispatch(togglePlaying()),
-        loadNextTrack: (index) => dispatch(loadNextTrack(index)),
         toggleShuffle: () => dispatch(toggleShuffle()),
         toggleRepeat: () => dispatch(toggleRepeat()),
-        previousTrack: (index) => dispatch(previousTrack(index)),
-        loadNextQueueTrack: () => dispatch(loadNextQueueTrack()),
-        showModal: (modalProps) => dispatch(showModal('ADD_TRACK_MODAL', modalProps))
+        showModal: (modalProps) => dispatch(showModal('ADD_TRACK_MODAL', modalProps)),
+        requestNextTrack: () => dispatch(requestNextTrack()),
+        requestPreviousTrack: () => dispatch(requestPreviousTrack())
     };
 };
 

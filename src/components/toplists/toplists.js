@@ -18,7 +18,7 @@ class TopLists extends Component {
     }
 
     onClickPlaylist = (playlist) => {
-        this.props.updateActivePlaylist(playlist, this.props.spotifyId)
+        this.props.updateActivePlaylist(playlist, this.props.spotifyId);
     }
 
     render() {

@@ -1,23 +1,17 @@
 import { musicActions } from '../constants/actions';
 
 const INITIAL_STATE = {
-    repeat: false,
-    autoPlay: true,
-    isPlaying: false,
     currentTrack: {},
     tracklist: [],
     queue: [],
     error: '',
     playingIndex: 0,
     tracklistId: '',
+    recentlyPlayed: []
 };
 
 const musicReducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
-        case musicActions.TOGGLE_PLAYING:
-            return { 
-                ...state, 
-                isPlaying: !state.isPlaying };
 
         case musicActions.SELECT_TRACK:
             return { ...state, 
@@ -37,16 +31,6 @@ const musicReducer = (state = INITIAL_STATE, action) => {
                 ...state, 
                 currentTrack: state.tracklist[action.index], 
                 playingIndex: action.index };
-            
-        case musicActions.TOGGLE_SHUFFLE:
-            return { 
-                ...state, 
-                shuffle: !state.shuffle };
-        
-        case musicActions.TOGGLE_REPEAT:
-            return { 
-                ...state, 
-                repeat: !state.repeat };
 
         case musicActions.ADD_TO_QUEUE:
             return { 
@@ -63,7 +47,21 @@ const musicReducer = (state = INITIAL_STATE, action) => {
                 queue: [...state.queue.slice(1)],
                 playingIndex: state.playingIndex + 1
             }; // LEL
-
+        
+        case musicActions.UPDATE_RECENTLY_PLAYED_MUSIC:
+            if (state.recentlyPlayed.length > 6) {
+                return {
+                    ...state, recentlyPlayed: [...state.recentlyPlayed.slice(1, 7), action.track]
+                };
+            }
+            return {
+                ...state, recentlyPlayed: [...state.recentlyPlayed, action.track]
+            };
+        case musicActions.UPDATE_CURRENT_TRACK:
+            return {
+                ...state,
+                currentTrack: action.track
+            };
         default:
             return state;
     }

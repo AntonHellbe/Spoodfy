@@ -1,11 +1,16 @@
 import { musicActions } from '../constants/actions';
 
-export const togglePlaying = () => ({
-    type: musicActions.TOGGLE_PLAYING,
-});
-
 export const selectTrack = (index, track, tracklist, tracklistId = '') => ({
     type: musicActions.SELECT_TRACK,
+    index,
+    track,
+    tracklist,
+    tracklistId
+});
+
+
+export const requestSelectTrack = (index, track, tracklist, tracklistId) => ({
+    type: musicActions.REQUEST_SELECT_TRACK,
     index,
     track,
     tracklist,
@@ -19,24 +24,6 @@ export const AddToQueue = (tracks) => ({
 
 export const loadNextTrack = (index) => ({
     type: musicActions.NEXT_TRACK,
-    index
-});
-
-export const toggleShuffle = () => ({
-    type: musicActions.TOGGLE_SHUFFLE,
-});
-
-export const toggleRepeat = () => ({
-    type: musicActions.TOGGLE_REPEAT,
-});
-
-export const updateVolume = (volume) => ({
-    type: musicActions.UPDATE_VOLUME,
-    volume
-});
-
-export const previousTrack = (index) => ({
-    type: musicActions.PREVIOUS_TRACK,
     index
 });
 
@@ -59,5 +46,10 @@ export const requestPlayPlaylist = (playlistUrl, playlist) => ({
 
 export const loadNextQueueTrack = () => ({
     type: musicActions.LOAD_NEXT_QUEUE_TRACK
+});
+
+export const updateRecentlyPlayed = (track) => ({
+    type: musicActions.UPDATE_RECENTLY_PLAYED_MUSIC,
+    track
 });
 

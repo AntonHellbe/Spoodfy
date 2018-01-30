@@ -3,7 +3,7 @@ import { trackActions } from '../constants/actions';
 const INITIAL_STATE = {
     userTopTracks: [],
     artistTopTracks: [],
-    recentlyPlayed: [],
+    recentlyPlayedSpotify: [],
     loadingTracks: false,
     playlistTracks: []
 };
@@ -26,7 +26,7 @@ const tracksReducer = (state = INITIAL_STATE, action) => {
         case trackActions.UPDATE_RECENTLY_PLAYED:
             return {
                 ...state,
-                recentlyPlayed: action.recentTracks
+                recentlyPlayedSpotify: action.recentTracks
             };
         case trackActions.ERROR_RECENTLY_PLAYED:
             return {

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import TrackItem from './trackitem';
 import Loader from '../loader/loader';
 import {
-    selectTrack,
+    requestSelectTrack,
 } from '../../actions/music_actions';
 import {
     removeTrackFromPlaylist
@@ -21,18 +21,6 @@ class TrackTable extends Component {
     }
 
 
-    onRemove = (index) => {
-        const {
-            activePlaylist: {
-                playlist
-            },
-            spotifyId,
-            tracks
-        } = this.props;
-
-        this.props.removeTrackFromPlaylist(spotifyId, playlist, tracks[index].track.uri);
-    }
-    
     onClickDropdown = (index) => {
         this.setState(() => ({ trackIndex: index }));
     }
@@ -69,20 +57,20 @@ class TrackTable extends Component {
             type 
         } = this.props;
 
-        const tracklist = type === 'playlist' ? 
-            tracks.filter((item) => { 
-                return item.track.preview_url !== null;
-                 
-            }).map((item) => item.track) :
-            tracks.filter((item) => item.preview_url !== null);
-
-        if (type === 'playlist') {
-            this.props.selectTrack(index, track, tracklist, playlistId);
-        } else if (type === 'artist') {
-            this.props.selectTrack(index, track, tracklist, currentArtist.id);
-        } else {
-            this.props.selectTrack(index, track, tracklist);
+        let trackId;
+        switch (type) {
+            case 'playlist':
+                trackId = playlistId;
+                break;
+            case 'artist':
+                trackId = currentArtist.id;
+                break;
+            default:
+                trackId = '';
+                break;
         }
+        console.log(track);
+        this.props.requestSelectTrack(index, track, tracks, trackId);
     }
     
 
@@ -150,11 +138,11 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    selectTrack: (index, track, queue, tracklistId) =>
-        dispatch(selectTrack(index, track, queue, tracklistId)),
+    requestSelectTrack: (index, track, queue, tracklistId) =>
+        dispatch(requestSelectTrack(index, track, queue, tracklistId)),
     showModal: (modalProps) => dispatch(showModal('ADD_TRACK_MODAL', modalProps)),
-    removeTrackFromPlaylist: (spotifyId, playlist, trackUri) => 
-        dispatch(removeTrackFromPlaylist(spotifyId, playlist, trackUri))
+    removeTrackFromPlaylist: (playlist, trackUri) => 
+        dispatch(removeTrackFromPlaylist(playlist, trackUri))
 });
 
 

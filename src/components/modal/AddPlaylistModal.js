@@ -26,7 +26,7 @@ class AddPlaylistModal extends Component {
     }
 
     submit = (values) => {
-        this.props.requestCreatePlaylist(values, this.props.spotifyId);
+        this.props.requestCreatePlaylist(values);
     }
 
     render() {
@@ -59,8 +59,8 @@ class AddPlaylistModal extends Component {
 
 
 const mapDispatchToProps = (dispatch) => ({
-    requestCreatePlaylist: (values, spotifyId) =>
-        dispatch(requestCreatePlaylist(values, spotifyId)),
+    requestCreatePlaylist: (values) =>
+        dispatch(requestCreatePlaylist(values)),
     hideModal: () => dispatch(hideModal())
 });
 

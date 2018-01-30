@@ -31,17 +31,15 @@ export const isFollowingPlaylistError = (error) => ({
     error
 });
 
-export const requestFollowPlaylist = (playlist, action, spotifyId) => ({
+export const requestFollowPlaylist = (playlist, action) => ({
     type: playlistActions.REQUEST_FOLLOW_PLAYLIST,
     playlist,
     action,
-    spotifyId
 });
 
-export const followPlaylistSuccess = (playlist, spotifyId) => ({
+export const followPlaylistSuccess = (playlist) => ({
     type: playlistActions.FOLLOW_PLAYLIST_SUCCESS,
     playlist,
-    spotifyId
 });
 
 export const followPlaylistError = (error) => ({
@@ -61,17 +59,16 @@ export const playPlaylistSuccess = (playlist, tracks) => ({
 
 //Add a successhandler for this - In order to dispatch a notification that the track has been
 //Added successfully
-export const addTrackToPlaylist = (spotifyId, playlistId, trackUri) => ({
+export const addTrackToPlaylist = (playlistId, spotifyId, trackUri) => ({
     type: playlistActions.REQUEST_ADD_TRACK_PLAYLIST,
-    spotifyId,
     playlistId,
+    spotifyId,
     trackUri
 });
 
 
-export const removeTrackFromPlaylist = (spotifyId, playlist, trackUri) => ({
+export const removeTrackFromPlaylist = (playlist, trackUri) => ({
     type: playlistActions.REQUEST_REMOVE_TRACK_PLAYLIST,
-    spotifyId,
     playlist,
     trackUri
 });
@@ -95,16 +92,14 @@ export const featuredPlaylistsError = (error) => ({
     error
 });
 
-export const requestUpdatePlaylistDetails = (values, spotifyId, playlist) => ({
+export const requestUpdatePlaylistDetails = (values, playlist) => ({
     type: playlistActions.REQUEST_UPDATE_PLAYLIST_DETAILS,
     values,
-    spotifyId,
     playlist,
 });
 
-export const updatePlaylistDetailsSuccess = (spotifyId, playlistId) => ({
+export const updatePlaylistDetailsSuccess = (playlistId) => ({
     type: playlistActions.UPDATE_PLAYLIST_DETAILS_SUCCESS,
-    spotifyId,
     playlistId
 });
 

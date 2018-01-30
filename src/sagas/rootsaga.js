@@ -7,6 +7,7 @@ import browseSagas from './browse_sagas';
 import artistsSagas from './artists_sagas';
 import trackSagas from './tracks_sagas';
 import albumSagas from './album_sagas';
+import musicControlSagas from './musiccontrol_sagas';
 
 export default function* rootSaga() {
     yield all([
@@ -17,6 +18,7 @@ export default function* rootSaga() {
         ...browseSagas,
         ...artistsSagas,
         ...trackSagas,
-        ...albumSagas
+        ...albumSagas,
+        ...musicControlSagas
     ]);
 }

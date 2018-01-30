@@ -2,20 +2,41 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import RecentItem from './recentitem';
 import WithAuthentication from '../HOC/WithAuthentication';
+import { 
+    selectTrack, 
+} from '../actions/music_actions';
+import {
+    togglePlaying
+} from '../actions/musiccontrol_actions';
 
 class RecentlyPlayed extends Component {
 
+    onClickPlay = (track) => {
+        this.props.selectTrack(track);
+    }
+
     render() {
-        const mostRecent = this.props.recentlyPlayed.slice(0, 7);
-        
+        const {
+            recentlyPlayed,
+            currentTrack,
+            isPlaying,
+        } = this.props;
         return (
             <div className="recent">
                 <h3>Recently Played</h3>
-                { mostRecent.map((item) => {
+                <ul className="latest-played-tracks">
+                { recentlyPlayed.map((item) => {
                     return (
-                        <RecentItem item={ item } />
+                        <RecentItem 
+                        item={ item } 
+                        onClickPlay={ this.onClickPlay }
+                        currentTrack={ currentTrack }
+                        isPlaying={ isPlaying }
+                        togglePlaying={ this.props.togglePlaying }
+                        />
                     );
                 }) }
+                </ul>
                 
             </div>
         );
@@ -23,8 +44,15 @@ class RecentlyPlayed extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    recentlyPlayed: state.tracks.recentlyPlayed,
-    isAuthenticated: state.user.isAuthenticated
+    isAuthenticated: state.user.isAuthenticated,
+    recentlyPlayed: state.music.recentlyPlayed,
+    currentTrack: state.music.currentTrack,
+    isPlaying: state.controls.isPlaying
 });
 
-export default connect(mapStateToProps, null)(WithAuthentication(RecentlyPlayed));
+const mapDispatchToProps = (dispatch) => ({
+    selectTrack: (track) => dispatch(selectTrack(0, track, [])),
+    togglePlaying: () => dispatch(togglePlaying())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(WithAuthentication(RecentlyPlayed));

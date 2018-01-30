@@ -7,7 +7,7 @@ import {
     requestAlbumTracks
 } from '../../actions/album_actions';
 import {
-    selectTrack,
+    requestSelectTrack,
     requestPlayAlbum,
 } from '../../actions/music_actions';
 
@@ -43,7 +43,7 @@ class Album extends Component {
         } = this.props;
 
         if (albumTracks[0].album !== currentAlbum.id) {
-            this.props.selectTrack(albumTracks[0], albumTracks);
+            this.props.requestSelectTrack(albumTracks[0], albumTracks);
         } else {
             this.props.requestPlayAlbum(currentAlbum.id, currentAlbum);
         }
@@ -107,7 +107,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch, props) => ({
     requestAlbumTracks: (album) => dispatch(requestAlbumTracks(props.match.params.id, album)),
-    selectTrack: (track, queue) => dispatch(selectTrack(0, track, queue, props.match.params.id)),
+    requestSelectTrack: (track, queue) => 
+        dispatch(requestSelectTrack(0, track, queue, props.match.params.id)),
     requestPlayAlbum: (id, album) => dispatch(requestPlayAlbum(id, album)),
 });
 

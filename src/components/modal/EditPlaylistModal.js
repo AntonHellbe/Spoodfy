@@ -23,10 +23,9 @@ class EditPlaylistModal extends Component {
 
     submit = (values) => {
         const {
-            spotifyId,
             playlist
         } = this.props;
-        this.props.requestUpdatePlaylistDetails(values, spotifyId, playlist);
+        this.props.requestUpdatePlaylistDetails(values, playlist);
     }
 
 
@@ -74,8 +73,8 @@ class EditPlaylistModal extends Component {
 
 const mapDispatchToProps = (dispatch) => ({
     hideModal: () => dispatch(hideModal()),
-    requestUpdatePlaylistDetails: (values, spotifyId, playlist) =>
-        dispatch(requestUpdatePlaylistDetails(values, spotifyId, playlist)),
+    requestUpdatePlaylistDetails: (values, playlist) =>
+        dispatch(requestUpdatePlaylistDetails(values, playlist)),
 });
 
 

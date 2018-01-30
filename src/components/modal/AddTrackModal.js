@@ -24,7 +24,6 @@ class AddTrackModal extends Component {
 
     onSelect = (e) => {
         const playlistId = e.target.id;
-        console.log(playlistId);
         this.setState(() => ({ selectedPlaylist: playlistId }));
     }
     onSubmit = () => {
@@ -32,9 +31,7 @@ class AddTrackModal extends Component {
             spotifyId,
             track
         } = this.props;
-        console.log(track);
-        console.log(spotifyId);
-        this.props.addTrackToPlaylist(spotifyId, this.state.selectedPlaylist, track.uri);
+        this.props.addTrackToPlaylist(this.state.selectedPlaylist, spotifyId, track.uri);
     }
 
     handlePageClick = (e) => {
@@ -51,7 +48,6 @@ class AddTrackModal extends Component {
         spotifyId
     } = this.props;
 
-    console.log(this.props);
     return (
             <div 
             className="modal-overlay" 
@@ -99,8 +95,8 @@ class AddTrackModal extends Component {
 
 const mapDispatchToProps = (dispatch) => ({
     hideModal: () => dispatch(hideModal()),
-    addTrackToPlaylist: (spotifyId, playlistId, trackUri) =>
-        dispatch(addTrackToPlaylist(spotifyId, playlistId, trackUri))
+    addTrackToPlaylist: (playlistId, spotifyId, trackUri) =>
+        dispatch(addTrackToPlaylist(playlistId, spotifyId, trackUri))
 });
 
 export default connect(null, mapDispatchToProps)(AddTrackModal);

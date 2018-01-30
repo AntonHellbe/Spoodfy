@@ -71,7 +71,7 @@ const mapStateToProps = (state) => ({
     activePlaylist: state.playlists.activePlaylist,
     currentTrack: state.music.currentTrack,
     tracklistId: state.music.tracklistId,
-    isPlaying: state.music.isPlaying,
+    isPlaying: state.controls.isPlaying,
 });
 
 

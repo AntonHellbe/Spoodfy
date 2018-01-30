@@ -19,6 +19,7 @@
         grid-template-columns: 257px 1fr 0;
         grid-template-rows: 57px 225px 1fr 200px 50px;
     }
+
 }
 
 @media only screen and (max-width: 800px) {
@@ -29,10 +30,8 @@
         grid-template-rows: 57px 225px 1fr 200px 50px;
     }
 
-    .sidemenu > .fa.fa-bars {
-        display: inline-block;
-        position: absolute;
-        left: 15px;
-        top: 22px;
+    .main > .sidemenu {
+        padding: 0;
     }
 }
+

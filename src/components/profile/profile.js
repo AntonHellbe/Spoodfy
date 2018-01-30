@@ -5,7 +5,7 @@ import {
     requestArtist
 } from '../../actions/artist_actions';
 import {
-    selectTrack
+    requestSelectTrack
 } from '../../actions/music_actions';
 import {
     requestUserTopTracks
@@ -34,7 +34,7 @@ class Profile extends Component {
     render() {
         const {
             topArtists,
-            recentlyPlayed,
+            recentlyPlayedSpotify,
             currentTrack,
             loadingArtist,
             user: {
@@ -135,11 +135,11 @@ class Profile extends Component {
                     <section id="content2">
 
                         <div className="recent-track-wrapper">
-                            {recentlyPlayed.map((item) =>
+                            { recentlyPlayedSpotify.map((item) =>
                                 (
                                     <RecentTrack
                                         item={ item }
-                                        selectTrack={ this.props.selectTrack }
+                                        selectTrack={ this.props.requestSelectTrack }
                                         currentTrack={ currentTrack }
                                         updateCurrentAlbum={ this.props.updateCurrentAlbum }
                                         requestArtist={ this.props.requestArtist }
@@ -167,7 +167,7 @@ class Profile extends Component {
 const mapStateToProps = (state) => ({
     user: state.user.user,
     topArtists: state.artists.topArtists,
-    recentlyPlayed: state.tracks.recentlyPlayed,
+    recentlyPlayedSpotify: state.tracks.recentlyPlayedSpotify,
     currentTrack: state.music.currentTrack,
     loadingArtist: state.artists.loadingArtist,
     userTopTracks: state.tracks.userTopTracks,
@@ -176,7 +176,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     topArtistsRequest: () => dispatch(topArtistsRequest()),
-    selectTrack: (track) => dispatch(selectTrack(0, track, [])),
+    requestSelectTrack: (track) => dispatch(requestSelectTrack(0, track, [])),
     requestUserTopTracks: () => dispatch(requestUserTopTracks()),
     updateCurrentAlbum: (album) => dispatch(updateCurrentAlbum(album)),
     requestArtist: (id) => dispatch(requestArtist(id))

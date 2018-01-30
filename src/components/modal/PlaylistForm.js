@@ -31,7 +31,7 @@ class PlaylistForm extends Component {
             initialValues,
             create,
         } = this.props;
-        console.log(this.props);
+        // console.log(this.props);
         return (
             <form
                 className="edit-playlist-form"

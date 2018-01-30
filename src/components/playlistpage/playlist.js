@@ -8,7 +8,7 @@ import {
     showModal
 } from '../../actions/modal_actions';
 import {
-    selectTrack,
+    requestSelectTrack,
 } from '../../actions/music_actions';
 import Banner from '../banner/banner';
 import TrackTable from '../tracktable/tracktable';
@@ -30,12 +30,8 @@ class Playlist extends Component {
         const { 
             playlistTracks, 
         } = this.props;
-        const tracks = playlistTracks.filter((item) => item.track.preview_url !== null)
-            .map((item) => item.track);
-        if (tracks.length === 0) {
-            return;
-        }
-        this.props.selectTrack(tracks[0], tracks);
+
+        this.props.requestSelectTrack(playlistTracks[0], playlistTracks);
     }
 
     onScroll = () => {
@@ -54,25 +50,21 @@ class Playlist extends Component {
 
     submit = (values) => {
         const {
-            spotifyId,
             activePlaylist: {
                 playlist
             }
         } = this.props;
-        this.props.requestUpdatePlaylistDetails(values, spotifyId, playlist);
-        // this.onClickEdit();
+        this.props.requestUpdatePlaylistDetails(values, playlist);
     }
 
     openModal = () => {
         const {
             activePlaylist: {
                 playlist
-            },
-            spotifyId
+            }
         } = this.props;
         this.props.showModal({
-            playlist,
-            spotifyId
+            playlist
         });
     }
 
@@ -140,12 +132,13 @@ const mapStateToProps = (state) => ({
     loadingTracks: state.tracks.loadingTracks,
     activePlaylist: state.playlists.activePlaylist,
     isFollowingActivePlaylist: state.playlists.isFollowingActivePlaylist,
-    spotifyId: state.user.spotifyId,
+    spotifyId: state.user.spotifyId
 });
 
 const mapDispatchToProps = (dispatch, props) => ({
     clearActivePlaylistId: () => dispatch(clearActivePlaylistId()),
-    selectTrack: (track, queue) => dispatch(selectTrack(0, track, queue, props.match.params.id)),
+    requestSelectTrack: (track, queue) => 
+        dispatch(requestSelectTrack(0, track, queue, props.match.params.id)),
     showModal: (modalProps) => dispatch(showModal('EDIT_PLAYLIST_MODAL', modalProps))
     
 });

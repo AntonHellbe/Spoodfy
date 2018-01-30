@@ -8,7 +8,7 @@ import {
     requestArtistTopTracks
 } from '../../actions/track_actions';
 import {
-    selectTrack,
+    requestSelectTrack,
     requestPlayArtistTopTracks,
 } from '../../actions/music_actions';
 import {
@@ -34,9 +34,13 @@ class Artist extends Component {
     }
 
     onClickPlay = () => {
-        const { artistTopTracks, currentArtist } = this.props;
+        const { 
+            artistTopTracks, 
+            currentArtist 
+        } = this.props;
+        
         if (artistTopTracks.find((artist) => currentArtist.id === artist.id)) {
-            this.props.selectTrack(artistTopTracks[0], artistTopTracks, currentArtist.id);
+            this.props.requestSelectTrack(artistTopTracks[0], artistTopTracks, currentArtist.id);
         } else {
             this.props.requestPlayArtistTopTracks(currentArtist.id);
         }
@@ -196,7 +200,7 @@ const mapDispatchToProps = (dispatch, props) => ({
     requestArtistAlbums: () => dispatch(requestArtistAlbums(props.match.params.id)),
     requestArtistTopTracks: () => dispatch(requestArtistTopTracks(props.match.params.id)),
     requestPlayArtistTopTracks: () => dispatch(requestPlayArtistTopTracks(props.match.params.id)),
-    selectTrack: (track, queue, id) => dispatch(selectTrack(0, track, queue, id)),
+    requestSelectTrack: (track, queue, id) => dispatch(requestSelectTrack(0, track, queue, id)),
     requestRelatedArtists: (id) => dispatch(requestRelatedArtists(id)),
 });
 

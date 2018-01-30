@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import {
-    AddToQueue, requestPlayPlaylist
+    AddToQueue,
 } from '../../actions/music_actions';
 import {
-    updateCurrentAlbum, requestAlbum
+    requestAlbum
 } from '../../actions/album_actions';
 
 import {
@@ -42,10 +42,9 @@ class TrackItem extends Component {
                 activePlaylist: {
                     playlist
                 },
-                spotifyId,
                 track
             } = this.props;
-            this.props.removeTrackFromPlaylist(spotifyId, playlist, track.uri);
+            this.props.removeTrackFromPlaylist(playlist, track.uri);
         }
 
         dropdownIndexChange = () => {
@@ -233,9 +232,9 @@ class TrackItem extends Component {
 
 const mapStateToProps = (state) => ({
     currentArtist: state.artists.currentArtist,
-    spotifyId: state.user.spotifyId,
     activePlaylist: state.playlists.activePlaylist,
-    currentTrack: state.music.currentTrack
+    currentTrack: state.music.currentTrack,
+    spotifyId: state.user.spotifyId
 
 });
 
@@ -243,8 +242,8 @@ const mapDispatchToProps = (dispatch) => ({
     AddToQueue: (tracks) => dispatch(AddToQueue(tracks)),
     requestAlbum: (id) => dispatch(requestAlbum(id)),
     requestArtist: (id) => dispatch(requestArtist(id)),
-    removeTrackFromPlaylist: (spotifyId, playlist, trackUri) =>
-        dispatch(removeTrackFromPlaylist(spotifyId, playlist, trackUri)),
+    removeTrackFromPlaylist: (playlist, trackUri) =>
+        dispatch(removeTrackFromPlaylist(playlist, trackUri)),
 });
 
 

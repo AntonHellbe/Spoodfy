@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { togglePlaying } from '../../actions/music_actions';
+import { togglePlaying } from '../../actions/musiccontrol_actions';
 import { 
     requestFollowArtist, 
     requestArtist 
@@ -62,8 +62,6 @@ class Banner extends Component {
         const {
             isFollowing
         } = this.props;
-
-        // console.log('Rendering followbutton');
        
         if (isFollowing) {
             return (
@@ -71,6 +69,7 @@ class Banner extends Component {
                 className="btn-follow"
                 id="unfollow"
                 onClick={ this.followAction }
+                style={ { color: '#03A9F4' } }
                 >
                     Unfollow
                 </button>
@@ -247,7 +246,7 @@ class Banner extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    isPlaying: state.music.isPlaying,
+    isPlaying: state.controls.isPlaying,
     tracklistId: state.music.tracklistId,
     spotifyId: state.user.spotifyId,
     user: state.user.user,

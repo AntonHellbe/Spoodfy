@@ -42,7 +42,6 @@ class ModalRoot extends Component {
         } = this.props.modals;
     
         const ModalToRender = MODAL_COMPONENTS[modalType];
-        console.log(modalProps);
         return (
             <Modal
             ref={ (modal) => { this.modal = modal; } }

@@ -2,9 +2,8 @@
     border-top: 1px solid rgba(125, 125, 135, 0.25);
     grid-area: 2 / 1 / 5 / 2;
     width: 100%;
-    max-width: 100%;
     height: 100%;
-    padding: 1%;
+    padding: 10px;
     background: $darkblack;
     overflow-y: auto;
     overflow-x: hidden;
@@ -22,6 +21,8 @@
     display: flex;
     align-items: center;
     justify-content: flex-start;
+    margin: 0;
+    padding: 0;
     
     i {
         font-size: 14px;
@@ -126,7 +127,7 @@
     grid-area: 0;
     position: absolute;
     left: 0;
-    padding: 1%;
+    padding: 10px;
     z-index: 999;
     width: 257px;
     height: calc(100% - 107px);
@@ -136,7 +137,7 @@
     overflow-x: hidden;
     top: 57px;
     bottom: 50px;
-    box-sizing: border-box;
+    // box-sizing: border-box;
     
     background: $darkblack;
 }

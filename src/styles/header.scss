@@ -238,13 +238,14 @@
         position: absolute;
         display: block;
         width: 100%;
-        background-color: #333;
-        height: calc(100% - 107px);
+        background-color: $darkblack;
         transition: all 0.3 ease in;
-        overflow-y: hidden;
+        overflow: hidden;
         top: 57px;
         bottom: 50px;
         left: 0px;
+        right: 0;
+        box-sizing: border-box;
     }
 
     .header > .navLinks > a {

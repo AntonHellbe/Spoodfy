@@ -1,4 +1,4 @@
-import { put, call, takeLatest, take, fork, takeEvery } from 'redux-saga/effects';
+import { put, call, takeLatest, take, fork, takeEvery, select } from 'redux-saga/effects';
 import axios from 'axios';
 import { 
     startSubmit,
@@ -27,6 +27,8 @@ import {
 } from '../actions/modal_actions';
 
 
+const getSpotifyId = state => state.user.spotifyId;
+
 function* userPlaylistsFetch() {
     while (true) {
         yield take([authActions.USER_INFO_SUCCESS,
@@ -47,8 +49,9 @@ function* userPlaylistsFetch() {
 
 function* followedPlaylistsFetch() {
     while (true) {
-        const { playlist, spotifyId } = yield take([playlistActions.UPDATE_PLAYLIST_ID, 
+        const { playlist } = yield take([playlistActions.UPDATE_PLAYLIST_ID,
             playlistActions.FOLLOW_PLAYLIST_SUCCESS]);
+        const spotifyId = yield select(getSpotifyId);
         const {
             id,
             owner
@@ -99,11 +102,11 @@ function* followPlaylistRequest() {
     
 }
 
-function* addTrackToPlaylist({ spotifyId, playlistId, trackUri }) {
+function* addTrackToPlaylist({ playlistId, spotifyId, trackUri }) {
     const URL = `${spotifyUrls.baseURL}${spotifyUrls.version}${spotifyUrls.users}/` +
         `${spotifyId}${spotifyUrls.playlists}/${playlistId}${spotifyUrls.tracks}?uris=${trackUri}`;
-    console.log(URL);
     // console.log(URL);
+    console.log(URL);
     try {
         const data = yield call(axios.post, URL);
         if (data.status === 201) {
@@ -117,11 +120,13 @@ function* addTrackToPlaylist({ spotifyId, playlistId, trackUri }) {
     }
 }
 
-function* removeTrackFromPlaylistHelper({ spotifyId, playlist, trackUri }) {
+function* removeTrackFromPlaylistHelper({ playlist, trackUri }) {
     // console.log(spotifyId, trackUri);
+    console.log(playlist);
+    const spotifyId = yield select(getSpotifyId);
     const URL = `${spotifyUrls.baseURL}${spotifyUrls.version}${spotifyUrls.users}/` +
     `${spotifyId}${spotifyUrls.playlists}/${playlist.id}${spotifyUrls.tracks}`;
-    // console.log(URL);
+    console.log(URL);
     try {
         const data = yield call(axios.delete, URL, {
             headers: {
@@ -199,7 +204,8 @@ function* updatePlaylistHelper() {
     }
 }
 
-function* updatePlaylistFetch({ spotifyId, playlistId }) {
+function* updatePlaylistFetch({ playlistId }) {
+    const spotifyId = yield select(getSpotifyId);
     const URL = `${spotifyUrls.baseURL}${spotifyUrls.version}${spotifyUrls.users}/` +
     `${spotifyId}${spotifyUrls.playlists}/${playlistId}`;
     try {
@@ -214,13 +220,11 @@ function* updatePlaylistFetch({ spotifyId, playlistId }) {
 function* addPlaylistHelper() {
     while (true) {
         const { 
-            spotifyId, 
             values 
         } = yield take(playlistActions.REQUEST_ADD_PLAYLIST);
-        console.log(values);
+        const spotifyId = yield select(getSpotifyId);
         const URL = `${spotifyUrls.baseURL}${spotifyUrls.version}${spotifyUrls.users}/` +
         `${spotifyId}${spotifyUrls.playlists}`;
-        console.log(URL);
         yield put(startSubmit('addPlaylist'));
         try {
             const data = yield call(axios.post, URL, {
