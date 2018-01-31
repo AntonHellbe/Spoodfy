@@ -7,6 +7,7 @@ import {
     hideModal
 } from '../../actions/modal_actions';
 import PlaylistForm from './PlaylistForm';
+import CloseOnEscape from '../../HOC/CloseOnEscape';
 
 class AddPlaylistModal extends Component {
 
@@ -64,4 +65,4 @@ const mapDispatchToProps = (dispatch) => ({
     hideModal: () => dispatch(hideModal())
 });
 
-export default connect(null, mapDispatchToProps)(AddPlaylistModal);
+export default connect(null, mapDispatchToProps)(CloseOnEscape(AddPlaylistModal));

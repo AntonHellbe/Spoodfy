@@ -62,23 +62,25 @@ function* requestSelectTrack() {
         } = yield take(musicActions.REQUEST_SELECT_TRACK);
         const recentlyPlayed = yield select(getRecentlyPlayed);
         let correctIndex = 0;
-        let tracksToPlay;
+        let tracksToPlay = [];
 
+        if (tracklist.length > 0) {
 
-        if (tracklist[0].track) {
-            tracksToPlay = tracklist.filter((playlistTrack) => 
-                playlistTrack.track.preview_url !== null
-            ).map((trackWithPreview) => 
-                trackWithPreview.track
-            );
-        } else {
-            tracksToPlay = tracklist.filter((trackitem) => 
-                trackitem.preview_url !== null
-            );
-        }
+            if (tracklist[0].track) {
+                tracksToPlay = tracklist.filter((playlistTrack) => 
+                    playlistTrack.track.preview_url !== null
+                ).map((trackWithPreview) => 
+                    trackWithPreview.track
+                );
+            } else {
+                tracksToPlay = tracklist.filter((trackitem) => 
+                    trackitem.preview_url !== null
+                );
+            }
 
-        if (tracksToPlay.length === 0) {
-            return;
+            if (tracksToPlay.length === 0) {
+                return;
+            }
         }
         
         if (index !== 0) {
@@ -92,7 +94,6 @@ function* requestSelectTrack() {
         }
 
         const trackToPlay = track.preview_url ? track : tracksToPlay[0];
-        console.log(trackToPlay);
         if (!(recentlyPlayed.find((recentTrack) => recentTrack.id === track.id))) {
             yield put(updateRecentlyPlayed(trackToPlay));
         }

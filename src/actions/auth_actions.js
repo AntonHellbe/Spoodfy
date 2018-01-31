@@ -48,3 +48,9 @@ export const userInformationError = (error) => ({
     type: authActions.USER_INFO_ERROR,
     error
 });
+
+export const refreshToken = (token) => ({
+    type: authActions.REFRESH_TOKEN,
+    token
+
+});

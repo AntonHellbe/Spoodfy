@@ -18,7 +18,7 @@ import {
     reuestPlaylistTracks
 } from '../actions/track_actions';
 import { 
-    selectTrack 
+    requestSelectTrack
 } from '../actions/music_actions';
 import {
     spotifyUrls
@@ -60,7 +60,7 @@ function* playArtistTopTracksHelper() {
             `${spotifyUrls.artists}/${id}${spotifyUrls.topTracks}?country=SE`;
         try {
             const data = yield call(axios.get, URL);
-            yield put(selectTrack(0, data.data.tracks[0], data.data.tracks, id));
+            yield put(requestSelectTrack(0, data.data.tracks[0], data.data.tracks, id));
             yield put(artistTopTracksSuccess(data.data.tracks));
         } catch (e) {
             console.log(e);
@@ -90,11 +90,8 @@ function* playPlaylistHelper({ playlistUrl, playlist }) {
 
     try {
         const data = yield call(axios.get, URL);
-        const tracks = data.data.items
-        .filter((item) => item.track.preview_url !== null)
-            .map((item) => item.track);
-        yield put(playlistTracksSuccess(tracks));
-        yield put(selectTrack(0, tracks[0], tracks, playlist.id));
+        yield put(playlistTracksSuccess(data.data.items));
+        yield put(requestSelectTrack(0, data.data.items[0], data.data.items, playlist.id));
 
     } catch (e) {
         console.log(e);

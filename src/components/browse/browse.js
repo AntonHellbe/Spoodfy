@@ -25,8 +25,8 @@ class Browse extends Component {
 
         return (
             <div className="main-content">
-            <div className="main-content-wrapper">
-                <div className="categories-content">
+                <div className="main-content-wrapper">
+                    <div className="categories-content">
 
                     { loadingBrowse ? 
                         (
@@ -34,30 +34,28 @@ class Browse extends Component {
                         )
                         :
                         (
-                            categories.map((category) => {
+                        <ul className="category-images-list">
+                            { categories.map((category) => {
                                 return (
-                                    <div className="category-image">
-                                        <Link 
-                                        to={ `/category/${category.id}` }
-                                        >
-                                            <div className="category-image-wrapper">
-                                                <img
-                                                src={ `${category.icons[0].url}` }
+                                    <li className="category-image-item">
+                                            <Link
+                                            to={ `/category/${category.id}` }
+                                            className="category-link"
+                                            >
+                                                <img 
+                                                src={ `${category.icons[0].url}` } 
                                                 role="presentation"
                                                 />
-                                            </div>
-                                        </Link>
-                                        <Link
-                                        className="category-title-link"
-                                        to={ `/category/${category.id}` }
-                                        >
-                                            <h3>
-                                                { category.name }
-                                            </h3>
-                                        </Link>
-                                    </div>
+                                                <h3>
+                                                    {category.name}
+                                                </h3>
+                                            </Link>
+                                    </li>
                                 );
                             })
+                        }
+                        </ul>
+
                         )
                     }
                     
@@ -66,6 +64,7 @@ class Browse extends Component {
             </div>
         );
     }
+    
 }
 
 const mapStateToProps = (state) => ({

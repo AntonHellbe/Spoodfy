@@ -22,3 +22,16 @@ export const toggleRepeat = () => ({
 export const togglePlaying = () => ({
     type: musicControlActions.TOGGLE_PLAYING,
 });
+
+export const startSeeking = () => ({
+    type: musicControlActions.START_SEEKING
+});
+
+export const stopSeeking = () => ({
+    type: musicControlActions.STOP_SEEKING
+});
+
+export const updatePlayedTime = (time) => ({
+    type: musicControlActions.UPDATE_PLAYED_TIME,
+    time
+});

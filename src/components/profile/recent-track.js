@@ -18,7 +18,7 @@ const RecentTrack = (props) => {
             return null;
         }
 
-    const style = props.currentTrack.id === track.id ? '0 4px 8px 0 #ff6b42' : null;
+    const style = props.currentTrack.id === track.id ? '0 4px 8px 0 #03A9F4' : null;
     return (
         <div className="recent-track" style={ { boxShadow: style } }>
             <div 

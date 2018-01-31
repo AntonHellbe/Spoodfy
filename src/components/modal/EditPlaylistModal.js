@@ -7,6 +7,7 @@ import {
 import {
     requestUpdatePlaylistDetails
 } from '../../actions/playlist_actions';
+import CloseOnEscape from '../../HOC/CloseOnEscape';
 
 
 class EditPlaylistModal extends Component {
@@ -78,4 +79,4 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 
-export default connect(null, mapDispatchToProps)(EditPlaylistModal);
+export default connect(null, mapDispatchToProps)(CloseOnEscape(EditPlaylistModal));

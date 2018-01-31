@@ -7,6 +7,9 @@ import {
     requestNextTrack,
     toggleShuffle,
     toggleRepeat,
+    startSeeking,
+    stopSeeking,
+    updatePlayedTime
 } from '../../actions/musiccontrol_actions';
 import {
     showModal
@@ -22,7 +25,6 @@ let HEIGHT = 0;
 class MusicBar extends Component {
 
     state = {
-        value: 0,
         isDropdownVisible: false,
         volume: 0.05
     }
@@ -36,17 +38,19 @@ class MusicBar extends Component {
 
 
     onMouseDown = () => {
+        this.props.startSeeking();
         this.props.togglePlaying();
     }
 
     onChange = (e) => {
         const value = e.target.value;
-        this.setState(() => ({ value }));
+        this.props.updatePlayedTime(value);
         this.audioElement.currentTime = value;
     }
 
     onMouseUp = () => {
         this.props.togglePlaying();
+        this.props.stopSeeking();
     }
 
     onVolumeClick = () => {
@@ -108,7 +112,9 @@ class MusicBar extends Component {
     }
 
     timeUpdate = (value) => {
-        this.setState(() => ({ value }));
+        if (!this.props.isSeeking) {
+            this.props.updatePlayedTime(value);
+        }
     }
 
     handleMusicControls = (e) => {
@@ -180,6 +186,7 @@ class MusicBar extends Component {
             currentTrack,
             isPlaying,
             shuffle,
+            playedTime
          } = this.props;
 
         let preview_url = null;
@@ -206,7 +213,7 @@ class MusicBar extends Component {
                     <input 
                     className="inputProgress"
                     ref={ (slider) => { this.slider = slider; } }
-                    value={ this.state.value }
+                    value={ playedTime }
                     type="range"
                     name="points" 
                     min="0"
@@ -217,7 +224,7 @@ class MusicBar extends Component {
                     key="inputProgress"
                     />
                     <ul>
-                        <li className="currentVal">{ (this.state.value / 100).toFixed(2) }</li>
+                        <li className="currentVal">{ (playedTime / 100).toFixed(2) }</li>
                         <li>{ (30 / 100).toFixed(2) }</li>
                     </ul>    
                     </div>
@@ -302,6 +309,8 @@ const mapStateToProps = (state) => ({
     queue: state.music.queue,
     userPlaylists: state.playlists.userPlaylists,
     spotifyId: state.user.spotifyId,
+    isSeeking: state.controls.isSeeking,
+    playedTime: state.controls.playedTime
 });
 
 const mapDispatchToProps = (dispatch) => {
@@ -311,7 +320,10 @@ const mapDispatchToProps = (dispatch) => {
         toggleRepeat: () => dispatch(toggleRepeat()),
         showModal: (modalProps) => dispatch(showModal('ADD_TRACK_MODAL', modalProps)),
         requestNextTrack: () => dispatch(requestNextTrack()),
-        requestPreviousTrack: () => dispatch(requestPreviousTrack())
+        requestPreviousTrack: () => dispatch(requestPreviousTrack()),
+        updatePlayedTime: (time) => dispatch(updatePlayedTime(time)),
+        startSeeking: () => dispatch(startSeeking()),
+        stopSeeking: () => dispatch(stopSeeking())
     };
 };
 

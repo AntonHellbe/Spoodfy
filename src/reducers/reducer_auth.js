@@ -30,6 +30,9 @@ const authReducer = (state = INITIAL_STATE, action) => {
 
         case authActions.USER_INFO_ERROR:
             return { ...state, user_error: action.error };
+
+        case authActions.REFRESH_TOKEN:
+            return { ...state, token: action.token };
         
         default:
             return state;

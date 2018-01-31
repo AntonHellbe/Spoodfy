@@ -44,22 +44,40 @@
 
 .select-playlist{
     list-style: none;
-    font-size: 12px;
+    font-size: 14px;
     margin: 0;
     padding: 0;
     margin-bottom: 10px;
+    
 
-    & > li {
+    & > .select-playlist-item {
         height: 25px;
         display: flex;
         align-items: center;
+        overflow-x: hidden;
+
+        & > div {
+            overflow-x: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
         
-        & > li > input[type=radio] {
+        & > div > input[type=radio] {
             margin-right: 5px;
             border-radius: 0;
+            display: none;
 
             &:focus {
                 outline: none;
+            }
+        }
+
+        & > div > label {
+
+
+
+            &:hover {
+                cursor: pointer;
             }
         }
     }

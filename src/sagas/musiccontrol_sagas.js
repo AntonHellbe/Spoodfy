@@ -10,7 +10,7 @@ import {
     updateRecentlyPlayed,
 } from '../actions/music_actions';
 import {
-    togglePlaying
+    togglePlaying, updatePlayedTime
 } from '../actions/musiccontrol_actions';
 import {
     musicControlActions
@@ -43,6 +43,7 @@ function* requestNextTrack() {
             nextTrack = tracklist[playingIndex + 1];
             yield put(loadNextTrack(playingIndex + 1));
         } else {
+            yield put(updatePlayedTime(0));
             yield put(togglePlaying());
         }
 

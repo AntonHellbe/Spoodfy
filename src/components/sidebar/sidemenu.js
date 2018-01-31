@@ -30,7 +30,7 @@ class SideMenu extends Component {
 
     render() {
         return (
-            <div className="sidemenu" id="abc">
+            <div className="sidemenu" id="sidemenu">
 
                 <div className="sidemenu-title">
                     <p className="playlist-sidemnu-title"> Playlists </p>

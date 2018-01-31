@@ -6,6 +6,8 @@ const INITIAL_STATE = {
     shuffle: false,
     repeat: false,
     isPlaying: false,
+    isSeeking: false,
+    playedTime: 0
 };
 
 const musicControlReducer = (state = INITIAL_STATE, action) => {
@@ -27,6 +29,25 @@ const musicControlReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 repeat: !state.repeat
             };
+        
+        case musicControlActions.START_SEEKING:
+            return {
+                ...state,
+                isSeeking: true
+            };
+        
+        case musicControlActions.STOP_SEEKING:
+            return {
+                ...state,
+                isSeeking: false
+            };
+        
+        case musicControlActions.UPDATE_PLAYED_TIME: {
+            return {
+                ...state,
+                playedTime: action.time
+            };
+        }
         
         default:
             return state;

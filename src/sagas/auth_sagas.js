@@ -15,6 +15,7 @@ import {
     clearToken,
     userInformationSuccess,
     userInformationError,
+    refreshToken,
     } from '../actions/auth_actions';
 import { spotifyUrls } from '../constants/spotify';
 import history from '../history';
@@ -24,9 +25,7 @@ import { store } from '../app';
 function* requestToken({ code }) {
     const URL = `http://localhost:5000/token?code=${code}`;
     try {
-        console.log(code);
         const data = yield call(axios.get, URL);
-        console.log(data);
         axios.defaults.headers.common.Authorization = `Bearer ${data.data}`; //eslint-disable-line
         axios.interceptors.response.use((response) => {
             return response;
@@ -39,7 +38,7 @@ function* requestToken({ code }) {
                 .then((newToken) => {
                     // console.log('Request successfull');
                     console.log(newToken);
-                    store.dispatch(setToken(newToken.data));
+                    store.dispatch(refreshToken(newToken.data));
                     axios.defaults.headers.common.Authorization = `Bearer ${newToken.data}`;
                     originalRequest.headers.Authorization = `Bearer ${newToken.data}`;
                     window.sessionStorage.setItem('token', newToken.data);
@@ -68,7 +67,6 @@ function* requestToken({ code }) {
 function* initialAuth() {
     const token = window.sessionStorage.getItem('token');
     if (token != null) {
-        console.log(axios.defaults.headers.common.Authorization);
         axios.defaults.headers.common.Authorization = `Bearer ${token}`;
         axios.interceptors.response.use((response) => {
             return response;
@@ -81,7 +79,7 @@ function* initialAuth() {
                 return axios.get('http://localhost:5000/refreshtoken')
                     .then((newToken) => {
                         console.log(newToken);
-                        store.dispatch(setToken(newToken.data));
+                        store.dispatch(refreshToken(newToken.data));
                         axios.defaults.headers.common.Authorization = `Bearer ${newToken.data}`;
                         originalRequest.headers.Authorization = `Bearer ${newToken.data}`;
                         window.sessionStorage.setItem('token', newToken.data);

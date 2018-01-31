@@ -153,6 +153,7 @@ function* featuredPlaylistsFetch() {
         
         try {
             const data = yield call(axios.get, URL);
+            console.log(data);
             yield put(featuredPlaylistsSuccess(data.data.playlists.items));
         } catch (e) {
             console.log(e);

@@ -20,14 +20,13 @@ class Header extends Component {
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.isAuthenticated && this.sidemenu === null) {
-            this.sidemenu = document.getElementById('abc');
-            console.log(this.sidemenu);
+            this.sidemenu = document.getElementById('sidemenu');
+            // console.log(this.sidemenu);
         }
     }
 
     
     onToggleSidemenu = () => {
-        console.log('click registrd!');
         if (this.state.isSidemenuVisible) {
             this.sidemenu.classList = ['sidemenu'];
         } else {

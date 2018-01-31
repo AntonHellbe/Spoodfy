@@ -14,6 +14,7 @@ import {
 import {
     removeTrackFromPlaylist
 } from '../../actions/playlist_actions';
+import CloseOnEscape from '../../HOC/CloseOnEscape';
 
 
 class TrackItem extends Component {

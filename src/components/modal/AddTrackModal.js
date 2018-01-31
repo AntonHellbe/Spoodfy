@@ -5,7 +5,7 @@ import { hideModal } from '../../actions/modal_actions';
 import {
     addTrackToPlaylist
 } from '../../actions/playlist_actions';
-
+import CloseOnEscape from '../../HOC/CloseOnEscape';
 
 class AddTrackModal extends Component {
     
@@ -23,7 +23,9 @@ class AddTrackModal extends Component {
     }
 
     onSelect = (e) => {
+        console.log('selecting');
         const playlistId = e.target.id;
+        console.log(playlistId);
         this.setState(() => ({ selectedPlaylist: playlistId }));
     }
     onSubmit = () => {
@@ -47,7 +49,6 @@ class AddTrackModal extends Component {
         playlists,
         spotifyId
     } = this.props;
-
     return (
             <div 
             className="modal-overlay" 
@@ -64,16 +65,27 @@ class AddTrackModal extends Component {
                             }
 
                             return (
-                                <li>
-                                <input 
-                                type="radio" 
-                                id={ playlist.id } 
-                                name="playlist-group"
-                                onClick={ this.onSelect }
-                                checked={ this.state.selectedPlaylist === playlist.id }
-                                />
-                                { playlist.name }
-                            </li>
+                                <li 
+                                className="select-playlist-item"
+                                key={ playlist.id }
+                                >
+                                    <div>
+                                        <input 
+                                        type="radio" 
+                                        id={ playlist.id } 
+                                        name="playlist-group"
+                                        onClick={ this.onSelect }
+                                        checked={ this.state.selectedPlaylist === playlist.id }
+                                        />
+                                        <label 
+                                        htmlFor={ playlist.id }
+                                        style={ this.state.selectedPlaylist === playlist.id ? { color: '#03A9F4' } : { color: '#858585' } }
+                                        id={ playlist.id }
+                                        >
+                                        { playlist.name }
+                                        </label>
+                                    </div>
+                                </li>
                             );
                         }) }
                     </ul>
@@ -99,4 +111,4 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch(addTrackToPlaylist(playlistId, spotifyId, trackUri))
 });
 
-export default connect(null, mapDispatchToProps)(AddTrackModal);
+export default connect(null, mapDispatchToProps)(CloseOnEscape(AddTrackModal));
